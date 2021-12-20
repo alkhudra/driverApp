@@ -1,4 +1,7 @@
+import 'package:alkhudhrah_app/constants/colors.dart';
+import 'package:alkhudhrah_app/locale/locale_keys.g.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 Widget brandName(logoW, logoH, fontS) {
   return Column(
@@ -10,7 +13,6 @@ Widget brandName(logoW, logoH, fontS) {
         padding: EdgeInsets.all(8.0),
         decoration: BoxDecoration(
           image: DecorationImage(
-            //TODO: change image to company logo
             image: AssetImage('assets/images/logo.png')
           )
         ),
@@ -22,10 +24,10 @@ Widget brandName(logoW, logoH, fontS) {
           style: TextStyle(
             fontSize: fontS,
             fontWeight: FontWeight.bold,
-            color: Color.fromRGBO(103, 156, 65, 1),
+            color: kLogoGreen,
           ),
           children: <TextSpan> [
-            TextSpan(text: "Alkhadra United"),
+            TextSpan(text: LocaleKeys.alkhadra_united.tr()),
           ]
         ),
       ),

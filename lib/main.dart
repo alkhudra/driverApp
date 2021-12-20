@@ -1,10 +1,26 @@
-import 'package:alkhudhrah_app/custom_widgets/widget.dart';
+import 'package:alkhudhrah_app/constants/colors.dart';
+import 'package:alkhudhrah_app/custom_widgets/brandname.dart';
 import 'package:alkhudhrah_app/ui/login.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import './locale/codegen_loader.g.dart';
 
-void main() {
-  runApp(MyHomepage());
+Future<void> main() async {
+  // runApp(MyHomepage());
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+
+  runApp(EasyLocalization(
+    child: MyHomepage(),
+    supportedLocales: [
+      Locale('en'),
+      Locale('ar'),
+    ],
+    path: 'assets/locale',
+    fallbackLocale: Locale('en'),
+    assetLoader: CodegenLoader(),
+  ));
 }
 
 class MyHomepage extends StatefulWidget {
@@ -18,31 +34,15 @@ class MyHomepage extends StatefulWidget {
 
 class _MyHomepageState extends State<MyHomepage> {
 
-  Locale? _locale;
-
-  void setLocale(Locale value) {
-    setState(() {
-      _locale = value;
-    });
-  }
-
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      locale: _locale,
       home: Homepage(),
       debugShowCheckedModeBanner: false,
-      title: 'Localizations Sample App',
-      localizationsDelegates: [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: [
-        Locale('en', ''), // English, no country code
-        Locale('ar', ''), // Spanish, no country code
-      ],
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
     );
   }
 }
@@ -72,11 +72,15 @@ class Homepage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(60),
                     ),
                     fixedSize: Size(310.0, 50.0),
-                    backgroundColor: Color.fromRGBO(116, 73, 34, 1),
+                    backgroundColor: kLogoBrown,
                   ),
-                  onPressed: () => MyHomepage.of(context).setLocale(Locale.fromSubtags(languageCode: 'ar')), 
+                  onPressed: () {
+                    context.setLocale(Locale('ar'));
+                    Navigator.push(context, MaterialPageRoute(
+                    builder: (context) => Login()));
+                  },
                   child: Text("عربي", style: TextStyle(
-                    color: Colors.white,
+                    color: kWhite,
                     fontSize: 25,
                   ),),
                 ),
@@ -90,10 +94,10 @@ class Homepage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(60),
                     ),
                     fixedSize: Size(310.0, 50.0),
-                    backgroundColor: Color.fromRGBO(103, 156, 65, 1),
+                    backgroundColor: kLogoGreen,
                   ),
                   onPressed: () {
-                    MyHomepage.of(context).setLocale(Locale.fromSubtags(languageCode: 'en'));
+                    context.setLocale(Locale('en'));
                     Navigator.push(context, MaterialPageRoute(
                       builder: (context) => Login()));
                   }, 

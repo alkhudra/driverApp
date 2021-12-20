@@ -1,6 +1,11 @@
-import 'package:alkhudhrah_app/custom_widgets/widget.dart';
+import 'package:alkhudhrah_app/constants/colors.dart';
+import 'package:alkhudhrah_app/custom_widgets/brandname.dart';
+import 'package:alkhudhrah_app/locale/locale_keys.g.dart';
 import 'package:alkhudhrah_app/main.dart';
+import 'package:alkhudhrah_app/ui/home.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class Login extends StatefulWidget {
   const Login({ Key? key }) : super(key: key);
@@ -12,6 +17,9 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
 
   final TextEditingController phoneController = TextEditingController();
+  String phoneNo = " ";
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,17 +51,19 @@ class _LoginState extends State<Login> {
           ),
           SizedBox(height: 50,),
           Container(
-            margin: EdgeInsets.only(top: 300, left: 60),
-            width: 300,
-            height: 60,
+            alignment: Alignment.center,
+            margin: EdgeInsets.symmetric(horizontal: 60, vertical: 300),
+            width: MediaQuery.of(context).size.width/1.5,
+            height: MediaQuery.of(context).size.height/15,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(60),
-              border: Border.all(color: Color.fromRGBO(103, 156, 65, 1),),
+              border: Border.all(color: kLogoGreen,
+              width: 1.5),
             ),
             child: Row(
               children: [
                 Container(
-                  margin: EdgeInsets.only(left: 20),
+                  margin: EdgeInsets.all(15.0),
                   width: 30,
                   height: 30,
                   decoration: BoxDecoration(
@@ -62,24 +72,41 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                 ),
-                SizedBox(width: 8,),
+                // SizedBox(width: 8,),
                 Container(
+                  padding: EdgeInsets.symmetric(horizontal: 5),
                   child: Text("+966", style: TextStyle(
                     color: Colors.grey[600],
                     fontSize: 14,
                   ),),
                 ),
                 Expanded(
-                  child: TextField(
+                  child: TextFormField(
                     controller: phoneController,
-                    keyboardType: TextInputType.phone,
+                    maxLength: 9,
+                    keyboardType: TextInputType.number,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    //TODO: remove helpers to helper class
+                    //Formatting for number only input
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                    ],
+                    //Formatting number to begin with 05 
+                    validator: (value) {
+                      if(value!.startsWith("5")) {
+                        phoneNo = "0" + value;
+                      } else {
+                        return LocaleKeys.please_begin_number.tr();
+                      }
+                    },
                     style: TextStyle(
                       color: Colors.grey[600],
                       fontWeight: FontWeight.bold),
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.only(left: 20),
-                      focusColor: Color.fromRGBO(103, 156, 65, 1),
+                      focusColor: kLogoGreen,
                       border: InputBorder.none,
+                      counterText: "",
                     ),
                   ),
                 ),
@@ -88,20 +115,25 @@ class _LoginState extends State<Login> {
           ),
           SizedBox(height: 20,),
           Container(
-            margin: EdgeInsets.only(left: 90, top: 470),
+            margin: EdgeInsets.fromLTRB(80, 470, 80, 310),
+            width: MediaQuery.of(context).size.width/1.6,
+            height: MediaQuery.of(context).size.height/12,
             child: TextButton(
               style: TextButton.styleFrom(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(60),
                 ),
                 fixedSize: Size(250.0, 70.0),
-                backgroundColor: Color.fromRGBO(103, 156, 65, 1),
+                backgroundColor: kLogoGreen,
               ),
               onPressed: () {
+                //disable button after first click, to avoid 
+                // sending two requests to DB
+
                 Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => Login()));
+                  builder: (context) => Homescreen()));
               }, 
-              child: Text("SIGN IN", style: TextStyle(
+              child: Text(LocaleKeys.SIGN_IN.tr(), style: TextStyle(
                 color: Colors.white,
                 fontSize: 20,
               ),),
@@ -112,3 +144,9 @@ class _LoginState extends State<Login> {
     );
   }
 }
+
+// textButton(
+//               btnName: 'SIGN IN', 
+//               btnFunc:  Navigator.push(context, MaterialPageRoute(
+//                   builder: (context) => Homescreen()))
+//             ), //textButton
