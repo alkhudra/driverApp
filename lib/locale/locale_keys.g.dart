@@ -13,7 +13,7 @@ abstract class  LocaleKeys {
   static const enter_code_note = 'enter_code_note';
   static const resend_code = 'resend_code';
   static const resend_code_note = 'resend_code_note';
-  static const log_out = 'Log out';
+  static const log_out = 'Log Out';
   static const languages = 'Languages';
   static const contact_us = 'Contact Us';
   static const edit_profile = 'EDIT PROFILE';
