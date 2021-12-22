@@ -16,13 +16,32 @@ class CodegenLoader extends AssetLoader{
 
   static const Map<String,dynamic> en = {
   "SIGN IN": "SIGN IN",
-  "Please begin number with 5": "Please begin number with 5",
-  "Alkhadra United" : "Alkhadra United"
+  "Please begin number with 5": "Number must start with 5",
+  "Please enter your phone number" : "Please enter a phone number",
+  "Alkhadra United" : "Alkhadra United",
+  "Ok" : "Ok",
+  "Enter code" : "Enter code",
+  "auth_note" : "Thank you for choosing AlKhadra United Company. Please wait until the data is validated and the verification code will be sent to you on your email.",
+  "Verify" : "Verify",
+  "enter_code_note" : "Enter the code sent to ",
+  "resend_code" : "Resend code",
+  "resend_code_note" : "Didn't receive a code?",
+  "Please enter 9 digit number" : "Please enter 9 digit number"
 };
 static const Map<String,dynamic> ar = {
   "SIGN IN": "تسجيل الدخول",
   "Please begin number with 5": "الرجاء بدء رقم الجوال بـ 5",
-  "Alkhadra United" : "الخضراء المتحدة"
+  "Please enter your phone number" : "الرجاء إدخال رقم الجوال",
+  "Please enter 9 digit number" : "الرجاء إدخال رقم مكون من ٩ خانات",
+  "Alkhadra United" : "الخضراء المتحدة",
+  "Ok" : "متابعة",
+  "Enter code" : "الرجاء إدخال الرمز",
+  "auth_note" : "Thank you for choosing AlKhadra United Company. Please wait until the data is validated and the verification code will be sent to you on your email.",
+  "Verify" : "تحقق",
+  "enter_code_note" : "أدخل الرمز المرسل إلى ",
+  "resend_code" : "إعادة إرسال رمز التحقق",
+  "resend_code_note" : "لم يصلك رمز التحقق؟"
+  
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "ar": ar};
 }

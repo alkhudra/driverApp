@@ -20,6 +20,37 @@ class _HomescreenState extends State<Homescreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          elevation: 0.0,
+          backgroundColor: Colors.transparent,
+          leading: Icon(Icons.arrow_back_ios, color: kLogoBrown,),
+          title: Row(
+            children: [
+              Column(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(top: 5),
+                    child: Text('Welcome back,',
+                    style: TextStyle(
+                          color: kLogoBrown, 
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                        ),),
+                  ),
+                  //TODO: replace name wuth username variable
+                  Container(
+                    child: Text('John Doe',
+                    style: TextStyle(
+                          color: kLogoGreen,
+                          fontSize: 25,
+                          fontWeight: FontWeight.w600,
+                        ),),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
         backgroundColor: Colors.grey[100],
         bottomNavigationBar: FancyBottomNavigation(
           inactiveIconColor: kLogoGreen,
@@ -41,30 +72,31 @@ class _HomescreenState extends State<Homescreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               // column for name and greeting
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(top: 20, right: 230),
-                    child: Text('Welcome Back,', 
-                    style: TextStyle(
-                      color: kLogoBrown, 
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                    ),),
-                  ),
-                  SizedBox(height: 5,),
-                  //TODO: replace username with variable
-                  Container(
-                    margin: EdgeInsets.only(left: 10),
-                    child: Text('John Doe', style: TextStyle(
-                      color: kLogoGreen,
-                      fontSize: 25,
-                      fontWeight: FontWeight.w600,
-                    ),),
-                  ),
-                ],
-              ),
+              // Column(
+              //   crossAxisAlignment: CrossAxisAlignment.start,
+              //   children: [
+              //     Container(
+              //       margin: EdgeInsets.only(top: 20, right: 230),
+              //       child: Text('Welcome Back,', 
+              //       style: TextStyle(
+              //         color: kLogoBrown, 
+              //         fontSize: 15,
+              //         fontWeight: FontWeight.w500,
+              //       ),),
+              //     ),
+              //     SizedBox(height: 5,),
+              //     //TODO: replace username with variable
+              //     Container(
+              //       margin: EdgeInsets.only(left: 10),
+              //       child: Text('John Doe', 
+              //       style: TextStyle(
+              //         color: kLogoGreen,
+              //         fontSize: 25,
+              //         fontWeight: FontWeight.w600,
+              //       ),),
+              //     ),
+              //   ],
+              // ),
               SizedBox(height: 50,),
               //column for incoming orders
               Container(

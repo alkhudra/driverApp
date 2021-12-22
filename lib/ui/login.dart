@@ -1,5 +1,6 @@
 import 'package:alkhudhrah_app/constants/colors.dart';
 import 'package:alkhudhrah_app/custom_widgets/brandname.dart';
+import 'package:alkhudhrah_app/dialogs/alert_dialog.dart';
 import 'package:alkhudhrah_app/locale/locale_keys.g.dart';
 import 'package:alkhudhrah_app/main.dart';
 import 'package:alkhudhrah_app/ui/home.dart';
@@ -18,7 +19,14 @@ class _LoginState extends State<Login> {
 
   final TextEditingController phoneController = TextEditingController();
   String phoneNo = " ";
+  late bool _isBtnDisabled;
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _isBtnDisabled = true;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +48,7 @@ class _LoginState extends State<Login> {
                 ),
               ],
               borderRadius: BorderRadius.circular(50),
-              color: Color.fromRGBO(251, 255, 249, 1),
+              color: kCard,
             ),
           ),
           SizedBox(height: 50,),
@@ -53,7 +61,7 @@ class _LoginState extends State<Login> {
           Container(
             alignment: Alignment.center,
             margin: EdgeInsets.symmetric(horizontal: 60, vertical: 300),
-            width: MediaQuery.of(context).size.width/1.5,
+            width: MediaQuery.of(context).size.width/1.4,
             height: MediaQuery.of(context).size.height/15,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(60),
@@ -87,16 +95,29 @@ class _LoginState extends State<Login> {
                     keyboardType: TextInputType.number,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     //TODO: remove helpers to helper class
+
                     //Formatting for number only input
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
                     ],
                     //Formatting number to begin with 05 
                     validator: (value) {
-                      if(value!.startsWith("5")) {
-                        phoneNo = "0" + value;
-                      } else {
-                        return LocaleKeys.please_begin_number.tr();
+                      if(value!.isEmpty) {
+                        _isBtnDisabled = true;
+                        return LocaleKeys.please_enter.tr();
+                      } else{
+                        if(value.length!=9) { 
+                          _isBtnDisabled = true;
+                          return LocaleKeys.phone_length.tr();
+                        } else {
+                          if(value.startsWith("5")){
+                            _isBtnDisabled = false;
+                            phoneNo = "0" + value;
+                          } else {
+                          _isBtnDisabled = true;
+                          return LocaleKeys.please_begin_number.tr();
+                          }
+                        }
                       }
                     },
                     style: TextStyle(
@@ -114,6 +135,7 @@ class _LoginState extends State<Login> {
             ),
           ),
           SizedBox(height: 20,),
+          //SIGN IN button
           Container(
             margin: EdgeInsets.fromLTRB(80, 470, 80, 310),
             width: MediaQuery.of(context).size.width/1.6,
@@ -126,12 +148,21 @@ class _LoginState extends State<Login> {
                 fixedSize: Size(250.0, 70.0),
                 backgroundColor: kLogoGreen,
               ),
-              onPressed: () {
+              onPressed:() {
                 //disable button after first click, to avoid 
                 // sending two requests to DB
+                if(_isBtnDisabled) {
 
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => Homescreen()));
+                } else {
+                  print(phoneNo);
+                  showDialog(
+                    context: context, 
+                    builder: (BuildContext context ) =>
+                      showPinDialog(context, phoneNo));
+                }
+
+                // Navigator.push(context, MaterialPageRoute(
+                //   builder: (context) => Homescreen()));
               }, 
               child: Text(LocaleKeys.SIGN_IN.tr(), style: TextStyle(
                 color: Colors.white,
@@ -144,6 +175,7 @@ class _LoginState extends State<Login> {
     );
   }
 }
+
 
 // textButton(
 //               btnName: 'SIGN IN', 
