@@ -26,7 +26,11 @@ class CodegenLoader extends AssetLoader{
   "enter_code_note" : "Enter the code sent to ",
   "resend_code" : "Resend code",
   "resend_code_note" : "Didn't receive a code?",
-  "Please enter 9 digit number" : "Please enter 9 digit number"
+  "Please enter 9 digit number" : "Please enter 9 digit number",
+  "Log Out" : "Log Out",
+  "Languages" : "Languages",
+  "Contact Us" : "Contact Us",
+  "EDIT PROFILE" : "EDIT PROFILE"
 };
 static const Map<String,dynamic> ar = {
   "SIGN IN": "تسجيل الدخول",
@@ -40,7 +44,11 @@ static const Map<String,dynamic> ar = {
   "Verify" : "تحقق",
   "enter_code_note" : "أدخل الرمز المرسل إلى ",
   "resend_code" : "إعادة إرسال رمز التحقق",
-  "resend_code_note" : "لم يصلك رمز التحقق؟"
+  "resend_code_note" : "لم يصلك رمز التحقق؟",
+  "Log Out" : "تسجيل الخروج",
+  "Languages" : "اللغات",
+  "Contact Us" : "تواصل معنا",
+  "EDIT PROFILE" : "تعديل الملف"
   
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "ar": ar};
