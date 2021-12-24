@@ -152,7 +152,7 @@ class _LoginState extends State<Login> {
                 //disable button after first click, to avoid 
                 // sending two requests to DB
                 if(_isBtnDisabled) {
-
+                  return ;
                 } else {
                   print(phoneNo);
                   showDialog(
@@ -160,9 +160,6 @@ class _LoginState extends State<Login> {
                     builder: (BuildContext context ) =>
                       showPinDialog(context, phoneNo));
                 }
-
-                // Navigator.push(context, MaterialPageRoute(
-                //   builder: (context) => Homescreen()));
               }, 
               child: Text(LocaleKeys.SIGN_IN.tr(), style: TextStyle(
                 color: Colors.white,

@@ -200,11 +200,12 @@ class _HomescreenState extends State<Homescreen> {
               Container(
                 margin: EdgeInsets.only(top: 5),
                 child: Text('Welcome back,',
-                style: TextStyle(
-                      color: kLogoBrown, 
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                    ),),
+                  style: TextStyle(
+                    color: kBlack.withOpacity(0.7), 
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
               ),
               //TODO: replace name wuth username variable
               Container(

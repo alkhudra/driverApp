@@ -30,7 +30,14 @@ class CodegenLoader extends AssetLoader{
   "Log Out" : "Log Out",
   "Languages" : "Languages",
   "Contact Us" : "Contact Us",
-  "EDIT PROFILE" : "EDIT PROFILE"
+  "EDIT PROFILE" : "EDIT PROFILE",
+  "Edit Profile" : "Edit Profile",
+  "Change Driver Name" : "Change Owner Name",
+  "Change Owner Name" : "Change Owner Name",
+  "Change Company Name" : "Change Company Name",
+  "Change Email" : "Change Email", 
+  "Change Phone Number" : "Change Phone Number",
+  "SAVE" : "SAVE"
 };
 static const Map<String,dynamic> ar = {
   "SIGN IN": "تسجيل الدخول",
@@ -48,7 +55,14 @@ static const Map<String,dynamic> ar = {
   "Log Out" : "تسجيل الخروج",
   "Languages" : "اللغات",
   "Contact Us" : "تواصل معنا",
-  "EDIT PROFILE" : "تعديل الملف"
+  "EDIT PROFILE" : "تعديل الملف",
+  "Edit Profile" : "تعديل الملف الشخصي",
+  "Change Driver Name" : "تعديل اسم السائق",
+  "Change Owner Name" : "تعديل اسم المالك",
+  "Change Company Name" : "تعديل اسم الشركة",
+  "Change Email" : "تعديل البريد الالكتروني", 
+  "Change Phone Number" : "تعديل رقم الجوال",
+  "SAVE" : "حفظ"
   
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "ar": ar};
