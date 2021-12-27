@@ -1,6 +1,7 @@
 import 'package:alkhudhrah_app/constants/colors.dart';
 import 'package:alkhudhrah_app/custom_widgets/brandname.dart';
 import 'package:alkhudhrah_app/ui/login.dart';
+import 'package:alkhudhrah_app/ui/login_email.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -77,7 +78,7 @@ class Homepage extends StatelessWidget {
                   onPressed: () {
                     context.setLocale(Locale('ar'));
                     Navigator.push(context, MaterialPageRoute(
-                    builder: (context) => Login()));
+                    builder: (context) => LoginEmail()));
                   },
                   child: Text("عربي", style: TextStyle(
                     color: kWhite,
@@ -99,7 +100,7 @@ class Homepage extends StatelessWidget {
                   onPressed: () {
                     context.setLocale(Locale('en'));
                     Navigator.push(context, MaterialPageRoute(
-                      builder: (context) => Login()));
+                      builder: (context) => LoginEmail()));
                   }, 
                   child: Text("English", style: TextStyle(
                     color: Colors.white,

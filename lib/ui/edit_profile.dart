@@ -171,6 +171,7 @@ final TextEditingController phoneController = TextEditingController();
                     SizedBox(height: 20,),
                     GestureDetector(
                       onTap: () {
+                        Navigator.pop(context);
                         Navigator.push(context, MaterialPageRoute(
                           builder: (context) => EditProfile())
                         );

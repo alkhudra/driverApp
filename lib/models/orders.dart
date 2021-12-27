@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 
@@ -14,6 +15,8 @@ class Orders {
     productName = proName; 
     productAmount = proAmount; 
     orderBy = orBy;
+    String formattedDate = DateFormat('kk:mm:ss \n EEE d MMM').format(orderTime);
+    orTime = formattedDate;
   }
 
 }

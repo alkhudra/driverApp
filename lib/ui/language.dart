@@ -1,19 +1,74 @@
+import 'package:alkhudhrah_app/constants/colors.dart';
+import 'package:alkhudhrah_app/custom_widgets/brandname.dart';
+import 'package:alkhudhrah_app/designs/buttons_design.dart';
+import 'package:alkhudhrah_app/ui/welcome.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class LanguageScreen extends StatefulWidget {
-  const LanguageScreen({ Key? key }) : super(key: key);
-
   @override
   _LanguageScreenState createState() => _LanguageScreenState();
 }
 
 class _LanguageScreenState extends State<LanguageScreen> {
+
+
+  void onLanguageButtonPressed(BuildContext context , String localeName) async{
+    //todo: edit locale problem
+
+
+    if(localeName == 'en')
+      await context.setLocale(Locale('en'));
+    else   await context.setLocale(Locale('ar'));
+
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return WelcomeScreen();
+    }));
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        //add default container and button to switch lang/locale 
-        body: Container(),
+        backgroundColor: cardBackgroundColor,
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              child: brandName(250.0, 250.0, 30.0),
+            ),
+            SizedBox(
+              height: 60,
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 10, right: 10),
+              child: MaterialButton(
+                onPressed: () {
+                  onLanguageButtonPressed(context,'ar');
+                },
+                height: ButtonsDesign.buttonsHeight,
+                shape: StadiumBorder(),
+                child: ButtonsDesign.buttonsText('عربي',kWhite),
+                color: kLogoBrown,
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 10, right: 10),
+              child: MaterialButton(
+                onPressed: () {
+                  onLanguageButtonPressed(context,'en');
+                },
+                height: ButtonsDesign.buttonsHeight,
+                shape: StadiumBorder(),
+                child: ButtonsDesign.buttonsText('english',kWhite),
+                color: kLogoGreen,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

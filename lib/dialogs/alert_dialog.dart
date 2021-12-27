@@ -196,7 +196,7 @@ Widget showPinDialog(BuildContext context, String userNumber) {
               Text(
                 LocaleKeys.enter_code.tr(),
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 22,
                   color: kDarkBlue,
                   fontWeight: FontWeight.bold,
                 ),
@@ -207,7 +207,9 @@ Widget showPinDialog(BuildContext context, String userNumber) {
               Text(
                 LocaleKeys.enter_code_note.tr() + '\n' + userNumber,
                 style: TextStyle(
-                  fontSize: 15,
+                  letterSpacing: 0.5,
+                  wordSpacing: 1,
+                  fontSize: 16,
                   color: kLogoGreen,
                 ),
               ),
@@ -215,7 +217,7 @@ Widget showPinDialog(BuildContext context, String userNumber) {
                 height: 20,
               ),
               Container(
-                margin: EdgeInsets.only(left: 10, right: 10),
+                padding: EdgeInsets.only(left: 50, right: 50),
                 child: PinCodeTextField(
                   appContext: context,
                   pastedTextStyle: TextStyle(
@@ -229,14 +231,15 @@ Widget showPinDialog(BuildContext context, String userNumber) {
 
                   errorAnimationController: errorController,
                   pinTheme: PinTheme(
+                    activeColor: kDarkBlue,
                     errorBorderColor: kLike,
                     inactiveFillColor: kWhite,
-                    selectedFillColor: kLogoGreen,
+                    selectedFillColor: kWhite,
                     shape: PinCodeFieldShape.box,
-                    inactiveColor: kLogoGreen,
-                    borderRadius: BorderRadius.circular(5),
+                    inactiveColor: kLogoGreen.withOpacity(0.7),
+                    borderRadius: BorderRadius.circular(18),
                     fieldHeight: 50,
-                    fieldWidth: 40,
+                    fieldWidth: 60,
                     activeFillColor: kWhite,
                   ),
                   cursorColor: kLogoGreen,
@@ -248,7 +251,7 @@ Widget showPinDialog(BuildContext context, String userNumber) {
                   boxShadows: [
                     BoxShadow(
                       offset: Offset(0, 1),
-                      color: kBlack,
+                      color: kBlack.withOpacity(0.1),
                       blurRadius: 5,
                     )
                   ],

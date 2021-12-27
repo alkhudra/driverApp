@@ -20,7 +20,7 @@ class CodegenLoader extends AssetLoader{
   "Please enter your phone number" : "Please enter a phone number",
   "Alkhadra United" : "Alkhadra United",
   "Ok" : "Ok",
-  "Enter code" : "Enter code",
+  "Enter Code" : "Enter Code",
   "auth_note" : "Thank you for choosing AlKhadra United Company. Please wait until the data is validated and the verification code will be sent to you on your email.",
   "Verify" : "Verify",
   "enter_code_note" : "Enter the code sent to ",
@@ -37,7 +37,12 @@ class CodegenLoader extends AssetLoader{
   "Change Company Name" : "Change Company Name",
   "Change Email" : "Change Email", 
   "Change Phone Number" : "Change Phone Number",
-  "SAVE" : "SAVE"
+  "SAVE" : "SAVE",
+  "Email" : "Email",
+  "Password" : "Password",
+  "Forgot Password" : "Forgot Password",
+  "Forgot Password?" : "Forgot Password?",
+  
 };
 static const Map<String,dynamic> ar = {
   "SIGN IN": "تسجيل الدخول",
@@ -46,7 +51,7 @@ static const Map<String,dynamic> ar = {
   "Please enter 9 digit number" : "الرجاء إدخال رقم مكون من ٩ خانات",
   "Alkhadra United" : "الخضراء المتحدة",
   "Ok" : "متابعة",
-  "Enter code" : "الرجاء إدخال الرمز",
+  "Enter Code" : "الرجاء إدخال الرمز",
   "auth_note" : "Thank you for choosing AlKhadra United Company. Please wait until the data is validated and the verification code will be sent to you on your email.",
   "Verify" : "تحقق",
   "enter_code_note" : "أدخل الرمز المرسل إلى ",
@@ -62,7 +67,11 @@ static const Map<String,dynamic> ar = {
   "Change Company Name" : "تعديل اسم الشركة",
   "Change Email" : "تعديل البريد الالكتروني", 
   "Change Phone Number" : "تعديل رقم الجوال",
-  "SAVE" : "حفظ"
+  "SAVE" : "حفظ",
+  "Email" : "البريد الإلكتروني",
+  "Password" : "كلمة المرور",
+  "Forgot Password" : "نسيت كلمة المرور",
+  "Forgot Password?" : "نسيت كلمة المرور؟",
   
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "ar": ar};

@@ -7,7 +7,7 @@ abstract class  LocaleKeys {
   static const phone_length = 'Please enter 9 digit number';
   static const alkhadra_united = 'Alkhadra United';
   static const ok = 'ok';
-  static const enter_code = 'Enter code';
+  static const enter_code = 'Enter Code';
   static const auth_note = 'auth_note';
   static const verify = 'Verify';
   static const enter_code_note = 'enter_code_note';
@@ -24,4 +24,8 @@ abstract class  LocaleKeys {
   static const change_email = 'Change Email';
   static const change_phone = 'Change Phone Number';
   static const save_changes = 'SAVE';
+  static const email_textfield = 'Email';
+  static const password_textfield = 'Password';
+  static const forgot_PW_Btn = 'Forgot Password?';
+  static const forgot_password = 'Forgot Password';
 }

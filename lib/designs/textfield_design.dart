@@ -30,7 +30,7 @@ class TextFieldDesign {
               fontSize: 16,
               fontWeight: FontWeight.w400
             ),
-            contentPadding: EdgeInsets.only(left: 20),
+            contentPadding: EdgeInsets.only(left: 20, right: 20),
             focusColor: kLogoGreen,
             border: InputBorder.none,
             counterText: "",

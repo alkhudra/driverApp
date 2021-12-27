@@ -69,6 +69,7 @@ class _HomescreenState extends State<Homescreen> {
                     SizedBox(height: 20,),
                     GestureDetector(
                       onTap: () {
+                        Navigator.pop(context);
                         Navigator.push(context, MaterialPageRoute(
                           builder: (context) => EditProfile())
                         );
@@ -191,32 +192,9 @@ class _HomescreenState extends State<Homescreen> {
           ),
           backgroundColor: Colors.transparent,
           leading: IconButton(
-              icon: Icon(Icons.arrow_back_ios), 
-              color: kLogoBrown,
-              onPressed: () => Navigator.pop(context),
-            ),
-          title: Column(
-            children: [
-              Container(
-                margin: EdgeInsets.only(top: 5),
-                child: Text('Welcome back,',
-                  style: TextStyle(
-                    color: kBlack.withOpacity(0.7), 
-                    fontSize: 15,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-              //TODO: replace name wuth username variable
-              Container(
-                child: Text('John Doe',
-                style: TextStyle(
-                      color: kLogoGreen,
-                      fontSize: 25,
-                      fontWeight: FontWeight.w600,
-                    ),),
-              ),
-            ],
+            icon: Icon(Icons.arrow_back_ios), 
+            color: kLogoBrown,
+            onPressed: () => Navigator.pop(context),
           ),
         ),
         backgroundColor: Colors.grey[100],
@@ -236,54 +214,41 @@ class _HomescreenState extends State<Homescreen> {
           },
         ),
         body: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              // column for name and greeting
-              // Column(
-              //   crossAxisAlignment: CrossAxisAlignment.start,
-              //   children: [
-              //     Container(
-              //       margin: EdgeInsets.only(top: 20, right: 230),
-              //       child: Text('Welcome Back,', 
-              //       style: TextStyle(
-              //         color: kLogoBrown, 
-              //         fontSize: 15,
-              //         fontWeight: FontWeight.w500,
-              //       ),),
-              //     ),
-              //     SizedBox(height: 5,),
-              //     //TODO: replace username with variable
-              //     Container(
-              //       margin: EdgeInsets.only(left: 10),
-              //       child: Text('John Doe', 
-              //       style: TextStyle(
-              //         color: kLogoGreen,
-              //         fontSize: 25,
-              //         fontWeight: FontWeight.w600,
-              //       ),),
-              //     ),
-              //   ],
-              // ),
-              SizedBox(height: 50,),
-              //column for incoming orders
-              Container(
-                alignment: Alignment.center,
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width/0.4,
-                margin: EdgeInsets.symmetric(horizontal: 20),
-                child: ListView(
-                  scrollDirection: Axis.vertical,
-                  children: [
-                    getOrder('Carrots', 35, TimeOfDay.now(), 'Jane Doe'),
-                    SizedBox(height: 10,),
-                    getOrder('Tomatoes', 10, TimeOfDay.now(), 'John Doe'),
-                    // SizedBox(height: 10,),
-                  ],
-                ),
+          child: Container(
+            decoration: BoxDecoration(
+              // color: Colors.red,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(40),
+                topRight: Radius.circular(40),
               ),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(height: 50,),
+                //column for incoming orders
+                Container(
+                  alignment: Alignment.center,
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width/0.4,
+                  margin: EdgeInsets.symmetric(horizontal: 20),
+                  child: ListView(
+                    scrollDirection: Axis.vertical,
+                    children: [
+                      getOrder('Carrots', 35, "12:43 PM", 'Restaurant A'),
+                      SizedBox(height: 10,),
+                      getOrder('Tomatoes', 10, "09:07 AM", 'Restaurant B'),
+                      SizedBox(height: 10,),
+                      getOrder('Leek', 53, "06:35 PM", 'Restaurant C'),
+                      SizedBox(height: 10,),
+                      getOrder('Oranges', 200, "08:29 PM", 'Restaurant D'),
+                      // SizedBox(height: 10,),
+                    ],
+                  ),
+                ),
         
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -298,7 +263,14 @@ getOrder(orName, orAmount, orTime, orBy) {
     decoration: BoxDecoration(
       color: kWhite,
       borderRadius: BorderRadius.circular(40),
-
+      boxShadow: [
+        BoxShadow(
+          color: Colors.grey,
+          offset: Offset(0.2, 3.0),
+          blurRadius: 4.0,
+          spreadRadius: -2.0
+        ),
+      ],
     ),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -306,14 +278,14 @@ getOrder(orName, orAmount, orTime, orBy) {
         Row(
           children: [
             Container(
-              padding: EdgeInsets.all(20.0),
+              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
               child: Text(orName, style: TextStyle(
                 color: kLogoGreen,
-                fontSize: 16,
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),),
             ),
-            SizedBox(width: 120,),
+            SizedBox(width: 130,),
             Container(
               padding: EdgeInsets.all(8.0),
               child: Icon(Icons.check_circle_outline_outlined,
@@ -331,25 +303,25 @@ getOrder(orName, orAmount, orTime, orBy) {
         ),
         SizedBox(height: 20,),
         Container(
-          padding: EdgeInsets.all(12.0),
+          padding: EdgeInsets.symmetric(horizontal: 30),
           child: Text('Order By: $orBy', style: TextStyle(
-            color: Colors.grey[400],
+            color: Colors.grey[500],
             fontSize: 14,
           ),),
         ),
         SizedBox(height: 5,),
         Container(
-          padding: EdgeInsets.all(12.0),
+          padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
           child: Text('Amount: $orAmount', style: TextStyle(
-            color: Colors.grey[400],
+            color: Colors.grey[500],
             fontSize: 14,
           ),),
         ),
         SizedBox(height: 5,),
         Container(
-          padding: EdgeInsets.all(12.0),
+          padding: EdgeInsets.symmetric(horizontal: 30),
           child: Text('Time made: $orTime', style: TextStyle(
-            color: Colors.grey[400],
+            color: Colors.grey[500],
             fontSize: 14,
           ),),
         ),
