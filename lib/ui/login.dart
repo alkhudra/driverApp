@@ -1,4 +1,5 @@
 import 'package:alkhudhrah_app/constants/colors.dart';
+import 'package:alkhudhrah_app/constants/pref_cont.dart';
 import 'package:alkhudhrah_app/custom_widgets/brandname.dart';
 import 'package:alkhudhrah_app/dialogs/alert_dialog.dart';
 import 'package:alkhudhrah_app/locale/locale_keys.g.dart';
@@ -156,10 +157,10 @@ class _LoginState extends State<Login> {
                   return ;
                 } else {
                   print(phoneNo);
-                  showDialog(
-                    context: context, 
-                    builder: (BuildContext context ) =>
-                      showPinDialog(context, phoneNo));
+                  // showDialog(
+                  //   context: context, 
+                  //   builder: (BuildContext context ) =>
+                  //     showPinDialog(context, phoneNo));
                 }
               }, 
               child: Text(LocaleKeys.SIGN_IN.tr(), style: TextStyle(

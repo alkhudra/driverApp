@@ -1,25 +1,26 @@
 import 'package:alkhudhrah_app/constants/colors.dart';
 import 'package:alkhudhrah_app/locale/locale_keys.g.dart';
-import 'package:alkhudhrah_app/ui/password_reset.dart';
+import 'package:alkhudhrah_app/ui/home.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:alkhudhrah_app/ui/login.dart';
 import 'package:flutter/material.dart';
 
-class ForgotPassword extends StatefulWidget {
-  const ForgotPassword({ Key? key }) : super(key: key);
+class ResetPassword extends StatefulWidget {
+  const ResetPassword({ Key? key }) : super(key: key);
 
   @override
-  _ForgotPasswordState createState() => _ForgotPasswordState();
+  _ResetPasswordState createState() => _ResetPasswordState();
 }
 
-class _ForgotPasswordState extends State<ForgotPassword> {
+class _ResetPasswordState extends State<ResetPassword> {
 
-  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController passwordConfirmController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-            backgroundColor: Colors.grey[100],
+      backgroundColor: Colors.grey[100],
       body: Stack(
         children: [
           Container(
@@ -81,7 +82,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               ),
               child: Expanded(
                 child: TextFormField(
-                  controller: emailController,
+                  obscureText: true,
+                  controller: passwordController,
                   keyboardType: TextInputType.emailAddress,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   //TODO: remove helpers to helper class
@@ -94,9 +96,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     color: Colors.grey[600],
                     fontWeight: FontWeight.bold),
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.email_outlined, color: kBlack.withOpacity(0.67),),
+                    prefixIcon: Icon(Icons.lock_outline_rounded, color: kBlack.withOpacity(0.67),),
                     contentPadding: EdgeInsets.only(left: 20, right: 20),
-                    labelText: LocaleKeys.email_textfield.tr(),
+                    labelText: LocaleKeys.password_textfield.tr(),
                     labelStyle: TextStyle(fontWeight: FontWeight.w500),
                     focusColor: kLogoGreen,
                     border: InputBorder.none,
@@ -106,28 +108,70 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             ),
           ),
           SizedBox(height: 20,),
-                    Container(
-            margin: EdgeInsets.fromLTRB(80, 540, 80, 310),
-            width: MediaQuery.of(context).size.width/1.6,
-            height: MediaQuery.of(context).size.height/12,
-            child: TextButton(
-              style: TextButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(60),
-                ),
-                fixedSize: Size(250.0, 70.0),
-                backgroundColor: kLogoGreen,
+            Positioned(
+            top: 360,
+            left: 60,
+            child: Container(
+              alignment: Alignment.center,
+              // margin: EdgeInsets.symmetric(horizontal: 60, vertical: 100),
+              width: MediaQuery.of(context).size.width/1.4,
+              height: MediaQuery.of(context).size.height/15,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(60),
+                border: Border.all(color: kLogoGreen,
+                width: 1.5),
               ),
-              onPressed:() {
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => ResetPassword()));
-              }, 
-              child: Text(LocaleKeys.send_code_btn.tr(), style: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-              ),),
+              child: Expanded(
+                child: TextFormField(
+                  obscureText: true,
+                  controller: passwordConfirmController,
+                  keyboardType: TextInputType.visiblePassword,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  //TODO: remove helpers to helper class
+                  inputFormatters: [
+                  ],
+                  //Formatting number to begin with 05 
+                  validator: (value) {
+                  },
+                  style: TextStyle(
+                    color: Colors.grey[600],
+                    fontWeight: FontWeight.bold),
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.lock_outline_rounded, color: kBlack.withOpacity(0.67),),
+                    contentPadding: EdgeInsets.only(left: 20, right: 20),
+                    labelText: LocaleKeys.confirm_password.tr(),
+                    labelStyle: TextStyle(fontWeight: FontWeight.w500),
+                    focusColor: kLogoGreen,
+                    border: InputBorder.none,
+                  ),
+                ),
+              ),
             ),
           ),
+          SizedBox(height: 20,),
+          Container(
+          margin: EdgeInsets.fromLTRB(80, 540, 80, 310),
+          width: MediaQuery.of(context).size.width/1.6,
+          height: MediaQuery.of(context).size.height/12,
+          child: TextButton(
+            style: TextButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(60),
+              ),
+              fixedSize: Size(250.0, 70.0),
+              backgroundColor: kLogoGreen,
+            ),
+            onPressed:() {
+              
+              Navigator.push(context, MaterialPageRoute(
+                builder: (context) => Homescreen()));
+            }, 
+            child: Text(LocaleKeys.send_code_btn.tr(), style: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+            ),),
+          ),
+        ),
         ]
       ),
     );

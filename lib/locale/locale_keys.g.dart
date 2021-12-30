@@ -2,11 +2,12 @@
 
 abstract class  LocaleKeys {
   static const SIGN_IN = 'SIGN IN';
-  static const please_begin_number = 'Please begin number with 5';
+  static const please_begin_number = 'Please begin number with 05';
   static const please_enter = 'Please enter your phone number';
   static const phone_length = 'Please enter 9 digit number';
   static const alkhadra_united = 'Alkhadra United';
-  static const ok = 'ok';
+  static const ok = 'Ok';
+  static const error = 'An error occurred';
   static const enter_code = 'Enter Code';
   static const auth_note = 'auth_note';
   static const verify = 'Verify';
@@ -28,4 +29,14 @@ abstract class  LocaleKeys {
   static const password_textfield = 'Password';
   static const forgot_PW_Btn = 'Forgot Password?';
   static const forgot_password = 'Forgot Password';
+  static const send_code_btn = 'SEND CODE';
+  static const reset_PW_btn = 'RESET PASSWORD';
+  static const reset_PW_title = 'Reset Password';
+  static const confirm_password = 'Confirm Password';
+  static const pass_required = 'Please Enter your Password';
+  static const confirm_pass_required = 'Please Confirm your Password';
+  static const not_match_pass = 'Passwords Don\'t Match, Please Try Again';
+  static const email_required = 'Please Enter your Email';
+  static const invalid_email = 'Invalid Email';
+  static const wait = 'Loading... Please Wait';
 }

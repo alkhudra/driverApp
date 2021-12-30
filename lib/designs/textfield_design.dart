@@ -41,3 +41,37 @@ class TextFieldDesign {
   }
 
 }
+
+InputDecoration textFieldDecorationWithIcon(String hint, IconData icon) {
+  return InputDecoration(
+    contentPadding: EdgeInsets.all(20),
+    focusColor: kLogoGreen,
+    hintText: hint,
+    hintStyle: TextStyle(color: kGray),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(50.0),
+      borderSide:
+          BorderSide(color: kLogoGreen, width: 1.0),
+    ),
+    prefixIcon: Icon(
+      icon,
+      color: kGray,
+    ),
+  );
+}
+
+//-----------------------------------------
+
+InputDecoration textFieldDecoration(String hint) {
+  return InputDecoration(
+    contentPadding: EdgeInsets.all(20),
+    focusColor: kLogoGreen,
+    hintText: hint,
+    hintStyle: TextStyle(color: kGray),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(50.0),
+      borderSide:
+          BorderSide(color: kLogoGreen, width: 1.0),
+    ),
+  );
+}

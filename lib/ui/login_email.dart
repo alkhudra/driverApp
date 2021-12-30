@@ -1,8 +1,13 @@
 import 'package:alkhudhrah_app/constants/colors.dart';
 import 'package:alkhudhrah_app/custom_widgets/brandname.dart';
+import 'package:alkhudhrah_app/designs/buttons_design.dart';
+import 'package:alkhudhrah_app/designs/card_design.dart';
+import 'package:alkhudhrah_app/designs/textfield_design.dart';
 import 'package:alkhudhrah_app/dialogs/alert_dialog.dart';
+import 'package:alkhudhrah_app/helper/info_corrector_helper.dart';
 import 'package:alkhudhrah_app/locale/locale_keys.g.dart';
 import 'package:alkhudhrah_app/main.dart';
+import 'package:alkhudhrah_app/router/route_constants.dart';
 import 'package:alkhudhrah_app/ui/forgotpassword.dart';
 import 'package:alkhudhrah_app/ui/home.dart';
 import 'package:alkhudhrah_app/ui/login.dart';
@@ -21,13 +26,13 @@ class _LoginEmailState extends State<LoginEmail> {
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  late bool _isBtnDisabled;
+  bool isBtnEnabled = true;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _isBtnDisabled = true;
+    // _isBtnDisabled = true;
   }
 
   @override
@@ -85,6 +90,9 @@ class _LoginEmailState extends State<LoginEmail> {
                       ],
                       //Formatting number to begin with 05 
                       validator: (value) {
+                        if(value != null) {
+
+                        }
                       },
                       style: TextStyle(
                         color: Colors.grey[600],
@@ -173,6 +181,18 @@ class _LoginEmailState extends State<LoginEmail> {
             width: MediaQuery.of(context).size.width/1.6,
             height: MediaQuery.of(context).size.height/12,
             child: TextButton(
+              onPressed: () {
+                if (isBtnEnabled) logIn();
+                // if(_isBtnDisabled) {
+                //   return null;
+                // } else {
+                //   setState(() {
+                //     _isBtnDisabled = true;
+                //   });
+                //   Navigator.push(context, MaterialPageRoute(
+                //   builder: (context) => Homescreen()));
+                // }
+              },
               style: TextButton.styleFrom(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(60),
@@ -180,22 +200,8 @@ class _LoginEmailState extends State<LoginEmail> {
                 fixedSize: Size(250.0, 70.0),
                 backgroundColor: kLogoGreen,
               ),
-              onPressed:() {
                 //disable button after first click, to avoid 
                 // sending two requests to DB
-                // if(_isBtnDisabled) {
-                //   return ;
-                // } else {
-                //   print(phoneNo);
-                //   showDialog(
-                //     context: context, 
-                //     builder: (BuildContext context ) =>
-                //       showPinDialog(context, phoneNo));
-                // }
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => Login()));
-
-              }, 
               child: Text(LocaleKeys.SIGN_IN.tr(), style: TextStyle(
                 color: Colors.white,
                 fontSize: 20,
@@ -206,6 +212,115 @@ class _LoginEmailState extends State<LoginEmail> {
       ),
     );
   }
+
+    void showErrorDialog(String txt) {
+    isBtnEnabled = true;
+    showDialog<String>(
+        context: context,
+        builder: (BuildContext context) =>
+            showMessageDialog(context, LocaleKeys.error.tr(), txt, noPage));
+  }
+
+  void logIn() {
+    if (emailController.value.text == '') {
+      showErrorDialog(LocaleKeys.email_required.tr());
+      return;
+    }
+
+    if (isValidEmail(emailController.value.text) == false) {
+      showErrorDialog(LocaleKeys.invalid_email.tr());
+      return;
+    }
+
+    if (passwordController.value.text == '') {
+      showErrorDialog(LocaleKeys.pass_required.tr());
+      return;
+    }
+
+    isBtnEnabled = false;
+
+    print('continue log in ');
+  }
+
+  ////---------------------------
+
+  Widget showEnterEmailDialog(BuildContext context) {
+    String errorMessage = "enter your mail to send code ";
+
+    bool visible = false;
+    final TextEditingController controller = TextEditingController();
+    return Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+      //this right here
+      child: Container(
+        height: CardDesign.cardsHeight,
+        width: CardDesign.cardsWidth,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              LocaleKeys.reset_PW_title.tr(),
+              style: TextStyle(
+                fontSize: 20,
+                color: kDarkBlue,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 20, right: 20),
+              child: TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                validator: (value) {
+
+                  if (!isValidEmail(controller.text)){
+                   return LocaleKeys.invalid_email.tr();
+
+                  }
+                },
+                controller: controller,
+                keyboardType: TextInputType.emailAddress,
+                style: TextStyle(
+                    color: kBlack,
+                    fontWeight: FontWeight.bold),
+                decoration: textFieldDecorationWithIcon(
+                    LocaleKeys.email_textfield.tr(), Icons.email),
+              ),
+            ),
+
+            SizedBox(
+              height: 35,
+            ),
+            // Container(
+            //     height: ButtonsDesign.buttonsHeight,
+            //     margin: EdgeInsets.only(left: 50, right: 50),
+            //     child: MaterialButton(
+            //       onPressed: () {
+
+            //         //todo: solve show error message
+            //         setState(() {
+            //           if (controller.text != '')
+
+            //             Navigator.pop(context, controller.text);
+            //         });
+
+            //       },
+            //       shape: StadiumBorder(),
+            //       child: ButtonsDesign.buttonsText(LocaleKeys.sign_up.tr(),
+            //           CustomColors().primaryWhiteColor),
+            //       color: CustomColors().primaryGreenColor,
+            //     ))
+          ],
+        ),
+      ),
+    );
+  }
+////---------------------------
+
+
+
 }
 
 

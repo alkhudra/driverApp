@@ -4,6 +4,7 @@ const  smsCode = "smsCode";
 const  isNew = "isNew";
 const  userPhone = "userPhone";
 const  firstLogin = "FirstLogInKey";
+
 const  currentUser = "currentUser";
 const  tokenType = "tokenType";
 const  token = "token";
@@ -21,3 +22,4 @@ const  profileData = "profileData";
 const  bankData = "bankData";
 const  userName = "userName";
 const  userLaunchDate = "userLaunchDate";
+const  userID = "userID";

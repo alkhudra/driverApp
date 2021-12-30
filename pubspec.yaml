@@ -27,6 +27,9 @@ dependencies:
   fancy_bottom_navigation: ^0.3.3
   flutter:
     sdk: flutter
+  geolocator: ^8.0.1
+  google_maps_flutter: ^2.0.9
+  json_annotation: ^4.0.0
   logger: ^1.1.0
   pin_code_fields: ^7.3.0
   retrofit: ^3.0.1

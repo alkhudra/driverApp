@@ -186,6 +186,10 @@ class _HomescreenState extends State<Homescreen> {
           ),
         ),
         appBar: AppBar(
+          title: Text('Welcome Back, John Doe', style: TextStyle(
+            color: kLogoBrown, 
+            fontWeight: FontWeight.w600
+          ),),
           elevation: 0.0,
           iconTheme: IconThemeData(
             color: kLogoBrown,
@@ -216,7 +220,6 @@ class _HomescreenState extends State<Homescreen> {
         body: SingleChildScrollView(
           child: Container(
             decoration: BoxDecoration(
-              // color: Colors.red,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(40),
                 topRight: Radius.circular(40),

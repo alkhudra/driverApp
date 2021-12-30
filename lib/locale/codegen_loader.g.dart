@@ -16,10 +16,11 @@ class CodegenLoader extends AssetLoader{
 
   static const Map<String,dynamic> en = {
   "SIGN IN": "SIGN IN",
-  "Please begin number with 5": "Number must start with 5",
+  "Please begin number with 05": "Number must start with 05",
   "Please enter your phone number" : "Please enter a phone number",
   "Alkhadra United" : "Alkhadra United",
   "Ok" : "Ok",
+  "An error occurred" : "An error occurred",
   "Enter Code" : "Enter Code",
   "auth_note" : "Thank you for choosing AlKhadra United Company. Please wait until the data is validated and the verification code will be sent to you on your email.",
   "Verify" : "Verify",
@@ -42,15 +43,26 @@ class CodegenLoader extends AssetLoader{
   "Password" : "Password",
   "Forgot Password" : "Forgot Password",
   "Forgot Password?" : "Forgot Password?",
+  "SEND CODE" : "SEND CODE",
+  "RESET PASSWORD" : "RESET PASSWORD",
+  "Reset Password" : "Reset Password",
+  "Confirm Password" : "Confirm Password",
+  "Please enter your password" : "Please enter your password",
+  "Please confirm your password" : "Please confirm your password",
+  "Passwords don\'t match, please try again" : "Passwords don\'t match, please try again",
+  "Please Enter your Email" : "Please Enter your Email",
+  "Invalid Email" : "Invalid Email",
+  "Loading... Please Wait" : "Loading... Please Wait",
   
 };
 static const Map<String,dynamic> ar = {
   "SIGN IN": "تسجيل الدخول",
-  "Please begin number with 5": "الرجاء بدء رقم الجوال بـ 5",
+  "Please begin number with 05": "الرجاء بدء رقم الجوال بـ 05",
   "Please enter your phone number" : "الرجاء إدخال رقم الجوال",
   "Please enter 9 digit number" : "الرجاء إدخال رقم مكون من ٩ خانات",
   "Alkhadra United" : "الخضراء المتحدة",
   "Ok" : "متابعة",
+  "An error occurred" : "حدث خطأ",
   "Enter Code" : "الرجاء إدخال الرمز",
   "auth_note" : "Thank you for choosing AlKhadra United Company. Please wait until the data is validated and the verification code will be sent to you on your email.",
   "Verify" : "تحقق",
@@ -72,6 +84,16 @@ static const Map<String,dynamic> ar = {
   "Password" : "كلمة المرور",
   "Forgot Password" : "نسيت كلمة المرور",
   "Forgot Password?" : "نسيت كلمة المرور؟",
+  "SEND CODE" : "أرسل الرمز",
+  "RESET PASSWORD" : "إعادة تعيين",
+  "Reset Password" : "إعادة تعيين كلمة المرور",
+  "Confirm Password" : "تأكيد كلمة المرور",
+  "Please enter your password" : "يرجى كتابة كلمة المرور",
+  "Please confirm your password" : "يرجى تأكيد كلمة المرور",
+  "Passwords don\'t match, please try again" : "كلمات المرور غير متطابقتين٬ الرجاء المحاولة مجددًا",
+  "Please Enter your Email" : "يرجى إدخال البريد الإلكتروني",
+  "Invalid Email" : "البريد الإلكتروني المدخل غير صحيح",
+  "Loading... Please Wait" : "جاري التحميل... يرجى الانتظار قليلًا",
   
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "ar": ar};
