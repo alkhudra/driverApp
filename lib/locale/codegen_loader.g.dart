@@ -53,6 +53,7 @@ class CodegenLoader extends AssetLoader{
   "Please Enter your Email" : "Please Enter your Email",
   "Invalid Email" : "Invalid Email",
   "Loading... Please Wait" : "Loading... Please Wait",
+  "Remember Me?" : "Remember Me?",
   
 };
 static const Map<String,dynamic> ar = {
@@ -94,6 +95,7 @@ static const Map<String,dynamic> ar = {
   "Please Enter your Email" : "يرجى إدخال البريد الإلكتروني",
   "Invalid Email" : "البريد الإلكتروني المدخل غير صحيح",
   "Loading... Please Wait" : "جاري التحميل... يرجى الانتظار قليلًا",
+  "Remember Me?" : "تذكرني؟",
   
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "ar": ar};

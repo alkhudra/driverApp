@@ -39,4 +39,5 @@ abstract class  LocaleKeys {
   static const email_required = 'Please Enter your Email';
   static const invalid_email = 'Invalid Email';
   static const wait = 'Loading... Please Wait';
+  static const remember_me = 'Remember Me?';
 }

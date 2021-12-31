@@ -7,6 +7,9 @@ import 'package:alkhudhrah_app/dialogs/alert_dialog.dart';
 import 'package:alkhudhrah_app/helper/info_corrector_helper.dart';
 import 'package:alkhudhrah_app/locale/locale_keys.g.dart';
 import 'package:alkhudhrah_app/main.dart';
+import 'package:alkhudhrah_app/network/api/api_response_type.dart';
+import 'package:alkhudhrah_app/network/models/register_response_model.dart';
+import 'package:alkhudhrah_app/network/repository/login_repository.dart';
 import 'package:alkhudhrah_app/router/route_constants.dart';
 import 'package:alkhudhrah_app/ui/forgotpassword.dart';
 import 'package:alkhudhrah_app/ui/home.dart';
@@ -27,6 +30,7 @@ class _LoginEmailState extends State<LoginEmail> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool isBtnEnabled = true;
+  bool isChecked = false;
 
   @override
   void initState() {
@@ -37,6 +41,19 @@ class _LoginEmailState extends State<LoginEmail> {
 
   @override
   Widget build(BuildContext context) {
+
+      Color getColor(Set<MaterialState> states) {
+      const Set<MaterialState> interactiveStates = <MaterialState>{
+        MaterialState.pressed,
+        MaterialState.hovered,
+        MaterialState.focused,
+      };
+      if (states.any(interactiveStates.contains)) {
+        return kLogoBrown;
+      }
+      return kLogoGreen;
+    }
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.grey[100],
@@ -174,6 +191,36 @@ class _LoginEmailState extends State<LoginEmail> {
               ),
             ),
           ),
+          SizedBox(height: 10,),
+          Row(
+            children: [
+              Container(
+                padding: EdgeInsets.only(left: 105, bottom: 50),
+                alignment: Alignment.centerLeft,
+                child: Checkbox(
+                  checkColor: Colors.white,
+                  fillColor: MaterialStateProperty.resolveWith(getColor),
+                  value: isChecked,
+                  onChanged: (bool? value) {
+                    setState(() {
+                      isChecked = value!;
+                      print(value);
+                    });
+                  },
+                ),
+              ),
+              // SizedBox(width: 5,),
+              Container(
+                padding: EdgeInsets.only(bottom: 50),
+                alignment: Alignment.centerLeft,
+                child: Text(LocaleKeys.remember_me.tr(),
+                style: TextStyle(
+                  color: kBlack.withOpacity(0.7),
+                  fontSize: 16
+                ),),
+              ),
+            ],
+          ),
           SizedBox(height: 20,),
           //SIGN IN button
           Container(
@@ -239,7 +286,35 @@ class _LoginEmailState extends State<LoginEmail> {
 
     isBtnEnabled = false;
 
+    //login api call
+
+
+
     print('continue log in ');
+
+        LoginRepository loginRepository = LoginRepository();
+    loginRepository
+        .loginUser(
+            emailController.text,
+            passwordController.text,
+            isChecked)
+        .then((result) {
+      if (result == null || result.apiStatus.code != ApiResponseType.OK.code) {
+        showErrorDialog(result.message);
+        return;
+      }
+      RegisterResponseModel model = result.result;
+      print(model.userId);
+
+      ///save user id in shared preference
+      ///
+      showDialog(
+              builder: (BuildContext context) =>
+                  showPinDialog(context, emailController.text, true),
+              context: context)
+          .then((value) {});
+    });
+  }
   }
 
   ////---------------------------
@@ -321,7 +396,6 @@ class _LoginEmailState extends State<LoginEmail> {
 
 
 
-}
 
 
 // textButton(
