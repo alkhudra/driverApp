@@ -4,11 +4,14 @@ import 'package:alkhudhrah_app/designs/buttons_design.dart';
 import 'package:alkhudhrah_app/designs/card_design.dart';
 import 'package:alkhudhrah_app/designs/textfield_design.dart';
 import 'package:alkhudhrah_app/dialogs/alert_dialog.dart';
+import 'package:alkhudhrah_app/dialogs/progress_dialog.dart';
 import 'package:alkhudhrah_app/helper/info_corrector_helper.dart';
+import 'package:alkhudhrah_app/helper/shared_pref_helper.dart';
 import 'package:alkhudhrah_app/locale/locale_keys.g.dart';
 import 'package:alkhudhrah_app/main.dart';
 import 'package:alkhudhrah_app/network/api/api_response_type.dart';
 import 'package:alkhudhrah_app/network/models/register_response_model.dart';
+import 'package:alkhudhrah_app/network/models/user_model.dart';
 import 'package:alkhudhrah_app/network/repository/login_repository.dart';
 import 'package:alkhudhrah_app/router/route_constants.dart';
 import 'package:alkhudhrah_app/ui/forgotpassword.dart';
@@ -193,9 +196,10 @@ class _LoginEmailState extends State<LoginEmail> {
           ),
           SizedBox(height: 10,),
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                padding: EdgeInsets.only(left: 105, bottom: 50),
+                padding: EdgeInsets.only(bottom: 50),
                 alignment: Alignment.centerLeft,
                 child: Checkbox(
                   checkColor: Colors.white,
@@ -292,30 +296,69 @@ class _LoginEmailState extends State<LoginEmail> {
 
     print('continue log in ');
 
-        LoginRepository loginRepository = LoginRepository();
+     //----------show progress----------------
+    showLoaderDialog(context);
+
+    //----------start api ----------------
+    LoginRepository loginRepository = LoginRepository();
     loginRepository
         .loginUser(
             emailController.text,
             passwordController.text,
             isChecked)
-        .then((result) {
+        .then((result) async {
+
+      //-------- fail response ---------
       if (result == null || result.apiStatus.code != ApiResponseType.OK.code) {
+        Navigator.pop(context);
         showErrorDialog(result.message);
         return;
       }
-      RegisterResponseModel model = result.result;
-      print(model.userId);
 
-      ///save user id in shared preference
-      ///
-      showDialog(
-              builder: (BuildContext context) =>
-                  showPinDialog(context, emailController.text, true),
-              context: context)
-          .then((value) {});
+      //-------- success response ---------
+          UserModel model = result.result;
+    if(model.user != null) {
+      print(model.user!.id);
+
+      PreferencesHelper.setUserID(model.user!.id);
+      PreferencesHelper.getUserID.then((value) => print(value));
+
+      PreferencesHelper.setUserToken(model.token);
+      PreferencesHelper.getUserToken.then((value) => print(value));
+
+
+      PreferencesHelper.setUser(model.user!);
+      PreferencesHelper.getUser.then((value) => print(value.toString()));
+
+    }
+
+
+    Navigator.pop(context);
+
+    directToHomePage();
+  
+
+
+
+      // RegisterResponseModel model = result.result;
+      // print(model.userId);
+
+      // showDialog(
+      //         builder: (BuildContext context) =>
+      //             showPinDialog(context, emailController.text, true),
+      //         context: context)
+      //     .then((value) {});
     });
   }
+
+    void directToHomePage() {
+
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) {
+          return Homescreen();
+        }));
   }
+}
 
   ////---------------------------
 
@@ -368,31 +411,17 @@ class _LoginEmailState extends State<LoginEmail> {
             SizedBox(
               height: 35,
             ),
-            // Container(
-            //     height: ButtonsDesign.buttonsHeight,
-            //     margin: EdgeInsets.only(left: 50, right: 50),
-            //     child: MaterialButton(
-            //       onPressed: () {
-
-            //         //todo: solve show error message
-            //         setState(() {
-            //           if (controller.text != '')
-
-            //             Navigator.pop(context, controller.text);
-            //         });
-
-            //       },
-            //       shape: StadiumBorder(),
-            //       child: ButtonsDesign.buttonsText(LocaleKeys.sign_up.tr(),
-            //           CustomColors().primaryWhiteColor),
-            //       color: CustomColors().primaryGreenColor,
             //     ))
           ],
         ),
       ),
     );
   }
+  
+
+  
 ////---------------------------
+
 
 
 
