@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:alkhudhrah_app/constants/pref_cont.dart';
 import 'package:alkhudhrah_app/helper/pref_manager.dart';
-import 'package:alkhudhrah_app/network/models/user_model.dart';
+import 'package:alkhudhrah_app/network/models/auth/success_login_response_model.dart';
 
 class PreferencesHelper {
   static Future<String> get getUserID => SharedPrefsManager.getString(userID);

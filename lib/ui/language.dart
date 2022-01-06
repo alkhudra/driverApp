@@ -1,9 +1,10 @@
 import 'package:alkhudhrah_app/constants/colors.dart';
 import 'package:alkhudhrah_app/custom_widgets/brandname.dart';
 import 'package:alkhudhrah_app/designs/buttons_design.dart';
-import 'package:alkhudhrah_app/ui/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+
+import 'login_email.dart';
 
 class LanguageScreen extends StatefulWidget {
   @override
@@ -22,7 +23,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
     else   await context.setLocale(Locale('ar'));
 
     Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return WelcomeScreen();
+      return LoginEmail();
     }));
   }
 
