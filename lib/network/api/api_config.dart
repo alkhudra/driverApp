@@ -1,8 +1,8 @@
 import 'dart:collection';
 
+import 'package:alkhudhrah_app/network/models/login_response_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:alkhudhrah_app/constants/api_const.dart';
-import 'package:alkhudhrah_app/network/models/register_response_model.dart';
 
 import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart';
@@ -52,5 +52,14 @@ abstract class RestClient {
   // Future<RegisterResponseModel> registerUser(@Body() Map<String, dynamic> hashMap);
 
   @POST(ApiConst.login_url)
-  Future<RegisterResponseModel> loginUser(@Body() Map<String, dynamic> hashMap);
+  Future<LoginResponseModel> loginUser(@Body() Map<String, dynamic> hashMap);
+
+  @POST(ApiConst.forget_password_url)
+  Future<String> forgetPassword(@Body() Map<String, dynamic> hashMap);
+
+  @POST(ApiConst.check_password_token_url)
+  Future<String> sendCodeForgetPassword(@Body() Map<String, dynamic> hashMap);
+
+  @POST(ApiConst.reset_password_url)
+  Future<String> resetPassword(@Body() Map<String, dynamic> hashMap);
 }

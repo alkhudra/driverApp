@@ -1,62 +1,83 @@
-// To parse this JSON data, do
-//
-//     final loginResponse = loginResponseFromJson(jsonString);
 
-import 'dart:convert';
 
-import 'package:json_annotation/json_annotation.dart';
-part 'login_response_model.g.dart';
+/// user : {"id":"897fd3ea-e138-4947-aa94-6749584d1a4b","email":"nolemohd.000@gmail.com","phoneNumber":"0576543980","driverName":"Manal test","companyName":"t","commercialRegistrationNo":"9998887779","branchNumber":4,"branches":[]}
+/// token : "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI4OTdmZDNlYS1lMTM4LTQ5NDctYWE5NC02NzQ5NTg0ZDFhNGIiLCJ1bmlxdWVfbmFtZSI6Im5vbGVtb2hkLjAwMEBnbWFpbC5jb20iLCJyb2xlIjoiQ29tcGFueSIsIm5iZiI6MTY0MTA1MjA1NCwiZXhwIjoxNjQxMTM4NDU0LCJpYXQiOjE2NDEwNTIwNTR9.4Qj8Ooihja1_hP3V1_xb0GDUreo6CxRbFCiGYfxtp8F4198Ou0_GkwVryDlNCkbKcQZAMC632ZHOV3ZCPmQxTQ"
 
-LoginResponse loginResponseFromJson(String str) => LoginResponse.fromJson(json.decode(str));
-
-String loginResponseToJson(LoginResponse data) => json.encode(data.toJson());
-
-class LoginResponse {
-    LoginResponse({
-        required this.user,
-        required this.token,
-    });
-
-    User user;
-    String token;
-
-    factory LoginResponse.fromJson(Map<String, dynamic> json) => LoginResponse(
-        user: User.fromJson(json["user"]),
-        token: json["token"],
-    );
-
-    Map<String, dynamic> toJson() => {
-        "user": user.toJson(),
-        "token": token,
-    };
+class LoginResponseModel {
+  LoginResponseModel({
+      User? user, 
+     required String token,}){
+    _user = user;
+    _token = token;
 }
 
-//manually added jsonserializable
-@JsonSerializable()
+  LoginResponseModel.fromJson(dynamic json) {
+    _user = json['user'] != null ? User.fromJson(json['user']) : null;
+    _token = json['token'];
+  }
+  User? _user;
+  String _token = '';
+
+  User? get user => _user;
+  String get token => _token;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    if (_user != null) {
+      map['user'] = _user?.toJson();
+    }
+    map['token'] = _token;
+    return map;
+  }
+
+}
+
+/// id : "897fd3ea-e138-4947-aa94-6749584d1a4b"
+/// email : "nolemohd.000@gmail.com"
+/// phoneNumber : "0576543980"
+/// ownerName : "Manal test"
+/// companyName : "t"
+/// commercialRegistrationNo : "9998887779"
+/// branchNumber : 4
+/// branches : []
+
 class User {
-    User({
-        required this.id,
-        required this.email,
-        required this.phoneNumber,
-        required this.driverName,
-    });
+  User({
+     required String id,
+      String? email, 
+      String? phoneNumber, 
+      String? driverName, 
+});
 
-    String id;
-    String email;
-    String phoneNumber;
-    String driverName;
 
-    factory User.fromJson(Map<String, dynamic> json) => User(
-        id: json["id"],
-        email: json["email"],
-        phoneNumber: json["phoneNumber"],
-        driverName: json["driverName"],
-    );
+  User.fromJson(dynamic json) {
+    _id = json['id'];
+    _email = json['email'];
+    _phoneNumber = json['phoneNumber'];
+    _driverName = json['driverName'];
+  }
+  String _id='';
+  String? _email;
+  String? _phoneNumber;
+  String? _driverName;
 
-    Map<String, dynamic> toJson() => {
-        "id": id,
-        "email": email,
-        "phoneNumber": phoneNumber,
-        "driverName": driverName,
-    };
+
+
+  String? get id => _id;
+  String? get email => _email;
+  String? get phoneNumber => _phoneNumber;
+  String? get driverName => _driverName;
+
+
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['id'] = _id;
+    map['email'] = _email;
+    map['phoneNumber'] = _phoneNumber;
+    map['driverName'] = _driverName;
+
+    return map;
+  }
+
 }

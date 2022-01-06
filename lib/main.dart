@@ -4,6 +4,7 @@ import 'package:alkhudhrah_app/ui/login.dart';
 import 'package:alkhudhrah_app/ui/login_email.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import './locale/codegen_loader.g.dart';
 
@@ -37,6 +38,10 @@ class MyHomepage extends StatefulWidget {
 class _MyHomepageState extends State<MyHomepage> {
   @override
   Widget build(BuildContext context) {
+        SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ]);
     return MaterialApp(
       home: Homepage(),
       debugShowCheckedModeBanner: false,

@@ -10,6 +10,7 @@ import 'package:alkhudhrah_app/helper/shared_pref_helper.dart';
 import 'package:alkhudhrah_app/locale/locale_keys.g.dart';
 import 'package:alkhudhrah_app/main.dart';
 import 'package:alkhudhrah_app/network/api/api_response_type.dart';
+import 'package:alkhudhrah_app/network/models/login_response_model.dart';
 import 'package:alkhudhrah_app/network/models/register_response_model.dart';
 import 'package:alkhudhrah_app/network/models/user_model.dart';
 import 'package:alkhudhrah_app/network/repository/login_repository.dart';
@@ -34,6 +35,7 @@ class _LoginEmailState extends State<LoginEmail> {
   final TextEditingController passwordController = TextEditingController();
   bool isBtnEnabled = true;
   bool isChecked = false;
+  bool isForgetPassBtnEnabled = true;
 
   @override
   void initState() {
@@ -213,7 +215,6 @@ class _LoginEmailState extends State<LoginEmail> {
                   },
                 ),
               ),
-              // SizedBox(width: 5,),
               Container(
                 padding: EdgeInsets.only(bottom: 50),
                 alignment: Alignment.centerLeft,
@@ -233,7 +234,9 @@ class _LoginEmailState extends State<LoginEmail> {
             height: MediaQuery.of(context).size.height/12,
             child: TextButton(
               onPressed: () {
-                if (isBtnEnabled) logIn();
+                // if (isBtnEnabled) logIn();
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => Homescreen()));
                 // if(_isBtnDisabled) {
                 //   return null;
                 // } else {
@@ -304,8 +307,7 @@ class _LoginEmailState extends State<LoginEmail> {
     loginRepository
         .loginUser(
             emailController.text,
-            passwordController.text,
-            isChecked)
+            passwordController.text)
         .then((result) async {
 
       //-------- fail response ---------
@@ -316,19 +318,22 @@ class _LoginEmailState extends State<LoginEmail> {
       }
 
       //-------- success response ---------
-          UserModel model = result.result;
+    LoginResponseModel model = result.result;
+    print(model.user.toString());
     if(model.user != null) {
       print(model.user!.id);
 
-      PreferencesHelper.setUserID(model.user!.id);
+      
+
+      PreferencesHelper.setUserID(model.user!.id!);
       PreferencesHelper.getUserID.then((value) => print(value));
 
       PreferencesHelper.setUserToken(model.token);
       PreferencesHelper.getUserToken.then((value) => print(value));
 
 
-      PreferencesHelper.setUser(model.user!);
-      PreferencesHelper.getUser.then((value) => print(value.toString()));
+      // PreferencesHelper.setUser(model.user!);
+      // PreferencesHelper.getUser.then((value) => print(value.toString()));
 
     }
 

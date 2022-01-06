@@ -40,4 +40,6 @@ abstract class  LocaleKeys {
   static const invalid_email = 'Invalid Email';
   static const wait = 'Loading... Please Wait';
   static const remember_me = 'Remember Me?';
+  static const process_success ='process_success';
+  static const continue_btn ='Continue';
 }

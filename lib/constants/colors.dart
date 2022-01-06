@@ -17,5 +17,7 @@ const Color kLangBG = Color.fromRGBO(241, 237, 252, 1);
 const Color kLang = Color.fromRGBO(170, 104, 210, 1);
 const Color kConBG = Color.fromRGBO(221, 245, 244, 1);
 const Color kCon = Color.fromRGBO(62, 34, 111, 1);
+const Color kRed = Colors.red;
+
 
   // Color unlikeColor = Color.fromRGBO(136, 125, 125, 1);
