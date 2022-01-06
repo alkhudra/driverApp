@@ -278,7 +278,7 @@ final TextEditingController phoneController = TextEditingController();
                   Navigator.pop(context);
                   Navigator.push(context, 
                   MaterialPageRoute(
-                    builder: (context) => LanguageScreen()
+                    builder: (context) => LanguageSetting()
                     ),
                   );
                 },

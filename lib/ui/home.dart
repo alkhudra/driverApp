@@ -4,6 +4,7 @@ import 'package:alkhudhrah_app/models/orders.dart';
 import 'package:alkhudhrah_app/ui/contact_us.dart';
 import 'package:alkhudhrah_app/ui/edit_profile.dart';
 import 'package:alkhudhrah_app/ui/language.dart';
+import 'package:alkhudhrah_app/ui/order_details.dart';
 import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -113,7 +114,7 @@ class _HomescreenState extends State<Homescreen> {
                   Navigator.pop(context);
                   Navigator.push(context, 
                   MaterialPageRoute(
-                    builder: (context) => LanguageScreen()
+                    builder: (context) => LanguageSetting()
                     ),
                   );
                 },
@@ -238,13 +239,13 @@ class _HomescreenState extends State<Homescreen> {
                   child: ListView(
                     scrollDirection: Axis.vertical,
                     children: [
-                      getOrder('Carrots', 35, "12:43 PM", 'Restaurant A'),
+                      getOrder(context, 'Carrots', 35, "12:43 PM", 'Restaurant A'),
                       SizedBox(height: 10,),
-                      getOrder('Tomatoes', 10, "09:07 AM", 'Restaurant B'),
+                      getOrder(context, 'Tomatoes', 10, "09:07 AM", 'Restaurant B'),
                       SizedBox(height: 10,),
-                      getOrder('Leek', 53, "06:35 PM", 'Restaurant C'),
+                      getOrder(context, 'Leek', 53, "06:35 PM", 'Restaurant C'),
                       SizedBox(height: 10,),
-                      getOrder('Oranges', 200, "08:29 PM", 'Restaurant D'),
+                      getOrder(context, 'Oranges', 200, "08:29 PM", 'Restaurant D'),
                       // SizedBox(height: 10,),
                     ],
                   ),
@@ -259,76 +260,84 @@ class _HomescreenState extends State<Homescreen> {
   }
 }
 
-getOrder(orName, orAmount, orTime, orBy) {
-  return Container(
-    width: 400,
-    height: 230,
-    decoration: BoxDecoration(
-      color: kWhite,
-      borderRadius: BorderRadius.circular(40),
-      boxShadow: [
-        BoxShadow(
-          color: Colors.grey,
-          offset: Offset(0.2, 3.0),
-          blurRadius: 4.0,
-          spreadRadius: -2.0
-        ),
-      ],
-    ),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-              child: Text(orName, style: TextStyle(
+getOrder(context, orName, orAmount, orTime, orBy) {
+  return GestureDetector(
+    child: Container(
+      width: 400,
+      height: 230,
+      decoration: BoxDecoration(
+        color: kWhite,
+        borderRadius: BorderRadius.circular(40),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey,
+            offset: Offset(0.2, 3.0),
+            blurRadius: 4.0,
+            spreadRadius: -2.0
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+                child: Text(orName, style: TextStyle(
+                  color: kLogoGreen,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),),
+              ),
+              SizedBox(width: 130,),
+              Container(
+                padding: EdgeInsets.all(8.0),
+                child: Icon(Icons.check_circle_outline_outlined,
                 color: kLogoGreen,
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),),
-            ),
-            SizedBox(width: 130,),
-            Container(
-              padding: EdgeInsets.all(8.0),
-              child: Icon(Icons.check_circle_outline_outlined,
-              color: kLogoGreen,
-              size: 30,),
-            ),
-            SizedBox(width: 5,),
-            Container(
-              padding: EdgeInsets.all(8.0),
-              child: Icon(Icons.cancel_outlined,
-              color: kLogoBrown,
-              size: 30,),
-            ),
-          ],
-        ),
-        SizedBox(height: 20,),
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 30),
-          child: Text('Order By: $orBy', style: TextStyle(
-            color: Colors.grey[500],
-            fontSize: 14,
-          ),),
-        ),
-        SizedBox(height: 5,),
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-          child: Text('Amount: $orAmount', style: TextStyle(
-            color: Colors.grey[500],
-            fontSize: 14,
-          ),),
-        ),
-        SizedBox(height: 5,),
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 30),
-          child: Text('Time made: $orTime', style: TextStyle(
-            color: Colors.grey[500],
-            fontSize: 14,
-          ),),
-        ),
-      ],
+                size: 30,),
+              ),
+              SizedBox(width: 5,),
+              Container(
+                padding: EdgeInsets.all(8.0),
+                child: Icon(Icons.cancel_outlined,
+                color: kLogoBrown,
+                size: 30,),
+              ),
+            ],
+          ),
+          SizedBox(height: 20,),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 30),
+            child: Text('Order By: $orBy', style: TextStyle(
+              color: Colors.grey[500],
+              fontSize: 14,
+            ),),
+          ),
+          SizedBox(height: 5,),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+            child: Text('Amount: $orAmount', style: TextStyle(
+              color: Colors.grey[500],
+              fontSize: 14,
+            ),),
+          ),
+          SizedBox(height: 5,),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 30),
+            child: Text('Time made: $orTime', style: TextStyle(
+              color: Colors.grey[500],
+              fontSize: 14,
+            ),),
+          ),
+        ],
+      ),
     ),
+    onTap: () {
+      Navigator.push(context, MaterialPageRoute(
+        builder: (context) => OrderDetails(),
+        ),
+      );
+    },
   );
 }

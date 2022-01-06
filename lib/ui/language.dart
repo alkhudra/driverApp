@@ -6,12 +6,12 @@ import 'package:alkhudhrah_app/ui/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-class LanguageScreen extends StatefulWidget {
+class LanguageSetting extends StatefulWidget {
   @override
-  _LanguageScreenState createState() => _LanguageScreenState();
+  _LanguageSettingState createState() => _LanguageSettingState();
 }
 
-class _LanguageScreenState extends State<LanguageScreen> {
+class _LanguageSettingState extends State<LanguageSetting> {
 
 
   void onLanguageButtonPressed(BuildContext context , String localeName) async{

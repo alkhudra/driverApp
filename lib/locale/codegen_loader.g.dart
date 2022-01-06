@@ -56,6 +56,7 @@ class CodegenLoader extends AssetLoader{
   "Remember Me?" : "Remember Me?",
   "process_success": "Process Success",
   "Continue" : "Continue",
+  "Order Details" : "Order Details",
 };
 static const Map<String,dynamic> ar = {
   "SIGN IN": "تسجيل الدخول",
@@ -99,6 +100,7 @@ static const Map<String,dynamic> ar = {
   "Remember Me?" : "تذكرني؟",
   "process_success": "تمت العملية بنجاح",
   "Continue" : "متابعة",
+  "Order Details" : "تفاصيل الطلب",
   
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "ar": ar};

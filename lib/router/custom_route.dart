@@ -14,7 +14,7 @@ class CustomRouter {
       case homeRoute:
         return MaterialPageRoute(builder: (_) => Homescreen());
       case languageRoute:
-        return MaterialPageRoute(builder: (_) => LanguageScreen());
+        return MaterialPageRoute(builder: (_) => LanguageSetting());
       case welcomeRoute:
         return MaterialPageRoute(builder: (_) => MyHomepage());
       default:

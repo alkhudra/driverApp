@@ -42,4 +42,5 @@ abstract class  LocaleKeys {
   static const remember_me = 'Remember Me?';
   static const process_success ='process_success';
   static const continue_btn ='Continue';
+  static const order_details ='Order Details';
 }
