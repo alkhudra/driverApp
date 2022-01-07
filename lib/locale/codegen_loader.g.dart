@@ -6,11 +6,11 @@ import 'dart:ui';
 
 import 'package:easy_localization/easy_localization.dart' show AssetLoader;
 
-class CodegenLoader extends AssetLoader{
+class CodegenLoader extends AssetLoader {
   const CodegenLoader();
 
   @override
-  Future<Map<String, dynamic>> load(String fullPath, Locale locale ) {
+  Future<Map<String, dynamic>> load(String fullPath, Locale locale) {
     return Future.value(mapLocales[locale.toString()]);
   }
 
@@ -57,6 +57,11 @@ class CodegenLoader extends AssetLoader{
   "process_success": "Process Success",
   "Continue" : "Continue",
   "Order Details" : "Order Details",
+  "pass_changed_done": "Password Reset Successful",
+  "code_not_match":
+  "Wrong code, please check your email or click resend code to get a new code ",
+  "continue_btn": "Continue",
+  "wrong_email": "Wrong Email, please try again"
 };
 static const Map<String,dynamic> ar = {
   "SIGN IN": "تسجيل الدخول",
@@ -101,7 +106,12 @@ static const Map<String,dynamic> ar = {
   "process_success": "تمت العملية بنجاح",
   "Continue" : "متابعة",
   "Order Details" : "تفاصيل الطلب",
+  "continue_btn": "استمرار",
+  "code_not_match":
+        "خطأ في رمز التحقق ٫قم بمراجعة بريدك الالكتروني او قم بالضغط على اعادة ارسال رمز التحقق للحصول على رمز جديد",
+  "pass_changed_done": "تم تغيير كلمة السر بنجاح",
+  "wrong_email": "البريد الإلكتروني غير صحيح ، حاول مرة اخرى "
   
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "ar": ar};
-}
+ }

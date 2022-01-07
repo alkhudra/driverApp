@@ -1,12 +1,16 @@
 import 'package:alkhudhrah_app/constants/colors.dart';
 import 'package:alkhudhrah_app/custom_widgets/brandname.dart';
 import 'package:alkhudhrah_app/designs/buttons_design.dart';
-import 'package:alkhudhrah_app/helper/shared_pref_helper.dart';
-import 'package:alkhudhrah_app/ui/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
+<<<<<<< HEAD
 class LanguageSetting extends StatefulWidget {
+=======
+import 'login_email.dart';
+
+class LanguageScreen extends StatefulWidget {
+>>>>>>> 9396e415e47a6419c2b9a45da5f9aa563241745a
   @override
   _LanguageSettingState createState() => _LanguageSettingState();
 }
@@ -22,9 +26,8 @@ class _LanguageSettingState extends State<LanguageSetting> {
       await context.setLocale(Locale('en'));
     else   await context.setLocale(Locale('ar'));
 
-    PreferencesHelper.setSelectedLanguage(localeName);
     Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return WelcomeScreen();
+      return LoginEmail();
     }));
   }
 

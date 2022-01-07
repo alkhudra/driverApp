@@ -1,5 +1,6 @@
 import 'package:alkhudhrah_app/constants/colors.dart';
 import 'package:alkhudhrah_app/custom_widgets/brandname.dart';
+import 'package:alkhudhrah_app/custom_widgets/green_btn.dart';
 import 'package:alkhudhrah_app/designs/buttons_design.dart';
 import 'package:alkhudhrah_app/designs/card_design.dart';
 import 'package:alkhudhrah_app/designs/textfield_design.dart';
@@ -7,12 +8,13 @@ import 'package:alkhudhrah_app/dialogs/alert_dialog.dart';
 import 'package:alkhudhrah_app/dialogs/progress_dialog.dart';
 import 'package:alkhudhrah_app/helper/info_corrector_helper.dart';
 import 'package:alkhudhrah_app/helper/shared_pref_helper.dart';
+import 'package:alkhudhrah_app/helper/snack_message.dart';
 import 'package:alkhudhrah_app/locale/locale_keys.g.dart';
 import 'package:alkhudhrah_app/main.dart';
 import 'package:alkhudhrah_app/network/api/api_response_type.dart';
-import 'package:alkhudhrah_app/network/models/login_response_model.dart';
+import 'package:alkhudhrah_app/network/models/auth/forget_password_response_model.dart';
+import 'package:alkhudhrah_app/network/models/auth/success_login_response_model.dart';
 import 'package:alkhudhrah_app/network/models/register_response_model.dart';
-import 'package:alkhudhrah_app/network/models/user_model.dart';
 import 'package:alkhudhrah_app/network/repository/login_repository.dart';
 import 'package:alkhudhrah_app/router/route_constants.dart';
 import 'package:alkhudhrah_app/ui/forgotpassword.dart';
@@ -21,6 +23,9 @@ import 'package:alkhudhrah_app/ui/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:alkhudhrah_app/constants/colors.dart';
+
+import 'enter_code_page.dart';
 
 class LoginEmail extends StatefulWidget {
   const LoginEmail({ Key? key }) : super(key: key);
@@ -30,250 +35,196 @@ class LoginEmail extends StatefulWidget {
 }
 
 class _LoginEmailState extends State<LoginEmail> {
-
   final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController passController = TextEditingController();
   bool isBtnEnabled = true;
-  bool isChecked = false;
   bool isForgetPassBtnEnabled = true;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    // _isBtnDisabled = true;
-  }
+  static bool isHasBranches = false;
 
   @override
   Widget build(BuildContext context) {
+    Size? size = MediaQuery
+        .of(context)
+        .size;
+    double scWidth = size.width;
+    double scHeight = size.height;
 
-      Color getColor(Set<MaterialState> states) {
-      const Set<MaterialState> interactiveStates = <MaterialState>{
-        MaterialState.pressed,
-        MaterialState.hovered,
-        MaterialState.focused,
-      };
-      if (states.any(interactiveStates.contains)) {
-        return kLogoBrown;
-      }
-      return kLogoGreen;
-    }
-
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.grey[100],
-      body: Stack(
-        children: [
-          Container(
-            margin: EdgeInsets.only(top: 120, left: 30, right: 30),
-            width: MediaQuery.of(context).size.width/0.3,
-            height: MediaQuery.of(context).size.height/2,
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey,
-                  offset: Offset(0.2, 6.0),
-                  blurRadius: 6.0,
-                  spreadRadius: -2.0
-                ),
-              ],
-              borderRadius: BorderRadius.circular(50),
-              color: kCard,
+    return SafeArea(
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: kCard,
+        body: Stack(
+          children: [
+            Container(
+              margin: EdgeInsets.only(top: 120, left: 30, right: 30),
+              width: MediaQuery
+                  .of(context)
+                  .size
+                  .width / 0.3,
+              height: MediaQuery
+                  .of(context)
+                  .size
+                  .height / 1.8,
+              decoration: CardDesign.largeCardDesign(),
             ),
-          ),
-          SizedBox(height: 50,),
-          Container(
-            margin: EdgeInsets.only(top: 50),
-            alignment: Alignment.topCenter,
-            child: brandName(115.0, 115.0, 20.0),
-          ),
-          SizedBox(height: 50,),
-          Positioned(
-            top: 260,
-            left: 60,
-            child: Container(
-              alignment: Alignment.center,
-              // margin: EdgeInsets.symmetric(horizontal: 60, vertical: 100),
-              width: MediaQuery.of(context).size.width/1.4,
-              height: MediaQuery.of(context).size.height/15,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(60),
-                border: Border.all(color: kLogoGreen,
-                width: 1.5),
-              ),
-              child: Row(
+            // SizedBox(
+            //   height: 10,
+            // ),
+            brandNameMiddle(),
+            // SizedBox(
+            //   height: 10,
+            // ),
+            Container(
+              margin: EdgeInsets.only(
+                  top: scHeight * 0.13,
+                  right: scWidth * 0.1,
+                  left: scWidth * 0.1),
+              // padding: EdgeInsets.symmetric(horizontal: scWidth/9, vertical: scHeight/5),
+              width: MediaQuery
+                  .of(context)
+                  .size
+                  .width,
+              height: MediaQuery
+                  .of(context)
+                  .size
+                  .height,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Expanded(
-                    child: TextFormField(
-                      controller: emailController,
-                      keyboardType: TextInputType.emailAddress,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      inputFormatters: [
-                      ],
-                      //Formatting number to begin with 05 
-                      validator: (value) {
-                        if(value != null) {
-
-                        }
-                      },
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                        fontWeight: FontWeight.bold),
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.email_outlined, color: kBlack.withOpacity(0.67),),
-                        contentPadding: EdgeInsets.only(left: 20, right: 20),
-                        labelText: LocaleKeys.email_textfield.tr(),
-                        labelStyle: TextStyle(fontWeight: FontWeight.w500),
-                        focusColor: kLogoGreen,
-                        border: InputBorder.none,
-                      ),
-                    ),
+                  TextFieldDesign.textFieldStyle(
+                    context: context,
+                    verMarg: 5,
+                    horMarg: 0,
+                    controller: emailController,
+                    kbType: TextInputType.emailAddress,
+                    obscTxt: false,
+                    lbTxt: LocaleKeys.email_textfield.tr(),
                   ),
+                  SizedBox(
+                    height: 3,
+                  ),
+                  TextFieldDesign.textFieldStyle(
+                      context: context,
+                      verMarg: 5,
+                      horMarg: 0,
+                      controller: passController,
+                      kbType: TextInputType.visiblePassword,
+                      obscTxt: true,
+                      lbTxt:  LocaleKeys.password_textfield.tr(),
+                  ),
+                  SizedBox(
+                    height: scHeight / 20,
+                  ),
+                  Container(
+                      height: scHeight / 30,
+                      padding: EdgeInsets.only(right: 10, left: 10),
+                      child: GestureDetector(
+                        onTap: () {
+                          if (isForgetPassBtnEnabled)
+                            showDialog(
+                                builder: (BuildContext context) =>
+                                    showEnterEmailDialog(context),
+                                context: context);
+                        },
+                        child: Text(LocaleKeys.forgot_PW_Btn.tr(),
+                            style: TextStyle(
+                                color: kLogoGreen)),
+                      )),
+
+                  SizedBox(
+                    height: scHeight * 0.05,
+                  ),
+                  greenBtn(LocaleKeys.SIGN_IN.tr(),
+                      EdgeInsets.only(left: 50, right: 50), () {
+                        if (isBtnEnabled) logIn();
+                      })
+
+                  ,
                 ],
               ),
             ),
-          ),
-          SizedBox(height: 20,),
-          Positioned(
-            top: 340,
-            left: 60,
-            child: Container(
-              alignment: Alignment.center,
-              width: MediaQuery.of(context).size.width/1.4,
-              height: MediaQuery.of(context).size.height/15,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(60),
-                border: Border.all(color: kLogoGreen,
-                width: 1.5),
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextFormField(
-                      controller: passwordController,
-                      keyboardType: TextInputType.visiblePassword,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      inputFormatters: [
-                      ],
-                      //Formatting number to begin with 05 
-                      validator: (value) {
-                      },
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                        fontWeight: FontWeight.bold),
-                        obscureText: true,
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.lock_outline, color: kBlack.withOpacity(0.67),),
-                        contentPadding: EdgeInsets.only(left: 20, right: 20),
-                        labelText: LocaleKeys.password_textfield.tr(),
-                        labelStyle: TextStyle(fontWeight: FontWeight.w500,),
-                        focusColor: kLogoGreen,
-                        border: InputBorder.none,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          SizedBox(height: 20,),
-          Positioned(
-            top: 490,
-            left: 150,
-            child: GestureDetector(
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => ForgotPassword(),
-                  )
-                );
-              },
-              child: Container(
-                child: Text(LocaleKeys.forgot_PW_Btn.tr(), style: TextStyle(
-                  color: kLogoGreen,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),),
-              ),
-            ),
-          ),
-          SizedBox(height: 10,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                padding: EdgeInsets.only(bottom: 50),
-                alignment: Alignment.centerLeft,
-                child: Checkbox(
-                  checkColor: Colors.white,
-                  fillColor: MaterialStateProperty.resolveWith(getColor),
-                  value: isChecked,
-                  onChanged: (bool? value) {
-                    setState(() {
-                      isChecked = value!;
-                      print(value);
-                    });
-                  },
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.only(bottom: 50),
-                alignment: Alignment.centerLeft,
-                child: Text(LocaleKeys.remember_me.tr(),
-                style: TextStyle(
-                  color: kBlack.withOpacity(0.7),
-                  fontSize: 16
-                ),),
-              ),
-            ],
-          ),
-          SizedBox(height: 20,),
-          //SIGN IN button
-          Container(
-            margin: EdgeInsets.fromLTRB(80, 540, 80, 310),
-            width: MediaQuery.of(context).size.width/1.6,
-            height: MediaQuery.of(context).size.height/12,
-            child: TextButton(
-              onPressed: () {
-                // if (isBtnEnabled) logIn();
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => Homescreen()));
-                // if(_isBtnDisabled) {
-                //   return null;
-                // } else {
-                //   setState(() {
-                //     _isBtnDisabled = true;
-                //   });
-                //   Navigator.push(context, MaterialPageRoute(
-                //   builder: (context) => Homescreen()));
-                // }
-              },
-              style: TextButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(60),
-                ),
-                fixedSize: Size(250.0, 70.0),
-                backgroundColor: kLogoGreen,
-              ),
-                //disable button after first click, to avoid 
-                // sending two requests to DB
-              child: Text(LocaleKeys.SIGN_IN.tr(), style: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-              ),),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
-    void showErrorDialog(String txt) {
+  //-------------------------
+  void showErrorDialog(String txt) {
+    isForgetPassBtnEnabled = true;
     isBtnEnabled = true;
     showDialog<String>(
         context: context,
         builder: (BuildContext context) =>
             showMessageDialog(context, LocaleKeys.error.tr(), txt, noPage));
   }
+
+  //-------------------------
+
+  Widget showEnterEmailDialog(BuildContext context) {
+    final TextEditingController controller = TextEditingController();
+    return Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+      //this right here
+      child: Container(
+        height: CardDesign.cardsHeight,
+        width: CardDesign.cardsWidth,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+               LocaleKeys.reset_PW_title.tr(),
+              style: TextStyle(
+                fontSize: 20,
+                color: kDarkBlue,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 10, right: 10),
+              child: TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                validator: (value) {
+                  if (!isValidEmail(controller.text)) {
+                    return LocaleKeys.invalid_email.tr();
+                  }
+                },
+                controller: controller,
+                keyboardType: TextInputType.emailAddress,
+                style: TextStyle(
+                    color: kBlack,
+                    fontWeight: FontWeight.bold),
+                decoration: textFieldDecorationWithIcon(
+                    LocaleKeys.email_textfield.tr(), Icons.email),
+              ),
+            ),
+            SizedBox(
+              height: 35,
+            ),
+            Container(
+                height: ButtonsDesign.buttonsHeight,
+                margin: EdgeInsets.only(left: 50, right: 50),
+                child: MaterialButton(
+                  onPressed: () {
+                    if(isForgetPassBtnEnabled)
+                     forgetPasswordProcess(controller.text);
+                  },
+                  shape: StadiumBorder(),
+                  child: ButtonsDesign.buttonsText(
+                       LocaleKeys.reset_PW_title.tr(),
+                      kWhite),
+                  color: kLogoGreen,
+                ))
+          ],
+        ),
+      ),
+    );
+  }
+
+  ////---------------------------
 
   void logIn() {
     if (emailController.value.text == '') {
@@ -286,154 +237,108 @@ class _LoginEmailState extends State<LoginEmail> {
       return;
     }
 
-    if (passwordController.value.text == '') {
+    if (passController.value.text == '') {
       showErrorDialog(LocaleKeys.pass_required.tr());
       return;
     }
 
     isBtnEnabled = false;
 
-    //login api call
-
-
-
     print('continue log in ');
 
-     //----------show progress----------------
-    showLoaderDialog(context);
+    //----------show progress----------------
 
+    showLoaderDialog(context);
     //----------start api ----------------
     LoginRepository loginRepository = LoginRepository();
     loginRepository
-        .loginUser(
-            emailController.text,
-            passwordController.text)
+        .loginUser(emailController.text, passController.text, true)
         .then((result) async {
-
       //-------- fail response ---------
-      if (result == null || result.apiStatus.code != ApiResponseType.OK.code) {
+
+      if (result.apiStatus.code != ApiResponseType.OK.code) {
         Navigator.pop(context);
         showErrorDialog(result.message);
         return;
       }
 
+      print(result.result);
       //-------- success response ---------
-    LoginResponseModel model = result.result;
-    print(model.user.toString());
-    if(model.user != null) {
-      print(model.user!.id);
+      SuccessLoginResponseModel model = SuccessLoginResponseModel.fromJson(
+          result.result);
 
-      
+      print(model.user.toString());
 
-      PreferencesHelper.setUserID(model.user!.id!);
-      PreferencesHelper.getUserID.then((value) => print(value));
+
+      User user = model.user!;
+
+
+      PreferencesHelper.setUserID(user.id);
+      PreferencesHelper.getUserID.then((value) => print('user id : $value'));
 
       PreferencesHelper.setUserToken(model.token);
-      PreferencesHelper.getUserToken.then((value) => print(value));
+      PreferencesHelper.getUserToken.then((value) => print('token : $value'));
 
+      PreferencesHelper.setUser(user);
 
-      // PreferencesHelper.setUser(model.user!);
-      // PreferencesHelper.getUser.then((value) => print(value.toString()));
+      Navigator.pop(context);
 
-    }
-
-
-    Navigator.pop(context);
-
-    directToHomePage();
-  
-
-
-
-      // RegisterResponseModel model = result.result;
-      // print(model.userId);
-
-      // showDialog(
-      //         builder: (BuildContext context) =>
-      //             showPinDialog(context, emailController.text, true),
-      //         context: context)
-      //     .then((value) {});
+      directToHomePage();
     });
   }
 
-    void directToHomePage() {
 
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) {
-          return Homescreen();
-        }));
-  }
-}
-
-  ////---------------------------
-
-  Widget showEnterEmailDialog(BuildContext context) {
-    String errorMessage = "enter your mail to send code ";
-
-    bool visible = false;
-    final TextEditingController controller = TextEditingController();
-    return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
-      //this right here
-      child: Container(
-        height: CardDesign.cardsHeight,
-        width: CardDesign.cardsWidth,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              LocaleKeys.reset_PW_title.tr(),
-              style: TextStyle(
-                fontSize: 20,
-                color: kDarkBlue,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 20, right: 20),
-              child: TextFormField(
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                validator: (value) {
-
-                  if (!isValidEmail(controller.text)){
-                   return LocaleKeys.invalid_email.tr();
-
-                  }
-                },
-                controller: controller,
-                keyboardType: TextInputType.emailAddress,
-                style: TextStyle(
-                    color: kBlack,
-                    fontWeight: FontWeight.bold),
-                decoration: textFieldDecorationWithIcon(
-                    LocaleKeys.email_textfield.tr(), Icons.email),
-              ),
-            ),
-
-            SizedBox(
-              height: 35,
-            ),
-            //     ))
-          ],
-        ),
-      ),
-    );
-  }
-  
-
-  
 ////---------------------------
 
+  void directToHomePage() {
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return Homescreen();
+    }));
+  }
+
+////---------------------------
+
+  void forgetPasswordProcess(String userEmail) {
+    if (userEmail != '') {
+      isForgetPassBtnEnabled = false;
+
+      print(userEmail);
+      //----------show progress----------------
+
+      showLoaderDialog(context);
+      //----------start api ----------------
+      LoginRepository loginRepository = LoginRepository();
+      loginRepository.forgetPassword(userEmail).then((result) async {
+        //-------- fail response ---------
+
+        if (result == null ||
+            result.apiStatus.code != ApiResponseType.OK.code) {
+          Navigator.pop(context);
+          showErrorDialog(result.message);
+          return;
+        }
+
+        //-------- success response ---------
+
+        ForgetPasswordResponseModel model = result.result;
+        if(model.code == ''){
+          Navigator.pop(context);
+          showErrorDialog(LocaleKeys.wrong_email.tr());
+          return;
+        }
+        Navigator.pop(context);
+        Navigator.pop(context);
+
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          isForgetPassBtnEnabled = true;
+          return EnterCodePage(
+            userEmail: userEmail,
+            code: model.code!,
+          );
+        }));
+      });
 
 
-
-
-
-// textButton(
-//               btnName: 'SIGN IN', 
-//               btnFunc:  Navigator.push(context, MaterialPageRoute(
-//                   builder: (context) => Homescreen()))
-//             ), //textButton
+    }
+  }
+}

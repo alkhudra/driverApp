@@ -1,24 +1,31 @@
 import 'dart:collection';
+import 'dart:convert';
 import 'dart:developer';
 
+import 'package:alkhudhrah_app/locale/locale_keys.g.dart';
 import 'package:alkhudhrah_app/network/api/api_config.dart';
 import 'package:alkhudhrah_app/network/api/api_response.dart';
 import 'package:alkhudhrah_app/network/api/api_response_type.dart';
-
+import 'package:alkhudhrah_app/network/models/auth/fail_reset_password_response_model.dart';
+import 'package:alkhudhrah_app/network/models/message_response_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:dio/dio.dart';
 
 class LoginRepository {
   final RestClient _client;
 
-  //todo: handle error
   LoginRepository([RestClient? client])
       : _client = client ?? RestClient(Dio());
+
+
+
 
   //--------------------------
 
   Future<ApiResponse> loginUser(
       String email,
-      String password) async {
+      String password, 
+      bool rememberMe) async {
     if (email == null ||
         password == null ) {
       return ApiResponse(ApiResponseType.BadRequest, null, '');
@@ -27,6 +34,7 @@ class LoginRepository {
     Map<String, dynamic> hashMap = {
       "email": email,
       "password": password,
+      "rememberMe" : rememberMe,
     };
 
     return await _client
@@ -43,6 +51,16 @@ class LoginRepository {
           if (res != null) {
             errorCode = res.statusCode!;
             errorMessage = res.statusMessage!;
+
+            if (errorCode == 400) {
+              MessageResponseModel model =
+              MessageResponseModel.fromJson(res.data);
+
+
+              errorMessage =  model.message!;
+            } else if (errorCode == 500) {
+              errorMessage = res.data['Message'];
+            }
           }
           break;
         default:
@@ -53,10 +71,7 @@ class LoginRepository {
       return ApiResponse(apiResponseType, null, errorMessage);
     });
   }
-
-//-----------------------------
-
-
+ //--------------------------
 
   Future<ApiResponse> forgetPassword(String email) async {
     if (email == null) {
@@ -71,16 +86,18 @@ class LoginRepository {
         .forgetPassword(hashMap)
         .then((value) => ApiResponse(ApiResponseType.OK, value, ''))
         .catchError((e) {
-
       int errorCode = 0;
       String errorMessage = "";
       switch (e.runtimeType) {
         case DioError:
-
           final res = (e as DioError).response;
           if (res != null) {
             errorCode = res.statusCode!;
             errorMessage = res.statusMessage!;
+            if(errorCode == 500)
+              errorMessage = res.data['Message'];
+            else  if(errorCode == 400)
+              errorMessage = LocaleKeys.invalid_email.tr();
           }
           break;
         default:
@@ -91,46 +108,10 @@ class LoginRepository {
       return ApiResponse(apiResponseType, null, errorMessage);
     });
   }
-  //-----------------
-  Future<ApiResponse> sendPasswordToken(String email,String token) async {
-    if (email == null) {
-      return ApiResponse(ApiResponseType.BadRequest, null, '');
-    }
-
-    Map<String, dynamic> hashMap = {
-      "email": email,
-      "token": token
-    };
-
-    return await _client
-        .sendCodeForgetPassword(hashMap)
-        .then((value) => ApiResponse(ApiResponseType.OK, value, ''))
-        .catchError((e) {
-
-      int errorCode = 0;
-      String errorMessage = "";
-      switch (e.runtimeType) {
-        case DioError:
-
-          final res = (e as DioError).response;
-          if (res != null) {
-            errorCode = res.statusCode!;
-            errorMessage = res.statusMessage!;
-          }
-          break;
-        default:
-      }
-      log("Got error : $errorCode -> $errorMessage");
-
-      var apiResponseType = ApiResponse.convert(errorCode);
-      return ApiResponse(apiResponseType, null, errorMessage);
-    });
-  }
-
   //-----------------
 
   Future<ApiResponse> resetPassword(String email, String password,
-      String confirmPassword,String token) async {
+      String confirmPassword, String token) async {
     if (email == null) {
       return ApiResponse(ApiResponseType.BadRequest, null, '');
     }
@@ -139,23 +120,46 @@ class LoginRepository {
       "email": email,
       "password": password,
       "confirmPassword": confirmPassword,
-      "token":token
+      "token": token
     };
 
     return await _client
         .resetPassword(hashMap)
         .then((value) => ApiResponse(ApiResponseType.OK, value, ''))
         .catchError((e) {
-
       int errorCode = 0;
       String errorMessage = "";
       switch (e.runtimeType) {
         case DioError:
-
           final res = (e as DioError).response;
           if (res != null) {
             errorCode = res.statusCode!;
             errorMessage = res.statusMessage!;
+            if (errorCode == 500) {
+              errorMessage = res.data['Message'];
+            }else if(errorCode ==400){
+
+
+              print(res.data);
+              String map = res.data.toString();
+              if (map.contains('message')) {
+                errorMessage = res.data['message'];
+              } else {
+                final de = jsonDecode(res.data.toString());
+                FailResetPasswordResponseModel model = FailResetPasswordResponseModel.fromJson(de);
+                if (model.errors!.confirmPassword!.isNotEmpty) {
+                  errorMessage = model.errors!.confirmPassword!.first;
+                }
+               else if (model.errors!.email!.isNotEmpty) {
+                  errorMessage = model.errors!.email!.first;
+                }
+              else  if (model.errors!.token!.isNotEmpty) {
+                  errorMessage = model.errors!.token!.first;
+                }
+                else
+                  errorMessage = model.errors!.password!.first;
+              }
+            }
           }
           break;
         default:

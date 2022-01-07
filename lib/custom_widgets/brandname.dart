@@ -34,3 +34,11 @@ Widget brandName(logoW, logoH, fontS) {
     ],
   );
 }
+
+Widget brandNameMiddle(){
+  return Container(
+    margin: EdgeInsets.only(top: 50),
+    alignment: Alignment.topCenter,
+    child: brandName(115.0, 115.0, 20.0),
+  );
+}

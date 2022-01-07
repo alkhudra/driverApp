@@ -8,5 +8,5 @@ abstract class ApiConst {
   static const String reset_password_url = '/AccountDriver/resetPassword';
   static const String forget_password_url = '/AccountDriver/forgetPassword';
   // static const String send_code_url = '/account/sendCode';
-  static const String check_password_token_url = '/AccountDriver/checkPasswordToken';
+ // static const String check_password_token = '/AccountDriver/checkPasswordToken';
 }

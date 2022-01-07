@@ -1,22 +1,20 @@
+/// user : {"id":"89c32cb8-a199-4ccb-bf9d-454b33b3c87b","email":"Salmetaha@gmail.com","phoneNumber":"0576543954","driverName":"Salma"}
+/// token : "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI4OWMzMmNiOC1hMTk5LTRjY2ItYmY5ZC00NTRiMzNiM2M4N2IiLCJ1bmlxdWVfbmFtZSI6IlNhbG1ldGFoYUBnbWFpbC5jb20iLCJyb2xlIjoiRHJpdmVyIiwibmJmIjoxNjQxNDY3MTUxLCJleHAiOjE2NDE1NTM1NTEsImlhdCI6MTY0MTQ2NzE1MX0.qQq5vFDJVvZ6V3nf63ZG6gMDQBnS2a7NrzCcMuN7uvTVXV3JUY8k0w3NwBmalbx7yz3Zeucr451gv4-JuoCi3g"
 
-
-/// user : {"id":"897fd3ea-e138-4947-aa94-6749584d1a4b","email":"nolemohd.000@gmail.com","phoneNumber":"0576543980","driverName":"Manal test","companyName":"t","commercialRegistrationNo":"9998887779","branchNumber":4,"branches":[]}
-/// token : "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI4OTdmZDNlYS1lMTM4LTQ5NDctYWE5NC02NzQ5NTg0ZDFhNGIiLCJ1bmlxdWVfbmFtZSI6Im5vbGVtb2hkLjAwMEBnbWFpbC5jb20iLCJyb2xlIjoiQ29tcGFueSIsIm5iZiI6MTY0MTA1MjA1NCwiZXhwIjoxNjQxMTM4NDU0LCJpYXQiOjE2NDEwNTIwNTR9.4Qj8Ooihja1_hP3V1_xb0GDUreo6CxRbFCiGYfxtp8F4198Ou0_GkwVryDlNCkbKcQZAMC632ZHOV3ZCPmQxTQ"
-
-class LoginResponseModel {
-  LoginResponseModel({
+class SuccessLoginResponseModel {
+  SuccessLoginResponseModel({
       User? user, 
      required String token,}){
     _user = user;
     _token = token;
 }
 
-  LoginResponseModel.fromJson(dynamic json) {
+  SuccessLoginResponseModel.fromJson(dynamic json) {
     _user = json['user'] != null ? User.fromJson(json['user']) : null;
     _token = json['token'];
   }
   User? _user;
-  String _token = '';
+  String _token ='';
 
   User? get user => _user;
   String get token => _token;
@@ -32,23 +30,22 @@ class LoginResponseModel {
 
 }
 
-/// id : "897fd3ea-e138-4947-aa94-6749584d1a4b"
-/// email : "nolemohd.000@gmail.com"
-/// phoneNumber : "0576543980"
-/// ownerName : "Manal test"
-/// companyName : "t"
-/// commercialRegistrationNo : "9998887779"
-/// branchNumber : 4
-/// branches : []
+/// id : "89c32cb8-a199-4ccb-bf9d-454b33b3c87b"
+/// email : "Salmetaha@gmail.com"
+/// phoneNumber : "0576543954"
+/// driverName : "Salma"
 
 class User {
   User({
-     required String id,
+      required String id,
       String? email, 
       String? phoneNumber, 
-      String? driverName, 
-});
-
+      String? driverName,}){
+    _id = id;
+    _email = email;
+    _phoneNumber = phoneNumber;
+    _driverName = driverName;
+}
 
   User.fromJson(dynamic json) {
     _id = json['id'];
@@ -61,14 +58,10 @@ class User {
   String? _phoneNumber;
   String? _driverName;
 
-
-
-  String? get id => _id;
+  String get id => _id;
   String? get email => _email;
   String? get phoneNumber => _phoneNumber;
   String? get driverName => _driverName;
-
-
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -76,7 +69,6 @@ class User {
     map['email'] = _email;
     map['phoneNumber'] = _phoneNumber;
     map['driverName'] = _driverName;
-
     return map;
   }
 

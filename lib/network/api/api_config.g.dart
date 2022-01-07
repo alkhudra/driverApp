@@ -16,63 +16,48 @@ class _RestClient implements RestClient {
   String? baseUrl;
 
   @override
-  Future<LoginResponseModel> loginUser(hashMap) async {
+  Future<dynamic> loginUser(hashMap) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(hashMap);
+    final _result = await _dio.fetch(_setStreamType<dynamic>(
+        Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+            .compose(_dio.options, '/AccountDriver/login',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data;
+    return value;
+  }
+
+  @override
+  Future<ForgetPasswordResponseModel> forgetPassword(hashMap) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(hashMap);
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<LoginResponseModel>(
+        _setStreamType<ForgetPasswordResponseModel>(
             Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
-                .compose(_dio.options, '/AccountDriver/login',
+                .compose(_dio.options, '/AccountDriver/forgetPassword',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = LoginResponseModel.fromJson(_result.data!);
+    final value = ForgetPasswordResponseModel.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<String> forgetPassword(hashMap) async {
+  Future<dynamic> resetPassword(hashMap) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(hashMap);
-    final _result = await _dio.fetch<String>(_setStreamType<String>(
-        Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
-            .compose(_dio.options, '/AccountDriver/forgetPassword',
-                queryParameters: queryParameters, data: _data)
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = _result.data!;
-    return value;
-  }
-
-  @override
-  Future<String> sendCodeForgetPassword(hashMap) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(hashMap);
-    final _result = await _dio.fetch<String>(_setStreamType<String>(
-        Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
-            .compose(_dio.options, '/AccountDriver/checkPasswordToken',
-                queryParameters: queryParameters, data: _data)
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = _result.data!;
-    return value;
-  }
-
-  @override
-  Future<String> resetPassword(hashMap) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(hashMap);
-    final _result = await _dio.fetch<String>(_setStreamType<String>(
+    final _result = await _dio.fetch(_setStreamType<dynamic>(
         Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
             .compose(_dio.options, '/AccountDriver/resetPassword',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = _result.data!;
+    final value = _result.data;
     return value;
   }
 

@@ -1,18 +1,18 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
-import 'package:alkhudhrah_app/locale/locale_keys.g.dart';
-import 'package:alkhudhrah_app/designs/buttons_design.dart';
-import 'package:alkhudhrah_app/designs/textfield_design.dart';
-import 'package:alkhudhrah_app/designs/card_design.dart';
-import 'package:alkhudhrah_app/dialogs/message_dialog.dart';
-import 'package:alkhudhrah_app/dialogs/progress_dialog.dart';
-import 'package:alkhudhrah_app/network/api/api_response_type.dart';
-import 'package:alkhudhrah_app/network/repository/login_repository.dart';
 import 'package:alkhudhrah_app/constants/colors.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:alkhudhrah_app/designs/app_bar_text.dart';
+import 'package:alkhudhrah_app/designs/buttons_design.dart';
+import 'package:alkhudhrah_app/designs/card_design.dart';
+import 'package:alkhudhrah_app/designs/textfield_design.dart';
+import 'package:alkhudhrah_app/dialogs/alert_dialog.dart';
+import 'package:alkhudhrah_app/dialogs/progress_dialog.dart';
+import 'package:alkhudhrah_app/locale/locale_keys.g.dart';
+import 'package:alkhudhrah_app/network/api/api_response_type.dart';
+import 'package:alkhudhrah_app/network/models/message_response_model.dart';
+import 'package:alkhudhrah_app/network/repository/login_repository.dart';
 import 'package:alkhudhrah_app/router/route_constants.dart';
-
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 class ResetPasswordPage extends StatefulWidget {
   final Map<String ,String> dataMap;
   const ResetPasswordPage({Key? key , required this.dataMap}) : super(key: key);
@@ -29,17 +29,15 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
   bool isBtnEnabled= true;
   @override
   Widget build(BuildContext context) {
-   return Scaffold(
-     appBar: AppBar(
-       title: Text(LocaleKeys.reset_PW_title.tr()),
-     ),
+    return Scaffold(
+      appBar: appBarText(LocaleKeys.reset_PW_title.tr(), true),
       //todo:
       /********
        *
        * design problems:
        * height of card  , width of main column ,place of btn
        * *********/
-      backgroundColor: Colors.grey[200],
+      backgroundColor: kCard,
       body: Stack(
         children: [
           Container(
@@ -64,7 +62,8 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                   verMarg: 5,
                   horMarg: 0,
                   controller: passController,
-                  kbType: TextInputType.emailAddress,
+                  kbType: TextInputType.visiblePassword,
+                  obscTxt: false,
                   lbTxt: LocaleKeys.password_textfield.tr(),
                 ),
 
@@ -74,6 +73,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                   horMarg: 0,
                   controller: confirmPassController,
                   kbType: TextInputType.visiblePassword,
+                  obscTxt: false,
                   lbTxt: LocaleKeys.confirm_password.tr(),
                 ),
 
@@ -126,23 +126,19 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
 
     isBtnEnabled = false;
 
-    //---------
-
 
     //----------show progress----------------
 
     showLoaderDialog(context);
     //----------start api ----------------
-    LoginRepository registerRepository = LoginRepository();
+    LoginRepository loginRepository = LoginRepository();
     String email = widget.dataMap.values.first;
     String token = widget.dataMap.values.last;
 
-    registerRepository.resetPassword(email, passController.text,confirmPassController.text,token) .then((result) async {
+    loginRepository.resetPassword(email, passController.text,confirmPassController.text,token) .then((result) async {
       //-------- fail response ---------
 
-      //todo: edit after adjustments
       if (result == null || result.apiStatus.code != ApiResponseType.OK.code) {
-        /* if (result.apiStatus.code == ApiResponseType.BadRequest)*/
         Navigator.pop(context);
         showErrorDialog(result.message);
         return;
@@ -151,10 +147,11 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
       //-------- success response ---------
       Navigator.pop(context);
 
-      String model = result.result;
+      MessageResponseModel model = MessageResponseModel.fromJson( result.result);
+
 
       if(model != null)
-      showSuccessDialog(context, model);
+        showSuccessDialog(context, model.message!);
 
 
     });
@@ -176,7 +173,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
     showDialog<String>(
         context: context,
         builder: (BuildContext context) =>
-            showMessageDialog(context, LocaleKeys.process_success.tr(),message ,loginRoute));
+            showMessageDialog(context, LocaleKeys.pass_changed_done.tr(),message ,loginRoute));
 
   }
 

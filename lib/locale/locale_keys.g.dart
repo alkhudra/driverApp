@@ -43,4 +43,8 @@ abstract class  LocaleKeys {
   static const process_success ='process_success';
   static const continue_btn ='Continue';
   static const order_details ='Order Details';
+  static const wrong_email="wrong_email";
+  static const code_not_match = "code_not_match";
+  static const pass_changed_done="pass_changed_done";
+
 }
