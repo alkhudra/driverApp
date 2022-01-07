@@ -61,7 +61,20 @@ class CodegenLoader extends AssetLoader {
   "code_not_match":
   "Wrong code, please check your email or click resend code to get a new code ",
   "continue_btn": "Continue",
-  "wrong_email": "Wrong Email, please try again"
+  "wrong_email": "Wrong Email, please try again",
+  "Fruits": "Fruits",
+  "Vegetables": "Vegetables",
+  "Subtotal": "Subtotal:",
+  "VAT": "VAT:",
+  "Total": "Total:",
+  "App Language" : "App Language",
+  "Preferred Language for The App" : "Preferred Language for The App",
+  "English" : "English",
+  "Arabic" : "arabic",
+  "Wallet" : "Wallet",
+  "New Orders" : "New Orders",
+  "My Orders" : "My Orders",
+  "Notifications" : "Notifications",
 };
 static const Map<String,dynamic> ar = {
   "SIGN IN": "تسجيل الدخول",
@@ -108,10 +121,22 @@ static const Map<String,dynamic> ar = {
   "Order Details" : "تفاصيل الطلب",
   "continue_btn": "استمرار",
   "code_not_match":
-        "خطأ في رمز التحقق ٫قم بمراجعة بريدك الالكتروني او قم بالضغط على اعادة ارسال رمز التحقق للحصول على رمز جديد",
+  "خطأ في رمز التحقق ٫قم بمراجعة بريدك الالكتروني او قم بالضغط على اعادة ارسال رمز التحقق للحصول على رمز جديد",
   "pass_changed_done": "تم تغيير كلمة السر بنجاح",
-  "wrong_email": "البريد الإلكتروني غير صحيح ، حاول مرة اخرى "
-  
+  "wrong_email": "البريد الإلكتروني غير صحيح ، حاول مرة اخرى ",
+  "Fruits": "فواكه",
+  "Vegetables": "خضار",
+  "Subtotal": "المجموع الفرعي",
+  "VAT": "ضريبة القيمة المضافة",
+  "Total": "المجموع الكلي",
+  "App Language": "لغة التطبيق",
+  "Preferred Language for The App": "اختيار لغة التطبيق",
+  "English" : "اللغة الإنجليزية",
+  "Arabic" : "اللغة العربية",
+  "Wallet" : "المحفظة",
+  "New Orders" : "طلبات جديدة",
+  "My Orders" : "طلباتي",
+  "Notifications" : "الإشعارات",
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "ar": ar};
  }

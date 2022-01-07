@@ -46,5 +46,18 @@ abstract class  LocaleKeys {
   static const wrong_email="wrong_email";
   static const code_not_match = "code_not_match";
   static const pass_changed_done="pass_changed_done";
+  static const fruits ="Fruits";
+  static const vegetables ="Vegetables";
+  static const subtotal ="Subtotal";
+  static const vat ="VAT";
+  static const total ="Total";
+  static const app_lang ="App Language";
+  static const select_lang ="Preferred Language for The App";
+  static const english ="English";
+  static const arabic ="Arabic";
+  static const wallet ="Wallet";
+  static const new_orders ="New Orders";
+  static const my_orders ="My Orders";
+  static const notifications_tab ="Notifications";
 
 }

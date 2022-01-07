@@ -1,11 +1,17 @@
 import 'dart:ui';
 
 import 'package:alkhudhrah_app/constants/colors.dart';
+import 'package:alkhudhrah_app/designs/drawer_design.dart';
 import 'package:alkhudhrah_app/designs/order_details_design.dart';
 import 'package:alkhudhrah_app/designs/textfield_design.dart';
 import 'package:alkhudhrah_app/locale/locale_keys.g.dart';
+import 'package:alkhudhrah_app/ui/home.dart';
+import 'package:alkhudhrah_app/ui/my_orders.dart';
+import 'package:alkhudhrah_app/ui/notifications.dart';
+import 'package:alkhudhrah_app/ui/wallet.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 
 import 'contact_us.dart';
 import 'edit_profile.dart';
@@ -19,6 +25,12 @@ class OrderDetails extends StatefulWidget {
 }
 
 class _OrderDetailsState extends State<OrderDetails> {
+
+  double subTotal = 0.0;
+  double vat = 0.0;
+  double total = 0.0;
+
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -65,7 +77,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                         Container(
                           margin: EdgeInsets.symmetric(horizontal: 60, vertical: 20),
                           alignment: Alignment.center,
-                          width: 300,
+                          width: 400,
                           height: 100,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
@@ -78,7 +90,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                           ),
                           child: Container(
                             alignment: Alignment.bottomLeft,
-                            padding: EdgeInsets.only(left: 5, bottom: 10),
+                            padding: EdgeInsets.only(left: 8, bottom: 8),
                             child: Image.asset('assets/images/green_grape.png'),
                           ),
                         ),
@@ -133,183 +145,154 @@ class _OrderDetailsState extends State<OrderDetails> {
                             ],
                           ),
                         ),
-
-                        //list of products
-
-                        //subtotal, VAT, total
-
-                        //PDF icon
-  
                       ],
                     ),
                     SizedBox(height: 20,),
-                    orderDetailsDesign(context),
+                    orderDetailsDesign(context, LocaleKeys.fruits.tr().toUpperCase(), 'Banana', 21, 3),
+                    orderDetailsDesign(context, LocaleKeys.vegetables.tr().toUpperCase(), 'Broccoli', 15, 1),
+                    //space after orders
+                    SizedBox(height: MediaQuery.of(context).size.height*0.07,),
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 50),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            child: RichText(
+                              text: TextSpan(
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w600,
+                                  color: kLogoGreen,
+                                ),
+                                children: <TextSpan> [
+                                  TextSpan(text: LocaleKeys.subtotal.tr(),
+                                  style: TextStyle(
+                                    color: kBlack,
+                                  )),
+                                  TextSpan(text: ': 23.8 SAR',
+                                  style: TextStyle(
+                                    color: kLogoGreen,
+                                  )),
+                                  ]
+                                ),
+                              ),
+                            ),
+                          SizedBox(height: 10,),
+                          Container(
+                            child: RichText(
+                              text: TextSpan(
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w600,
+                                  color: kLogoGreen,
+                                ),
+                                children: <TextSpan> [
+                                  TextSpan(text: LocaleKeys.vat.tr(),
+                                  style: TextStyle(
+                                    color: kBlack,
+                                  )),
+                                  TextSpan(text: ': 4.05 SAR',
+                                  style: TextStyle(
+                                    color: kLogoGreen,
+                                  )),
+                                  ]
+                                ),
+                              ),
+                            ),
+                          SizedBox(height: 10,),
+                          Divider(
+                            thickness: 1,
+                            color: kGray,
+                          ),
+                          Container(
+                            child: RichText(
+                              text: TextSpan(
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                                children: <TextSpan> [
+                                  TextSpan(text: LocaleKeys.total.tr(),
+                                  style: TextStyle(
+                                    color: kLogoGreen,
+                                  )),
+                                  TextSpan(text: ': 27.85 SAR',
+                                  style: TextStyle(
+                                    color: kLogoGreen,
+                                  )),
+                                  ]
+                                ),
+                              ),
+                            ),
+                          SizedBox(height: 10,),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
             ),
           ],
         ),
-        endDrawer: Drawer(
-          child: ListView(
-            children: [
-              Container(
-                width: 100,
-                height: 300,
-                decoration: BoxDecoration(
-                  color: kLogoGreen,
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(60),
-                    bottomRight: Radius.circular(60),
-                  ),
-                ),
-                child: Column(
-                  children: [
-                    Container(
-                      width: 100,
-                      height: 100,
-                      margin: EdgeInsets.only(top: 40),
-                      child: CircleAvatar(
-                        backgroundImage: AssetImage('assets/images/male_avatar.png'),
-                      ),
-                    ),
-                    SizedBox(height: 20,),
-                    Container(
-                      //TODO: replace with company variable from DB
-                      child: Text('Company Name', style: TextStyle(
-                        color: kWhite,
-                        fontSize: 21,
-                        fontWeight: FontWeight.w600,
-                      ),),
-                    ),
-                    SizedBox(height: 10,),
-                    Container(
-                      //TODO: replace with email variable from DB
-                      child: Text('company@email.com', style: TextStyle(
-                        color: kWhite,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w300,
-                      ),),
-                    ),
-                    SizedBox(height: 20,),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                        Navigator.push(context, MaterialPageRoute(
-                          builder: (context) => EditProfile())
-                        );
-                      },
-                      child: Container(
-                        width: 120,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          color: kWhite,
-                          borderRadius: BorderRadius.circular(40),
-                        ),
-                        child: Center(child: Text(LocaleKeys.edit_profile.tr(),
-                        style: TextStyle(color: kLogoGreen,
-                        fontWeight: FontWeight.w700),)),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              ListTile(
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: kLangBG
-                      ),
-                      child: Icon(Icons.language, color: kLang,),
-                    ),
-                    SizedBox(width: 10,),
-                    Text(LocaleKeys.languages.tr(), style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                    ),),
-                  ],
-                ),
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(context, 
-                  MaterialPageRoute(
-                    builder: (context) => LanguageSetting()
-                    ),
-                  );
-                },
-              ),
-              Divider(
-                thickness: 2.5,
-              ),
-              ListTile(
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: kConBG
-                      ),
-                      child: Icon(Icons.verified_user_rounded, color: kCon,),
-                    ),
-                    SizedBox(width: 10,),
-                    Text(LocaleKeys.contact_us.tr(), style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                    ),),
-                  ],
-                ),
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(context, 
-                  MaterialPageRoute(
-                    builder: (context) => ContactUs()
-                    ),
-                  );
-                },
-              ),
-              Divider(
-                thickness: 2.5,
-              ),
-              ListTile(
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: kLogOutBG
-                      ),
-                      child: Icon(Icons.logout, color: kLogOut,),
-                    ),
-                    SizedBox(width: 10,),
-                    Text(LocaleKeys.log_out.tr(), style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                    ),),
-                  ],
-                ),
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(context, 
-                  MaterialPageRoute(
-                    builder: (context) => EditProfile()
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
+        bottomNavigationBar: GNav(
+          backgroundColor: kWhite,
+          rippleColor: kGray, // tab button ripple color when pressed
+          hoverColor: kGray, // tab button hover color
+          haptic: true, // haptic feedback
+          tabBorderRadius: 20, 
+          tabActiveBorder: Border.all(color: kLogoGreen, width: 1), // tab button border
+          // tabBorder: Border.all(color: kLightGreen, width: 1), // tab button border
+          // tabShadow: [BoxShadow(color: Colors.grey.withOpacity(0.5), blurRadius: 8)], // tab button shadow
+          curve: Curves.easeOutCubic, // tab animation curves
+          duration: Duration(milliseconds: 500), // tab animation duration
+          gap: 8, // the tab button gap between icon and text 
+          color: kBlack.withOpacity(0.4), // unselected icon color
+          activeColor: kWhite, // selected icon and text color
+          iconSize: 28, // tab button icon size
+          tabBackgroundColor: kLogoGreen, // selected tab background color
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10), // navigation bar padding
+          tabMargin: EdgeInsets.symmetric(horizontal: 3, vertical: 8),
+          tabs: [
+            GButton(
+              icon: Icons.add_shopping_cart_outlined,
+              text: LocaleKeys.new_orders.tr(),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => Homescreen(),
+                ));
+              },
+            ),
+            GButton(
+              icon: Icons.price_change,
+              text: LocaleKeys.wallet.tr(),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => WalletScreen(),
+                ));
+              },
+            ),
+            GButton(
+              icon: Icons.checklist_outlined,
+              text: LocaleKeys.my_orders.tr(),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => MyOrdersScreen(),
+                ));
+              },
+            ),
+            GButton(
+              icon: Icons.notifications_none_outlined,
+              text: LocaleKeys.notifications_tab.tr(),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(
+                builder: (context) => NotificationsScreen(),
+                ));
+              },
+            )
+          ]
         ),
+        endDrawer: drawerDesign(context),
       ),
     );
   }
