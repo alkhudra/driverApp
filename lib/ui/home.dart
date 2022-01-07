@@ -1,19 +1,12 @@
 import 'package:alkhudhrah_app/constants/colors.dart';
+import 'package:alkhudhrah_app/designs/bottom_nav_bar.dart';
 import 'package:alkhudhrah_app/designs/drawer_design.dart';
 import 'package:alkhudhrah_app/locale/locale_keys.g.dart';
-import 'package:alkhudhrah_app/ui/contact_us.dart';
-import 'package:alkhudhrah_app/ui/edit_profile.dart';
-import 'package:alkhudhrah_app/ui/language.dart';
 import 'package:alkhudhrah_app/ui/order_details.dart';
-import 'package:alkhudhrah_app/ui/wallet.dart';
-import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
 
-import 'my_orders.dart';
-import 'notifications.dart';
 
 class Homescreen extends StatefulWidget {
   const Homescreen({ Key? key }) : super(key: key);
@@ -49,63 +42,7 @@ class _HomescreenState extends State<Homescreen> {
           ),
         ),
         backgroundColor: Colors.grey[100],
-        bottomNavigationBar: GNav(
-          backgroundColor: kWhite,
-          rippleColor: kGray, // tab button ripple color when pressed
-          hoverColor: kGray, // tab button hover color
-          haptic: true, // haptic feedback
-          tabBorderRadius: 20, 
-          tabActiveBorder: Border.all(color: kLogoGreen, width: 1), // tab button border
-          // tabBorder: Border.all(color: kLightGreen, width: 1), // tab button border
-          // tabShadow: [BoxShadow(color: Colors.grey.withOpacity(0.5), blurRadius: 8)], // tab button shadow
-          curve: Curves.easeOutCubic, // tab animation curves
-          duration: Duration(milliseconds: 500), // tab animation duration
-          gap: 8, // the tab button gap between icon and text 
-          color: kBlack.withOpacity(0.4), // unselected icon color
-          activeColor: kWhite, // selected icon and text color
-          iconSize: 28, // tab button icon size
-          tabBackgroundColor: kLogoGreen, // selected tab background color
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10), // navigation bar padding
-          tabMargin: EdgeInsets.symmetric(horizontal: 3, vertical: 8),
-          tabs: [
-            GButton(
-              icon: Icons.add_shopping_cart_outlined,
-              text: LocaleKeys.new_orders.tr(),
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => Homescreen(),
-                ));
-              },
-            ),
-            GButton(
-              icon: Icons.price_change,
-              text: LocaleKeys.wallet.tr(),
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => WalletScreen(),
-                ));
-              },
-            ),
-            GButton(
-              icon: Icons.checklist_outlined,
-              text: LocaleKeys.my_orders.tr(),
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => MyOrdersScreen(),
-                ));
-              },
-            ),
-            GButton(
-              icon: Icons.notifications_none_outlined,
-              text: LocaleKeys.notifications_tab.tr(),
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(
-                builder: (context) => NotificationsScreen(),
-                ));
-              },
-            )
-          ]
-        ),
+        bottomNavigationBar: navBarDesign(context),
         body: SingleChildScrollView(
           child: Container(
             decoration: BoxDecoration(

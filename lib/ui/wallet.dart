@@ -1,4 +1,6 @@
 import 'package:alkhudhrah_app/constants/colors.dart';
+import 'package:alkhudhrah_app/designs/bottom_nav_bar.dart';
+import 'package:alkhudhrah_app/designs/drawer_design.dart';
 import 'package:alkhudhrah_app/locale/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -18,65 +20,55 @@ class WalletScreen extends StatefulWidget {
 class _WalletScreenState extends State<WalletScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-              bottomNavigationBar: GNav(
-          backgroundColor: kWhite,
-          rippleColor: kGray, // tab button ripple color when pressed
-          hoverColor: kGray, // tab button hover color
-          haptic: true, // haptic feedback
-          tabBorderRadius: 20, 
-          tabActiveBorder: Border.all(color: kLogoGreen, width: 1), // tab button border
-          // tabBorder: Border.all(color: kLightGreen, width: 1), // tab button border
-          // tabShadow: [BoxShadow(color: Colors.grey.withOpacity(0.5), blurRadius: 8)], // tab button shadow
-          curve: Curves.easeOutCubic, // tab animation curves
-          duration: Duration(milliseconds: 500), // tab animation duration
-          gap: 8, // the tab button gap between icon and text 
-          color: kBlack.withOpacity(0.4), // unselected icon color
-          activeColor: kWhite, // selected icon and text color
-          iconSize: 28, // tab button icon size
-          tabBackgroundColor: kLogoGreen, // selected tab background color
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10), // navigation bar padding
-          tabMargin: EdgeInsets.symmetric(horizontal: 3, vertical: 8),
-          tabs: [
-            GButton(
-              icon: Icons.add_shopping_cart_outlined,
-              text: LocaleKeys.new_orders.tr(),
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => Homescreen(),
-                ));
-              },
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.grey[100],
+        body: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              centerTitle: true,
+              // collapsedHeight: 200,
+              title: Text(LocaleKeys.wallet.tr(), style: TextStyle(
+                fontWeight: FontWeight.w700,
+                fontSize: 22
+              ),),
+              flexibleSpace: Stack(
+                children: [
+                  Positioned.fill(
+                    left: 180,
+                    child: Image.asset('assets/images/grapevector.png'),
+                  ),
+                ],
+              ),
+              expandedHeight: 160,
+              elevation: 0.0,
+              backgroundColor: kLogoGreen,
+              iconTheme: IconThemeData(color: kWhite),
+              leading: IconButton(
+                icon: Icon(Icons.arrow_back_ios), 
+                color: kWhite,
+                onPressed: () => Navigator.pop(context),
+              ),
             ),
-            GButton(
-              icon: Icons.price_change,
-              text: LocaleKeys.wallet.tr(),
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => WalletScreen(),
-                ));
-              },
+            SliverToBoxAdapter(
+              child: Container(
+                // margin: EdgeInsets.only(top: 100),
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height,
+                color: kWhite,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                  ],
+                ),
+              ),
             ),
-            GButton(
-              icon: Icons.checklist_outlined,
-              text: LocaleKeys.my_orders.tr(),
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => MyOrdersScreen(),
-                ));
-              },
-            ),
-            GButton(
-              icon: Icons.notifications_none_outlined,
-              text: LocaleKeys.notifications_tab.tr(),
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(
-                builder: (context) => NotificationsScreen(),
-                ));
-              },
-            )
-          ]
+          ],
         ),
-      
+        endDrawer: drawerDesign(context),
+        bottomNavigationBar: navBarDesign(context),
+      ),
     );
   }
 }
