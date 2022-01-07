@@ -4,14 +4,18 @@ import 'package:alkhudhrah_app/designs/buttons_design.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
+<<<<<<< HEAD
+class LanguageSetting extends StatefulWidget {
+=======
 import 'login_email.dart';
 
 class LanguageScreen extends StatefulWidget {
+>>>>>>> 9396e415e47a6419c2b9a45da5f9aa563241745a
   @override
-  _LanguageScreenState createState() => _LanguageScreenState();
+  _LanguageSettingState createState() => _LanguageSettingState();
 }
 
-class _LanguageScreenState extends State<LanguageScreen> {
+class _LanguageSettingState extends State<LanguageSetting> {
 
 
   void onLanguageButtonPressed(BuildContext context , String localeName) async{

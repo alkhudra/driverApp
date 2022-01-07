@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 const Color kLogoGreen = Color.fromRGBO(103, 156, 65, 1);
+const Color kDarkGreen = Color.fromRGBO(76, 179, 43, 1);
+const Color kLightGreen = Color.fromRGBO(93, 204, 58, 1);
 const Color kLogoBrown = Color.fromRGBO(116, 73, 34, 1);
 const Color kWhite = Colors.white; 
 const Color kGray = Color.fromRGBO(223, 228, 221, 1);

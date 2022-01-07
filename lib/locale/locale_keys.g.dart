@@ -40,9 +40,11 @@ abstract class  LocaleKeys {
   static const invalid_email = 'Invalid Email';
   static const wait = 'Loading... Please Wait';
   static const remember_me = 'Remember Me?';
+  static const process_success ='process_success';
+  static const continue_btn ='Continue';
+  static const order_details ='Order Details';
   static const wrong_email="wrong_email";
   static const code_not_match = "code_not_match";
-  static const continue_btn = "continue_btn";
   static const pass_changed_done="pass_changed_done";
 
 }
