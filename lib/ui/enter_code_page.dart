@@ -100,7 +100,7 @@ class _EnterCodePageState extends State<EnterCodePage> {
                       shape: StadiumBorder(),
                       child: ButtonsDesign.buttonsText(
                           LocaleKeys.continue_btn.tr(),
-                          kWhite),
+                          kWhite, 15),
                       color: kLogoGreen,
                     )),
                 SizedBox(

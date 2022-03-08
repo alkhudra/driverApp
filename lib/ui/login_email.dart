@@ -215,7 +215,7 @@ class _LoginEmailState extends State<LoginEmail> {
                   shape: StadiumBorder(),
                   child: ButtonsDesign.buttonsText(
                        LocaleKeys.reset_PW_title.tr(),
-                      kWhite),
+                      kWhite, 15),
                   color: kLogoGreen,
                 ))
           ],

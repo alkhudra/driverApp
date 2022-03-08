@@ -8,7 +8,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import 'contact_us.dart';
-import 'language.dart';
+import 'language_setting.dart';
 
 class ContactUs extends StatefulWidget {
   const ContactUs({ Key? key }) : super(key: key);

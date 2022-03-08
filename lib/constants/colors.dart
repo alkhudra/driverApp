@@ -6,6 +6,7 @@ const Color kLightGreen = Color.fromRGBO(93, 204, 58, 1);
 const Color kLogoBrown = Color.fromRGBO(116, 73, 34, 1);
 const Color kWhite = Colors.white; 
 const Color kGray = Color.fromRGBO(223, 228, 221, 1);
+const Color kDarkGray = Color.fromRGBO(95, 95, 95, 1);
 const Color kCard = Color.fromRGBO(251, 255, 249, 1);
 const Color kDarkBlue = Color.fromRGBO(10, 60, 72, 1);
 const Color kBlack = Color.fromRGBO(34, 41, 46, 1); 
@@ -20,6 +21,7 @@ const Color kLang = Color.fromRGBO(170, 104, 210, 1);
 const Color kConBG = Color.fromRGBO(221, 245, 244, 1);
 const Color kCon = Color.fromRGBO(62, 34, 111, 1);
 const Color kRed = Colors.red;
+const Color kBackgroundColor =Colors.white;
 
 
   // Color unlikeColor = Color.fromRGBO(136, 125, 125, 1);

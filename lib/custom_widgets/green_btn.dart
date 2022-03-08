@@ -12,7 +12,7 @@ Widget greenBtn(String txt,EdgeInsetsGeometry edgeInsetsGeometry, Function() onP
       child: MaterialButton(
         onPressed: onPressed,
         shape: StadiumBorder(),
-        child: ButtonsDesign.buttonsText(txt, kWhite),
+        child: ButtonsDesign.buttonsText(txt, kWhite, 15),
         color: kLogoGreen,
       ));
 }

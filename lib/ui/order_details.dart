@@ -16,7 +16,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 
 import 'contact_us.dart';
 import 'edit_profile.dart';
-import 'language.dart';
+import 'language_setting.dart';
 
 class OrderDetails extends StatefulWidget {
   const OrderDetails({ Key? key }) : super(key: key);

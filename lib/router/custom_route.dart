@@ -1,6 +1,6 @@
 import 'package:alkhudhrah_app/ui/home.dart';
 import 'package:flutter/material.dart';
-import 'package:alkhudhrah_app/ui/language.dart';
+import 'package:alkhudhrah_app/ui/language_setting.dart';
 import 'package:alkhudhrah_app/ui/login.dart';
 import 'package:alkhudhrah_app/main.dart';
 import 'package:alkhudhrah_app/router/route_constants.dart';
