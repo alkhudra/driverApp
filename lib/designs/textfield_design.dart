@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 class TextFieldDesign {
 
-
   static textFieldStyle({context, double? verMarg, double? horMarg, TextEditingController? controller, TextInputType? kbType, String? lbTxt, validat, enabled, obscTxt}) {
     return Container(
       alignment: Alignment.center,

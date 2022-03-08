@@ -42,7 +42,7 @@ class _HomescreenState extends State<Homescreen> {
           ),
         ),
         backgroundColor: Colors.grey[100],
-        bottomNavigationBar: navBarDesign(context),
+        bottomNavigationBar: BottomNavBar(),
         body: SingleChildScrollView(
           child: Container(
             decoration: BoxDecoration(

@@ -12,7 +12,7 @@ Drawer drawerDesign(context) {
       children: [
         Container(
           width: 100,
-          height: 300,
+          height: 250,
           decoration: BoxDecoration(
             color: kLogoGreen,
             borderRadius: BorderRadius.only(
@@ -49,25 +49,25 @@ Drawer drawerDesign(context) {
                 ),),
               ),
               SizedBox(height: 20,),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(context, MaterialPageRoute(
-                    builder: (context) => EditProfile())
-                  );
-                },
-                child: Container(
-                  width: 120,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: kWhite,
-                    borderRadius: BorderRadius.circular(40),
-                  ),
-                  child: Center(child: Text(LocaleKeys.edit_profile.tr(),
-                  style: TextStyle(color: kLogoGreen,
-                  fontWeight: FontWeight.w700))),
-                ),
-              ),
+              // GestureDetector(
+              //   onTap: () {
+              //     Navigator.pop(context);
+              //     Navigator.push(context, MaterialPageRoute(
+              //       builder: (context) => EditProfile())
+              //     );
+              //   },
+              //   child: Container(
+              //     width: 120,
+              //     height: 40,
+              //     decoration: BoxDecoration(
+              //       color: kWhite,
+              //       borderRadius: BorderRadius.circular(40),
+              //     ),
+              //     child: Center(child: Text(LocaleKeys.edit_profile.tr(),
+              //     style: TextStyle(color: kLogoGreen,
+              //     fontWeight: FontWeight.w700))),
+              //   ),
+              // ),
             ],
           ),
         ),

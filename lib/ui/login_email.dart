@@ -135,7 +135,7 @@ class _LoginEmailState extends State<LoginEmail> {
                     height: scHeight * 0.05,
                   ),
                   greenBtn(LocaleKeys.SIGN_IN.tr(),
-                      EdgeInsets.only(left: 50, right: 50), () {
+                      EdgeInsets.only(left: 50, right: 50, top: 30), () {
                         if (isBtnEnabled) logIn();
                       })
 

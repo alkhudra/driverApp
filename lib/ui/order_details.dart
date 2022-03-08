@@ -236,7 +236,7 @@ class _OrderDetailsState extends State<OrderDetails> {
             ),
           ],
         ),
-        bottomNavigationBar: navBarDesign(context),
+        bottomNavigationBar: BottomNavBar(),
         endDrawer: drawerDesign(context),
       ),
     );

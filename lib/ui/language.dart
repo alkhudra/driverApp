@@ -93,42 +93,72 @@ class _LanguageSettingState extends State<LanguageSetting> {
                     SizedBox(
                       height: 20,
                     ),
-                    ListTile(
-                      title: Text(LocaleKeys.english.tr(),
-                      style: TextStyle(
-                        color: kLogoGreen,
-                        fontWeight: FontWeight.w700
-                      ),),
-                      leading: Radio<Languages>(
-                        activeColor: kLogoGreen,
-                        value: Languages.english,
-                        groupValue: _character,
-                        onChanged: (Languages? value) {
-                          setState(() {
-                            _character = value;
-                            onLanguageButtonPressed(context,'en');
-                          });
-                        },
-                      ),
-                    ),
-                    ListTile(
-                      title: Text(LocaleKeys.arabic.tr(),
-                      style: TextStyle(
-                        color: kLogoGreen,
-                        fontWeight: FontWeight.w700
-                      ),),
-                      leading: Radio<Languages>(
-                        activeColor: kLogoGreen,
-                        value: Languages.arabic,
-                        groupValue: _character,
-                        onChanged: (Languages? value) {
-                          setState(() {
-                            _character = value;
-                            onLanguageButtonPressed(context,'ar');
-                          });
-                        },
-                      ),
-                    ),
+            Container(
+              margin: EdgeInsets.only(left: 40, right: 40),
+              child: MaterialButton(
+                onPressed: () {
+                  onLanguageButtonPressed(context,'ar');
+                },
+                height: ButtonsDesign.buttonsHeight,
+                shape: StadiumBorder(),
+                child: ButtonsDesign.buttonsText('عربي',kWhite),
+                color: kLogoBrown,
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 40, right: 40),
+              child: MaterialButton(
+                onPressed: () {
+                  onLanguageButtonPressed(context,'en');
+                },
+                height: ButtonsDesign.buttonsHeight,
+                shape: StadiumBorder(),
+                child: ButtonsDesign.buttonsText('english',kWhite),
+                color: kLogoGreen,
+              ),
+            ),
+                    // ListTile(
+                    //   title: Text(LocaleKeys.english.tr(),
+                    //   style: TextStyle(
+                    //     color: kLogoGreen,
+                    //     fontWeight: FontWeight.w700
+                    //   ),),
+                    //   leading: Radio<Languages>(
+                    //     activeColor: kLogoGreen,
+                    //     value: Languages.english,
+                    //     groupValue: _character,
+                    //     onChanged: (Languages? value) {
+                    //       setState(() {
+                    //         _character = value;
+                    //         onLanguageButtonPressed(context,'en');
+                    //       });
+                    //     },
+                    //   ),
+                    // ),
+                    //add english button
+
+                    // ListTile(
+                    //   title: Text(LocaleKeys.arabic.tr(),
+                    //   style: TextStyle(
+                    //     color: kLogoGreen,
+                    //     fontWeight: FontWeight.w700
+                    //   ),),
+                    //   leading: Radio<Languages>(
+                    //     activeColor: kLogoGreen,
+                    //     value: Languages.arabic,
+                    //     groupValue: _character,
+                    //     onChanged: (Languages? value) {
+                    //       setState(() {
+                    //         _character = value;
+                    //         onLanguageButtonPressed(context,'ar');
+                    //       });
+                    //     },
+                    //   ),
+                    // ),
+                    //add arabic button
                   ],
                 ),
               ),

@@ -67,7 +67,7 @@ class _WalletScreenState extends State<WalletScreen> {
           ],
         ),
         endDrawer: drawerDesign(context),
-        bottomNavigationBar: navBarDesign(context),
+        bottomNavigationBar: BottomNavBar(),
       ),
     );
   }
