@@ -1,5 +1,8 @@
 import 'package:alkhudhrah_app/constants/colors.dart';
+import 'package:alkhudhrah_app/helper/route_helper.dart';
+import 'package:alkhudhrah_app/helper/shared_pref_helper.dart';
 import 'package:alkhudhrah_app/locale/locale_keys.g.dart';
+import 'package:alkhudhrah_app/router/route_constants.dart';
 import 'package:alkhudhrah_app/ui/contact_us.dart';
 import 'package:alkhudhrah_app/ui/edit_profile.dart';
 import 'package:alkhudhrah_app/ui/language_setting.dart';
@@ -9,6 +12,7 @@ import 'package:easy_localization/easy_localization.dart';
 Drawer drawerDesign(context) {
   return Drawer(
     child: ListView(
+      padding: EdgeInsets.all(0.0),
       children: [
         Container(
           width: 100,
@@ -157,11 +161,11 @@ Drawer drawerDesign(context) {
           ),
           onTap: () {
             Navigator.pop(context);
-            Navigator.push(context, 
-            MaterialPageRoute(
-              builder: (context) => EditProfile()
-              ),
-            );
+            PreferencesHelper.setUser(null);
+            PreferencesHelper.setUserLoggedIn(false);
+            PreferencesHelper.setUserFirstLogIn(false);
+
+            moveToNewStack(context, loginRoute);
           },
         ),
       ],

@@ -41,132 +41,130 @@ class _LanguageSettingState extends State<LanguageSetting> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.grey[100],
-        body: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              centerTitle: true,
-              // collapsedHeight: 200,
-              title: Text(LocaleKeys.app_lang.tr(), style: TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 22
-              ),),
-              flexibleSpace: Stack(
+    return Scaffold(
+      backgroundColor: Colors.grey[100],
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            centerTitle: true,
+            // collapsedHeight: 200,
+            title: Text(LocaleKeys.app_lang.tr(), style: TextStyle(
+              fontWeight: FontWeight.w700,
+              fontSize: 22
+            ),),
+            flexibleSpace: Stack(
+              children: [
+                Positioned.fill(
+                  left: 180,
+                  child: Image.asset('assets/images/grapevector.png'),
+                ),
+              ],
+            ),
+            expandedHeight: 160,
+            elevation: 0.0,
+            backgroundColor: kLogoGreen,
+            iconTheme: IconThemeData(color: kWhite),
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios), 
+              color: kWhite,
+              onPressed: () => Navigator.pop(context),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Container(
+              // margin: EdgeInsets.only(top: 100),
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height,
+              color: kWhite,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Positioned.fill(
-                    left: 180,
-                    child: Image.asset('assets/images/grapevector.png'),
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+                    child: Text(LocaleKeys.select_lang.tr()+':',
+                    style: TextStyle(
+                      color: kBlack.withOpacity(0.7),
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600
+                    ),),
                   ),
+                  SizedBox(
+                    height: 20,
+                  ),
+          Container(
+            margin: EdgeInsets.only(left: 40, right: 40),
+            child: MaterialButton(
+              onPressed: () {
+                onLanguageButtonPressed(context,'ar');
+              },
+              height: ButtonsDesign.buttonsHeight,
+              shape: StadiumBorder(),
+              child: ButtonsDesign.buttonsText('عربي',kWhite, 15),
+              color: kLogoBrown,
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 40, right: 40),
+            child: MaterialButton(
+              onPressed: () {
+                onLanguageButtonPressed(context,'en');
+              },
+              height: ButtonsDesign.buttonsHeight,
+              shape: StadiumBorder(),
+              child: ButtonsDesign.buttonsText('english', kWhite, 15),
+              color: kLogoGreen,
+            ),
+          ),
+                  // ListTile(
+                  //   title: Text(LocaleKeys.english.tr(),
+                  //   style: TextStyle(
+                  //     color: kLogoGreen,
+                  //     fontWeight: FontWeight.w700
+                  //   ),),
+                  //   leading: Radio<Languages>(
+                  //     activeColor: kLogoGreen,
+                  //     value: Languages.english,
+                  //     groupValue: _character,
+                  //     onChanged: (Languages? value) {
+                  //       setState(() {
+                  //         _character = value;
+                  //         onLanguageButtonPressed(context,'en');
+                  //       });
+                  //     },
+                  //   ),
+                  // ),
+                  //add english button
+
+                  // ListTile(
+                  //   title: Text(LocaleKeys.arabic.tr(),
+                  //   style: TextStyle(
+                  //     color: kLogoGreen,
+                  //     fontWeight: FontWeight.w700
+                  //   ),),
+                  //   leading: Radio<Languages>(
+                  //     activeColor: kLogoGreen,
+                  //     value: Languages.arabic,
+                  //     groupValue: _character,
+                  //     onChanged: (Languages? value) {
+                  //       setState(() {
+                  //         _character = value;
+                  //         onLanguageButtonPressed(context,'ar');
+                  //       });
+                  //     },
+                  //   ),
+                  // ),
+                  //add arabic button
                 ],
               ),
-              expandedHeight: 160,
-              elevation: 0.0,
-              backgroundColor: kLogoGreen,
-              iconTheme: IconThemeData(color: kWhite),
-              leading: IconButton(
-                icon: Icon(Icons.arrow_back_ios), 
-                color: kWhite,
-                onPressed: () => Navigator.pop(context),
-              ),
             ),
-            SliverToBoxAdapter(
-              child: Container(
-                // margin: EdgeInsets.only(top: 100),
-                width: double.infinity,
-                height: MediaQuery.of(context).size.height,
-                color: kWhite,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-                      child: Text(LocaleKeys.select_lang.tr()+':',
-                      style: TextStyle(
-                        color: kBlack.withOpacity(0.7),
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600
-                      ),),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-            Container(
-              margin: EdgeInsets.only(left: 40, right: 40),
-              child: MaterialButton(
-                onPressed: () {
-                  onLanguageButtonPressed(context,'ar');
-                },
-                height: ButtonsDesign.buttonsHeight,
-                shape: StadiumBorder(),
-                child: ButtonsDesign.buttonsText('عربي',kWhite, 15),
-                color: kLogoBrown,
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 40, right: 40),
-              child: MaterialButton(
-                onPressed: () {
-                  onLanguageButtonPressed(context,'en');
-                },
-                height: ButtonsDesign.buttonsHeight,
-                shape: StadiumBorder(),
-                child: ButtonsDesign.buttonsText('english', kWhite, 15),
-                color: kLogoGreen,
-              ),
-            ),
-                    // ListTile(
-                    //   title: Text(LocaleKeys.english.tr(),
-                    //   style: TextStyle(
-                    //     color: kLogoGreen,
-                    //     fontWeight: FontWeight.w700
-                    //   ),),
-                    //   leading: Radio<Languages>(
-                    //     activeColor: kLogoGreen,
-                    //     value: Languages.english,
-                    //     groupValue: _character,
-                    //     onChanged: (Languages? value) {
-                    //       setState(() {
-                    //         _character = value;
-                    //         onLanguageButtonPressed(context,'en');
-                    //       });
-                    //     },
-                    //   ),
-                    // ),
-                    //add english button
-
-                    // ListTile(
-                    //   title: Text(LocaleKeys.arabic.tr(),
-                    //   style: TextStyle(
-                    //     color: kLogoGreen,
-                    //     fontWeight: FontWeight.w700
-                    //   ),),
-                    //   leading: Radio<Languages>(
-                    //     activeColor: kLogoGreen,
-                    //     value: Languages.arabic,
-                    //     groupValue: _character,
-                    //     onChanged: (Languages? value) {
-                    //       setState(() {
-                    //         _character = value;
-                    //         onLanguageButtonPressed(context,'ar');
-                    //       });
-                    //     },
-                    //   ),
-                    // ),
-                    //add arabic button
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-        endDrawer: drawerDesign(context),
+          ),
+        ],
       ),
+      endDrawer: drawerDesign(context),
     );
   }
 }

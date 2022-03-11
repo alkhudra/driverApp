@@ -7,15 +7,21 @@ import 'package:alkhudhrah_app/network/api/api_config.dart';
 import 'package:alkhudhrah_app/network/api/api_response.dart';
 import 'package:alkhudhrah_app/network/api/api_response_type.dart';
 import 'package:alkhudhrah_app/network/models/auth/fail_reset_password_response_model.dart';
+import 'package:alkhudhrah_app/network/models/error_response_model.dart';
 import 'package:alkhudhrah_app/network/models/message_response_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:dio/dio.dart';
 
-class LoginRepository {
-  final RestClient _client;
+class AuthRepository {
+   late final RestClient _client;
 
-  LoginRepository([RestClient? client])
-      : _client = client ?? RestClient(Dio());
+  // AuthRepository([RestClient? client])
+  //     : _client = client ?? RestClient(Dio());
+  AuthRepository(Map<String,dynamic> headerMap) {
+    _client = RestClient(Dio(
+    BaseOptions(contentType: 'application/json', headers: headerMap),
+  ));
+}
 
 
 
@@ -41,12 +47,10 @@ class LoginRepository {
         .loginUser(hashMap)
         .then((value) => ApiResponse(ApiResponseType.OK, value, ''))
         .catchError((e) {
-
       int errorCode = 0;
       String errorMessage = "";
       switch (e.runtimeType) {
         case DioError:
-
           final res = (e as DioError).response;
           if (res != null) {
             errorCode = res.statusCode!;
@@ -96,8 +100,13 @@ class LoginRepository {
             errorMessage = res.statusMessage!;
             if(errorCode == 500)
               errorMessage = res.data['Message'];
-            else  if(errorCode == 400)
-              errorMessage = LocaleKeys.invalid_email.tr();
+            else  if(errorCode == 400) {
+              // errorMessage = LocaleKeys.invalid_email.tr();
+              ErrorResponseModel errorResponseModel = 
+                  ErrorResponseModel.fromJson(res.data);
+              errorMessage = errorResponseModel.error!.message!;
+              print(errorMessage);
+            }
           }
           break;
         default:
@@ -138,8 +147,6 @@ class LoginRepository {
             if (errorCode == 500) {
               errorMessage = res.data['Message'];
             }else if(errorCode ==400){
-
-
               print(res.data);
               String map = res.data.toString();
               if (map.contains('message')) {

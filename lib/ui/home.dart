@@ -1,6 +1,8 @@
 import 'package:alkhudhrah_app/constants/colors.dart';
+import 'package:alkhudhrah_app/designs/appbar_design.dart';
 import 'package:alkhudhrah_app/designs/bottom_nav_bar.dart';
 import 'package:alkhudhrah_app/designs/drawer_design.dart';
+import 'package:alkhudhrah_app/designs/order_tile_design.dart';
 import 'package:alkhudhrah_app/locale/locale_keys.g.dart';
 import 'package:alkhudhrah_app/ui/order_details.dart';
 import 'package:flutter/material.dart';
@@ -15,71 +17,107 @@ class Homescreen extends StatefulWidget {
   _HomescreenState createState() => _HomescreenState();
 }
 
-class _HomescreenState extends State<Homescreen> {
+class _HomescreenState extends State<Homescreen>  with SingleTickerProviderStateMixin {
   // List<String> orders = <String>[];
 
   int currentPage = 0;
 
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    _tabController = TabController(length: 2, vsync: this);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _tabController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        endDrawer: drawerDesign(context),
-        appBar: AppBar(
-          title: Text('Welcome Back, John Doe', style: TextStyle(
-            color: kLogoBrown, 
-            fontWeight: FontWeight.w600
-          ),),
-          elevation: 0.0,
-          iconTheme: IconThemeData(
-            color: kLogoBrown,
-          ),
-          backgroundColor: Colors.transparent,
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios), 
-            color: kLogoBrown,
-            onPressed: () => Navigator.pop(context),
-          ),
-        ),
-        backgroundColor: Colors.grey[100],
-        bottomNavigationBar: BottomNavBar(),
-        body: SingleChildScrollView(
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(40),
-                topRight: Radius.circular(40),
+    Size size = MediaQuery.of(context).size;
+    double scWidth = size.width;
+    double scHeight = size.height;
+
+    return Scaffold(
+      appBar: bnbAppBar(context, LocaleKeys.home.tr()),
+      endDrawer: drawerDesign(context),
+      backgroundColor: kBackgroundColor,
+      // bottomNavigationBar: BottomNavBar(),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: Container(
+              height: 40,
+              width: 320,
+              decoration: BoxDecoration(
+                // color: CustomColors().primaryWhiteColor,
+                borderRadius: BorderRadius.circular(25),
+                border: Border.all(color: kLogoGreen),
+              ),
+              child: TabBar(
+                controller: _tabController,
+                // give the indicator a decoration (color and border radius)
+                indicator: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25),
+                  color: kLogoGreen,
+                ),
+                labelColor: kWhite,
+                labelStyle: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontFamily: 'Almarai',
+                  fontSize: 16
+                ),
+                unselectedLabelColor: kDarkBlue,
+                tabs: [
+                  // first tab [you can add an icon using the icon property]
+                  Tab(
+                    text: LocaleKeys.current_orders.tr(),
+                  ),
+
+                  // second tab [you can add an icon using the icon property]
+                  Tab(
+                    text: LocaleKeys.completed_orders.tr(),
+                  ),
+                ],
               ),
             ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+          ),
+          SizedBox(height: 10,),
+          Expanded(
+            child: TabBarView(
+              controller: _tabController,
               children: [
-                SizedBox(height: 50,),
-                //column for incoming orders
+                // first tab bar view widget 
                 Container(
-                  alignment: Alignment.center,
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width/0.4,
+                  margin: EdgeInsets.symmetric(horizontal: 20,),
+                  child: ListView.builder(
+                      itemBuilder: ((context, index) {
+                        return orderTileDesign(context, scWidth, scHeight);
+                      }),
+                      itemCount: 10,
+                    ),
+                ),
+
+
+                // second tab bar view widget
+                Container(
                   margin: EdgeInsets.symmetric(horizontal: 20),
-                  child: ListView(
-                    scrollDirection: Axis.vertical,
-                    children: [
-                      getOrder(context, 'Carrots', 35, "12:43 PM", 'Restaurant A'),
-                      SizedBox(height: 10,),
-                      getOrder(context, 'Tomatoes', 10, "09:07 AM", 'Restaurant B'),
-                      SizedBox(height: 10,),
-                      getOrder(context, 'Leek', 53, "06:35 PM", 'Restaurant C'),
-                      SizedBox(height: 10,),
-                      getOrder(context, 'Oranges', 200, "08:29 PM", 'Restaurant D'),
-                      // SizedBox(height: 10,),
-                    ],
+                  child: ListView.builder(
+                    itemBuilder: ((context, index) {
+                      return orderTileDesign(context, scWidth, scHeight);
+                    }),
+                    itemCount: 10,
                   ),
                 ),
-        
               ],
             ),
           ),
-        ),
+        ],
       ),
     );
   }

@@ -87,7 +87,7 @@ flutter:
   fonts:
   - family: Almarai
     fonts:
-      - asset: fonts/Almarai-Regular.ttf
+      - asset: assets/fonts/Almarai-Regular.ttf
 
 
   # fonts:

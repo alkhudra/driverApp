@@ -1,12 +1,14 @@
 
 import 'dart:io';
+import 'package:alkhudhrah_app/constants/colors.dart';
+import 'package:alkhudhrah_app/helper/route_helper.dart';
+import 'package:alkhudhrah_app/locale/locale_keys.g.dart';
+import 'package:alkhudhrah_app/router/route_constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:alkhudhrah_app/locale/locale_keys.g.dart';
+import 'package:alkhudhrah_app/main.dart';
 import 'package:alkhudhrah_app/ui/login_email.dart';
-import 'package:alkhudhrah_app/constants/colors.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:alkhudhrah_app/router/route_constants.dart';
 
 Widget showMessageDialog(BuildContext context, String title, String txt,String pageRout) {
   if (Platform.isIOS) {
@@ -14,8 +16,8 @@ Widget showMessageDialog(BuildContext context, String title, String txt,String p
       title: Text(title), // To display the title it is optional
       content: Text(txt), // Message which will be pop up on the screen
       actions: [
-        if(pageRout == loginRoute)
-          directToLoginPageBtns(context)
+        if(pageRout != noPage)
+          directToPageBtns(context,pageRout)
         else
         messageDialogBtns(context ),
       ],
@@ -25,8 +27,8 @@ Widget showMessageDialog(BuildContext context, String title, String txt,String p
       title: Text(title), // To display the title it is optional
       content: Text(txt), // Message which will be pop up on the screen
       actions: [
-        if(pageRout == loginRoute)
-          directToLoginPageBtns(context)
+        if(pageRout != noPage)
+          directToPageBtns(context,pageRout)
         else
           messageDialogBtns(context ),
       ],
@@ -34,11 +36,10 @@ Widget showMessageDialog(BuildContext context, String title, String txt,String p
   }
 }
 
-TextButton messageDialogBtns(BuildContext context) {
-  return TextButton(
-    style: TextButton.styleFrom(
-      backgroundColor: kLogoGreen,
-    ),
+//------------------------------------
+FlatButton messageDialogBtns(BuildContext context) {
+  return FlatButton(
+    textColor: kLogoGreen,
     onPressed: () {
       Navigator.pop(context);
       },
@@ -48,25 +49,31 @@ TextButton messageDialogBtns(BuildContext context) {
     ),
   );
 }
+//------------------------------------
 
 
-TextButton directToLoginPageBtns(BuildContext context) {
+FlatButton directToPageBtns(BuildContext context,String route) {
 
-  return TextButton(
-    style: TextButton.styleFrom(
-      backgroundColor: kLogoGreen,
-    ),
+  return FlatButton(
+    textColor: kLogoGreen,
     onPressed: () {
       Navigator.pop(context);
-      Navigator.push(context,
 
-          MaterialPageRoute(builder: (context) {
-            return LoginEmail();
-          }));
+      moveToNewStack(context , route);
+
+
     },
     child: Text(
       LocaleKeys.ok.tr(),
       style: TextStyle(fontWeight: FontWeight.bold),
     ),
   );
+}
+
+
+void showErrorMessageDialog(BuildContext context ,String txt) {
+  showDialog<String>(
+      context: context,
+      builder: (BuildContext context) =>
+          showMessageDialog(context, LocaleKeys.error.tr(), txt, noPage));
 }

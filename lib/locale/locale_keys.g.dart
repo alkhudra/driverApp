@@ -56,8 +56,12 @@ abstract class  LocaleKeys {
   static const english ="English";
   static const arabic ="Arabic";
   static const wallet ="Wallet";
-  static const new_orders ="New Orders";
-  static const my_orders ="My Orders";
+  static const current_orders ="Current";
+  static const completed_orders ="Completed";
+  static const orders ="Orders";
   static const notifications_tab ="Notifications";
-
+  static const home ="Home";
+  static const load_more = "Load More";
+  static const wrong_error = "wrong_error";
+  static const welcome_back = "Welcome Back";
 }

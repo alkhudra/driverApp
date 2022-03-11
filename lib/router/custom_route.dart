@@ -1,4 +1,6 @@
+import 'package:alkhudhrah_app/ui/dashboard_page.dart';
 import 'package:alkhudhrah_app/ui/home.dart';
+import 'package:alkhudhrah_app/ui/language_page.dart';
 import 'package:flutter/material.dart';
 import 'package:alkhudhrah_app/ui/language_setting.dart';
 import 'package:alkhudhrah_app/ui/login.dart';
@@ -14,11 +16,41 @@ class CustomRouter {
       case homeRoute:
         return MaterialPageRoute(builder: (_) => Homescreen());
       case languageRoute:
-        return MaterialPageRoute(builder: (_) => LanguageSetting());
-      case welcomeRoute:
-        return MaterialPageRoute(builder: (_) => MyHomepage());
+        return MaterialPageRoute(builder: (_) => LanguagePage());
       default:
-        return MaterialPageRoute(builder: (_) => MyHomepage());
+        return MaterialPageRoute(builder: (_) => DashboardPage());
     }
   }
+
+  static Route<dynamic> dlGeneratedRoute(RouteSettings routeSettings) {
+    switch(routeSettings.name) {
+      //Add Product Details page
+     /* case "/productPage":
+      if (args is Map) {
+        return MaterialPageRoute(
+          builder: (_) {
+            return ProductDetails(productModel: productModel, language: language)
+          }
+         );
+      } */
+
+      default: 
+      return _errorRoute();
+    }
+  }
+
+  static Route<dynamic> _errorRoute() {
+    return MaterialPageRoute(
+      builder: (_) {
+        return Scaffold(
+          body: Center(
+            child: Container(
+              child: Text('Page Not Found!'),
+            ),
+          ),
+        );
+      }
+    );
+  }
 }
+

@@ -10,6 +10,7 @@ import 'package:alkhudhrah_app/dialogs/progress_dialog.dart';
 import 'package:alkhudhrah_app/helper/shared_pref_helper.dart';
 import 'package:alkhudhrah_app/locale/locale_keys.g.dart';
 import 'package:alkhudhrah_app/network/api/api_response_type.dart';
+import 'package:alkhudhrah_app/network/helper/network_helper.dart';
 import 'package:alkhudhrah_app/network/models/auth/forget_password_response_model.dart';
 import 'package:alkhudhrah_app/network/repository/login_repository.dart';
 import 'package:alkhudhrah_app/router/route_constants.dart';
@@ -187,13 +188,15 @@ class _EnterCodePageState extends State<EnterCodePage> {
   }
 
   //-------------------
-  void resendCode(String userEmail) {
+  void resendCode(String userEmail) async {
     isResendEnabled = false;
     showLoaderDialog(context);
 
 
     //----------start api ----------------
-    LoginRepository loginRepository = LoginRepository();
+    Map<String, dynamic> headerMap = await getAuthHeaderMap();
+    
+    AuthRepository loginRepository = AuthRepository(headerMap);
     loginRepository.forgetPassword(userEmail).then((result) async {
       //-------- fail response ---------
 
