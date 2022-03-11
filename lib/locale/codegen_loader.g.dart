@@ -80,6 +80,8 @@ class CodegenLoader extends AssetLoader {
   "Load More": "LOAD MORE",
   "wrong_error": "Something Wrong Happened, Please try again later",
   "Welcome Back": "Welcome Back",
+  "Current Credit": "Current Credit",
+  "SAR": "SAR",
 };
 static const Map<String,dynamic> ar = {
   "SIGN IN": "تسجيل الدخول",
@@ -147,6 +149,8 @@ static const Map<String,dynamic> ar = {
   "Load More": "عرض المزيد",
   "wrong_error": "حدث خطأ ما٫ يرجي المحاولة لاحقا ",
   "Welcome Back": "مرحبًا بعودتك",
+  "Current Credit": "الرصيد الحالي",
+  "SAR": "ريال",
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "ar": ar};
  }

@@ -64,4 +64,6 @@ abstract class  LocaleKeys {
   static const load_more = "Load More";
   static const wrong_error = "wrong_error";
   static const welcome_back = "Welcome Back";
+  static const credit = "Current Credit";
+  static const sar = "SAR";
 }

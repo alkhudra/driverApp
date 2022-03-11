@@ -22,9 +22,32 @@ class _WalletScreenState extends State<WalletScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: kBackgroundColor,
       appBar: appBarDesign(context, LocaleKeys.wallet.tr()),
-      body: Container()
+      body: Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              child: Text(LocaleKeys.credit.tr() + ' : ',
+              style: TextStyle(
+                color: kLogoGreen,
+                fontWeight: FontWeight.w600,
+                fontSize: 18
+              ),),
+            ),
+            SizedBox(width: 5,),
+                        Container(
+              child: Text(' -  ' + LocaleKeys.sar.tr(),
+              style: TextStyle(
+                color: kDarkGray.withOpacity(0.8),
+                fontWeight: FontWeight.w500,
+                fontSize: 17
+              ),),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
