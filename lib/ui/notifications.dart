@@ -1,4 +1,5 @@
 import 'package:alkhudhrah_app/designs/appbar_design.dart';
+import 'package:alkhudhrah_app/designs/drawer_design.dart';
 import 'package:alkhudhrah_app/locale/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarDesign(context, LocaleKeys.notifications_tab.tr()),
+      appBar: bnbAppBar(context, LocaleKeys.notifications_tab.tr()),
+      endDrawer: drawerDesign(context),
     );
   }
 }

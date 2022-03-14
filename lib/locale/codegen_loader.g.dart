@@ -82,6 +82,10 @@ class CodegenLoader extends AssetLoader {
   "Welcome Back": "Welcome Back",
   "Current Credit": "Current Credit",
   "SAR": "SAR",
+  "Social Media": "Social Media",
+  "Our Location": "Our Location",
+  "Twitter": "Twitter",
+  "WhatsApp": "WhatsApp",
 };
 static const Map<String,dynamic> ar = {
   "SIGN IN": "تسجيل الدخول",
@@ -151,6 +155,10 @@ static const Map<String,dynamic> ar = {
   "Welcome Back": "مرحبًا بعودتك",
   "Current Credit": "الرصيد الحالي",
   "SAR": "ريال",
+  "Social Media": "مواقع التواصل الاجتماعي",
+  "Our Location": "مقرنا",
+  "Twitter": "تويتر",
+  "WhatsApp": "واتس آب",
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "ar": ar};
  }

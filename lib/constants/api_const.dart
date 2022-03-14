@@ -7,6 +7,9 @@ abstract class ApiConst {
   static const String get_user_info_url = '/AccountDriver/getRegisteredUser/';
   static const String reset_password_url = '/AccountDriver/resetPassword';
   static const String forget_password_url = '/AccountDriver/forgetPassword';
+  //check if account or accountdriver for check pw token
+  static const String check_password_token_url = '/AccountDriver/checkPasswordToken';
+  static const String get_contact_url = "/Home/getContactUs";
   // static const String send_code_url = '/account/sendCode';
  // static const String check_password_token = '/AccountDriver/checkPasswordToken';
 }

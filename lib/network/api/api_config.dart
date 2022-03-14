@@ -14,8 +14,6 @@ part 'api_config.g.dart';
 * */
 @RestApi(baseUrl: ApiConst.basic_url)
 abstract class RestClient {
-
-
   factory RestClient(Dio dio,{String? baseUrl}) = _RestClient;
 
   @POST(ApiConst.login_url)
@@ -26,4 +24,10 @@ abstract class RestClient {
 
   @POST(ApiConst.reset_password_url)
   Future<dynamic> resetPassword(@Body() Map<String, dynamic> hashMap);
+
+  @GET(ApiConst.get_contact_url)
+  Future<dynamic> getContactInfo();
+
+  @POST(ApiConst.check_password_token_url)
+  Future<String> sendCodeForgetPassword(@Body() Map<String, dynamic> hashMap);
 }

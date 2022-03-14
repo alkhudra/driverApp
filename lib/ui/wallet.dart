@@ -23,7 +23,8 @@ class _WalletScreenState extends State<WalletScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kBackgroundColor,
-      appBar: appBarDesign(context, LocaleKeys.wallet.tr()),
+      appBar: bnbAppBar(context, LocaleKeys.wallet.tr()),
+      endDrawer: drawerDesign(context),
       body: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

@@ -66,4 +66,8 @@ abstract class  LocaleKeys {
   static const welcome_back = "Welcome Back";
   static const credit = "Current Credit";
   static const sar = "SAR";
+  static const social_media = "Social Media";
+  static const our_location = "Our Location";
+  static const twit = "Twitter";
+  static const whats_app = "WhatsApp";
 }
