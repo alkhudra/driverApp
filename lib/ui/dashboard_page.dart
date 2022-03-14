@@ -91,6 +91,7 @@ class _DashboardPageState extends State<DashboardPage> {
                       ? kLogoGreen 
                       : kGray,
                     ),
+                    SizedBox(height: 5,),
                     Text(
                       LocaleKeys.wallet.tr(),
                       style: TextStyle(
@@ -103,15 +104,19 @@ class _DashboardPageState extends State<DashboardPage> {
                   ],
                 ),
               ),
-              //Home FAB 
-              Container(
-                alignment: Alignment.bottomCenter,
-                child: Text(LocaleKeys.home.tr(),
-                style: TextStyle(
-                  color: currentTab == 1
-                          ? kLogoGreen
-                          : kGray,
-                ),
+              //Home FAB Text
+              Center(
+                child: Container(
+                  margin: EdgeInsets.only(bottom: 5),
+                  alignment: Alignment.bottomCenter,
+                  // color: Colors.red,
+                  child: Text(LocaleKeys.home.tr(),
+                    style: TextStyle(
+                      color: currentTab == 1
+                              ? kLogoGreen
+                              : kGray,
+                    ),
+                  ),
                 ),
               ),
               //Notifications tab
@@ -133,6 +138,7 @@ class _DashboardPageState extends State<DashboardPage> {
                       ? kLogoGreen
                       : kGray,
                     ),
+                    SizedBox(height: 5,),
                     Text(
                       LocaleKeys.notifications_tab.tr(),
                       style: TextStyle(
@@ -145,84 +151,6 @@ class _DashboardPageState extends State<DashboardPage> {
                   ],
                 ),
               ),
-              // Container(
-              //   alignment: Alignment.bottomCenter,
-              //   child: Text(LocaleKeys.home.tr(),
-              //   style: TextStyle(
-              //     color: currentTab == 1
-              //             ? kLogoGreen
-              //             : kGray,
-              //   ),
-              //   ),
-              // ),
-              // SizedBox(width: 6,),
-              //Right tab bar icons
-              // Row(
-              //   crossAxisAlignment: CrossAxisAlignment.start,
-              //   children: [
-              //     //Left tab bar icons
-              //     MaterialButton(
-              //       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              //       minWidth: 20,
-              //       onPressed: () {
-              //         setState(() {
-              //           currentScreen = MyOrdersPage();
-              //           currentTab = 3;
-              //         });
-              //       },
-              //       child: Column(
-              //         mainAxisAlignment: MainAxisAlignment.center,
-              //         children: [
-              //           Icon(
-              //             Icons.shopping_basket_rounded,
-              //             color: currentTab == 3 
-              //             ? kLogoGreen
-              //             : kGray,
-              //           ),
-              //           Text(
-              //             LocaleKeys.my_orders.tr(),
-              //             style: TextStyle(
-              //               fontSize: 13,
-              //               color: currentTab == 3 
-              //               ? kLogoGreen
-              //               : kGray,
-              //             ),
-              //           ),
-              //         ],
-              //       ),
-              //     ),
-              //     MaterialButton(
-              //       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              //       minWidth: 20,
-              //       onPressed: () {
-              //         setState(() {
-              //           currentScreen = FavoritesPage();
-              //           currentTab = 1;
-              //         });
-              //       },
-              //       child: Column(
-              //         mainAxisAlignment: MainAxisAlignment.center,
-              //         children: [
-              //           Icon(
-              //             Icons.favorite,
-              //             color: currentTab == 1 
-              //             ? kLogoGreen
-              //             : kGray,
-              //           ),
-              //           Text(
-              //             LocaleKeys.favorites.tr(),
-              //             style: TextStyle(
-              //               fontSize: 13,
-              //               color: currentTab == 1 
-              //               ? kLogoGreen
-              //               : kGray,
-              //             ),
-              //           ),
-              //         ],
-              //       ),
-              //     ),
-              //   ],
-              // ),
             ],
           ),
         ),

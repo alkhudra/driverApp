@@ -70,4 +70,5 @@ abstract class  LocaleKeys {
   static const our_location = "Our Location";
   static const twit = "Twitter";
   static const whats_app = "WhatsApp";
+  static const on_the_way = "Your Order is On The Way!";
 }
