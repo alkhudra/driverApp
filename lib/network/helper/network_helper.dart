@@ -40,7 +40,7 @@ Widget errorCase(AsyncSnapshot<dynamic?> snapshot) {
           width: 250,
           height: 250,
           child: Image.asset(
-            'images/logo.png',
+            'assets/images/logo.png',
             ),
         ),
         SizedBox(height: 15,),

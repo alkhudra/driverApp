@@ -11,10 +11,10 @@ import 'package:dio/dio.dart';
 
 import 'package:easy_localization/easy_localization.dart';
 
-class HomeRepository {
+class ContactUsRepository {
   late final RestClient _client;
 
-  HomeRepository(Map<String, dynamic> headerMap) {
+  ContactUsRepository(Map<String, dynamic> headerMap) {
     _client = RestClient(Dio(
       BaseOptions(contentType: 'application/json', headers: headerMap),
     ));

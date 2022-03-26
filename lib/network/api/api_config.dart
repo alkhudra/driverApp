@@ -30,4 +30,11 @@ abstract class RestClient {
 
   @POST(ApiConst.check_password_token_url)
   Future<String> sendCodeForgetPassword(@Body() Map<String, dynamic> hashMap);
+
+  //--------------- orders ----------------
+  @GET(ApiConst.get_orders)
+  Future<dynamic> getOrders(@Query('PageNumber') int pageNumber, @Query('PageSize') int  pageSize, @Query('ProductName') String  productName);
+
+  @POST(ApiConst.order_delivered)
+  Future<dynamic> orderDelivered(@Query('invoiceNumber') int invoiceNumber, @Query('hasPaid') bool hasPaid,);
 }

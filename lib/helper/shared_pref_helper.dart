@@ -1,9 +1,9 @@
 import 'dart:convert';
 
+import 'package:alkhudhrah_app/network/models/driver_user.dart';
 import 'package:flutter/widgets.dart';
 import 'package:alkhudhrah_app/constants/pref_cont.dart';
 import 'package:alkhudhrah_app/helper/pref_manager.dart';
-import 'package:alkhudhrah_app/network/models/user_model.dart';
 
 class PreferencesHelper {
   static Future<bool> get getIsUserFirstLogIn =>
@@ -64,16 +64,16 @@ class PreferencesHelper {
   }*/
   //--------------------
 
-  static Future<User> get getUser async {
+  static Future<DriverUser> get getUser async {
     Map<String, dynamic> userMap =
         await SharedPrefsManager.getFromJson(currentUser);
-    return User.fromJson(userMap);
+    return DriverUser.fromJson(userMap);
   }
 
-  static Future setUser(User? user) {
+  static Future setUser(DriverUser? driverUser) {
     //  user = User.fromJson(user);
-    if (user != null)
-      return SharedPrefsManager.setToJson(currentUser, user);
+    if (driverUser != null)
+      return SharedPrefsManager.setToJson(currentUser, driverUser);
     else
       return SharedPrefsManager.setToJson(currentUser, '');
   }

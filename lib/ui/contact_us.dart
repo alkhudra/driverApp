@@ -9,7 +9,7 @@ import 'package:alkhudhrah_app/network/api/api_response.dart';
 import 'package:alkhudhrah_app/network/helper/exception_helper.dart';
 import 'package:alkhudhrah_app/network/helper/network_helper.dart';
 import 'package:alkhudhrah_app/network/models/contact_us_response_model.dart';
-import 'package:alkhudhrah_app/network/repository/home_repository.dart';
+import 'package:alkhudhrah_app/network/repository/contact_us_repository.dart';
 import 'package:alkhudhrah_app/ui/edit_profile.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +44,7 @@ class _ContactUsState extends State<ContactUs> {
             return errorCase(snapshot);
         },
       ),
-      endDrawer: drawerDesign(context),
+      // endDrawer: drawerDesign(context),
     );
   }
 
@@ -92,7 +92,7 @@ class _ContactUsState extends State<ContactUs> {
                     height: scHeight * 0.13,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage('images/product_icon.png'),
+                        image: AssetImage('assets/images/product_icon.png'),
                       ),
                     ),
                     child: Icon(
@@ -143,7 +143,7 @@ class _ContactUsState extends State<ContactUs> {
                     height: scHeight * 0.13,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage('images/product_icon.png'),
+                        image: AssetImage('assets/images/product_icon.png'),
                       ),
                     ),
                     child: Icon(
@@ -191,7 +191,7 @@ class _ContactUsState extends State<ContactUs> {
                   height: scHeight * 0.13,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('images/product_icon.png'),
+                      image: AssetImage('assets/images/product_icon.png'),
                     ),
                   ),
                   child: Icon(FontAwesomeIcons.hashtag,
@@ -231,7 +231,7 @@ class _ContactUsState extends State<ContactUs> {
                         height: scHeight * 0.12,
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage('images/product_icon.png'),
+                            image: AssetImage('assets/images/product_icon.png'),
                           ),
                         ),
                         child: Icon(FontAwesomeIcons.whatsapp,
@@ -273,7 +273,7 @@ class _ContactUsState extends State<ContactUs> {
                         height: scHeight * 0.12,
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage('images/product_icon.png'),
+                            image: AssetImage('assets/images/product_icon.png'),
                           ),
                         ),
                         child: Icon(FontAwesomeIcons.twitter,
@@ -336,7 +336,7 @@ class _ContactUsState extends State<ContactUs> {
                     height: scHeight * 0.13,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage('images/product_icon.png'),
+                        image: AssetImage('assets/images/product_icon.png'),
                       ),
                     ),
                     child: Icon(
@@ -377,9 +377,9 @@ class _ContactUsState extends State<ContactUs> {
     Future<ContactUsResponseModel?> getContactUsInfo() async {
     Map<String, dynamic> headerMap = await getHeaderMap();
 
-    HomeRepository homeRepository = HomeRepository(headerMap);
+    ContactUsRepository contactUsRepository = ContactUsRepository(headerMap);
 
-    ApiResponse apiResponse = await homeRepository.getContactInfo();
+    ApiResponse apiResponse = await contactUsRepository.getContactInfo();
     if (apiResponse.apiStatus.code == ApiResponseType.OK.code)
       return ContactUsResponseModel.fromJson(apiResponse.result);
     else

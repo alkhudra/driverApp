@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:alkhudhrah_app/network/models/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefsManager {

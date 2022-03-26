@@ -1,30 +1,33 @@
+import 'package:flutter/material.dart';
 import 'package:alkhudhrah_app/constants/cont.dart';
+import 'package:alkhudhrah_app/locale/locale_keys.g.dart';
 import 'package:alkhudhrah_app/designs/appbar_design.dart';
 import 'package:alkhudhrah_app/designs/drawer_design.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:alkhudhrah_app/designs/no_item_design.dart';
 import 'package:alkhudhrah_app/designs/order_tile_design.dart';
 import 'package:alkhudhrah_app/helper/custom_btn.dart';
-import 'package:alkhudhrah_app/locale/locale_keys.g.dart';
 import 'package:alkhudhrah_app/network/API/api_response.dart';
 import 'package:alkhudhrah_app/network/API/api_response_type.dart';
 import 'package:alkhudhrah_app/network/helper/exception_helper.dart';
 import 'package:alkhudhrah_app/network/helper/network_helper.dart';
 import 'package:alkhudhrah_app/network/models/orders/get_orders_response_model.dart';
 import 'package:alkhudhrah_app/network/models/orders/order_header.dart';
+import 'package:alkhudhrah_app/network/models/orders/order_items.dart';
 import 'package:alkhudhrah_app/network/repository/order_repository.dart';
-import 'package:flutter/material.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:alkhudhrah_app/constants/colors.dart';
+import 'package:lottie/lottie.dart';
 
-
-class Homescreen extends StatefulWidget {
-  const Homescreen({ Key? key }) : super(key: key);
+class OrderList extends StatefulWidget {
+  const OrderList({Key? key}) : super(key: key);
 
   @override
-  _HomescreenState createState() => _HomescreenState();
+  _OrderListState createState() => _OrderListState();
 }
 
-class _HomescreenState extends State<Homescreen>  with SingleTickerProviderStateMixin {
- late TabController _tabController;
+class _OrderListState extends State<OrderList>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
   int pageNumber = 1;
   int pageSize = listItemsCount;
  // List<OrderHeader> list = [];
@@ -54,6 +57,7 @@ class _HomescreenState extends State<Homescreen>  with SingleTickerProviderState
             return errorCase(snapshot);
         },
       ),
+      // endDrawer: drawerDesign(context),
       appBar: bnbAppBar(context, LocaleKeys.orders.tr()),
       endDrawer: drawerDesign(context),
     );
@@ -76,7 +80,6 @@ class _HomescreenState extends State<Homescreen>  with SingleTickerProviderState
     return Container(
       child: Column(
         children: [
-          SizedBox(height: 10,),
           Expanded(
             child: orderList.length > 0
                 ? ListView.builder(
@@ -195,7 +198,7 @@ class _HomescreenState extends State<Homescreen>  with SingleTickerProviderState
 
     ApiResponse apiResponse =
         await orderRepository.getOrders(pageNumber, pageSize, '');
-        //TODO: add productName to getOrders? 
+        //TODO: add productName to getOrders?
 
     if (apiResponse.apiStatus.code == ApiResponseType.OK.code) {
       GetOrdersResponseModel? responseModel =

@@ -71,4 +71,26 @@ abstract class  LocaleKeys {
   static const twit = "Twitter";
   static const whats_app = "WhatsApp";
   static const on_the_way = "Your Order is On The Way!";
+  static const under_process = "under_process";
+  static const on_delivery = "on_delivery";
+  static const completed_order = "completed_order";
+  static const no_current_orders = "no_current_orders";
+  static const no_finished_orders = "no_finished_orders";
+  static const order_complete_successfully = "order_complete_successfully";
+  static const order_complete_fail = "order_complete_fail";
+  static const order_no = "order_no";
+  static const display_invoice = "display_invoice";
+  static const main_page = "main_page";
+  static const order_status = "Order Status";
+  static const contact_client = "contact_client";
+  static const cash = "cash";
+  static const credit_card = "credit_card";
+  static const postpaid = "postpaid";
+  static const apple_pay = "apple_pay";
+  static const stc_pay = "stc_pay";
+  static const items = "items";
+  static const products_in_order = "products_in_order";
+  static const payment_method = "payment_method";
+  static const discount = "discount";
+  static const discount_percentage = "discount_percentage";
 }

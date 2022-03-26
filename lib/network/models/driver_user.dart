@@ -1,13 +1,10 @@
-
-class User {
-  User({
-    required String id,
+class DriverUser {
+  DriverUser({
+    String? id,
     String? email,
     String? phoneNumber,
     String? driverName,
-    //TODO: type image or string?
-    String? image,
-  }) {
+    String? image,}){
     _id = id;
     _email = email;
     _phoneNumber = phoneNumber;
@@ -15,24 +12,24 @@ class User {
     _image = image;
   }
 
-  User.fromJson(dynamic json) {
+  DriverUser.fromJson(dynamic json) {
     _id = json['id'];
     _email = json['email'];
     _phoneNumber = json['phoneNumber'];
     _driverName = json['driverName'];
     _image = json['image'];
   }
-  String _id = '';
+  String? _id;
   String? _email;
   String? _phoneNumber;
   String? _driverName;
   String? _image;
+
   String? get id => _id;
   String? get email => _email;
   String? get phoneNumber => _phoneNumber;
   String? get driverName => _driverName;
   String? get image => _image;
-
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -44,8 +41,4 @@ class User {
     return map;
   }
 
-  @override
-  String toString() {
-    return 'User{_id: $_id, _email: $_email, _phoneNumber: $_phoneNumber, _driverName: $_driverName, _image: $_image}';
-  }
 }

@@ -1,7 +1,6 @@
 import 'package:alkhudhrah_app/constants/colors.dart';
 import 'package:alkhudhrah_app/custom_widgets/brandname.dart';
 import 'package:alkhudhrah_app/custom_widgets/green_btn.dart';
-import 'package:alkhudhrah_app/designs/buttons_design.dart';
 import 'package:alkhudhrah_app/designs/card_design.dart';
 import 'package:alkhudhrah_app/designs/textfield_design.dart';
 import 'package:alkhudhrah_app/dialogs/alert_dialog.dart';
@@ -10,28 +9,17 @@ import 'package:alkhudhrah_app/dialogs/progress_dialog.dart';
 import 'package:alkhudhrah_app/helper/info_corrector_helper.dart';
 import 'package:alkhudhrah_app/helper/route_helper.dart';
 import 'package:alkhudhrah_app/helper/shared_pref_helper.dart';
-import 'package:alkhudhrah_app/helper/snack_message.dart';
 import 'package:alkhudhrah_app/locale/locale_keys.g.dart';
-import 'package:alkhudhrah_app/main.dart';
 import 'package:alkhudhrah_app/network/api/api_response_type.dart';
 import 'package:alkhudhrah_app/network/helper/network_helper.dart';
-import 'package:alkhudhrah_app/network/models/auth/forget_password_response_model.dart';
 import 'package:alkhudhrah_app/network/models/auth/success_login_response_model.dart';
-import 'package:alkhudhrah_app/network/models/user_model.dart';
-import 'package:alkhudhrah_app/network/models/register_response_model.dart';
+import 'package:alkhudhrah_app/network/models/driver_user.dart';
 import 'package:alkhudhrah_app/network/repository/login_repository.dart';
 import 'package:alkhudhrah_app/router/route_constants.dart';
-import 'package:alkhudhrah_app/ui/forgotpassword.dart';
-import 'package:alkhudhrah_app/ui/home.dart';
-import 'package:alkhudhrah_app/ui/login.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:alkhudhrah_app/constants/colors.dart';
-
-import 'enter_code_page.dart';
 
 class LoginEmail extends StatefulWidget {
   const LoginEmail({ Key? key }) : super(key: key);
@@ -140,7 +128,7 @@ class _LoginEmailState extends State<LoginEmail> {
                   height: scHeight * 0.05,
                 ),
                 greenBtn(LocaleKeys.SIGN_IN.tr(),
-                    EdgeInsets.only(left: 50, right: 50, top: 30), () {
+                    EdgeInsets.only(left: 50, right: 50, top: 30, bottom: 60), () {
                       if (isBtnEnabled) logIn();
                     })
 
@@ -211,7 +199,7 @@ class _LoginEmailState extends State<LoginEmail> {
       print(model.user.toString());
 
 
-      User user = model.user!;
+      DriverUser user = model.user!;
 
 
       PreferencesHelper.setUserID(user.id!);

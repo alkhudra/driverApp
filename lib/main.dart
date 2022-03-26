@@ -1,15 +1,11 @@
 import 'package:alkhudhrah_app/locale/codegen_loader.g.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:alkhudhrah_app/ui/login_email.dart';
 import 'package:alkhudhrah_app/ui/dashboard_page.dart';
-import 'package:alkhudhrah_app/ui/home.dart';
 import 'package:alkhudhrah_app/ui/language_page.dart';
 import 'package:alkhudhrah_app/constants/colors.dart';
-import 'package:alkhudhrah_app/router/custom_route.dart';
 import 'package:alkhudhrah_app/router/route_constants.dart';
 import 'helper/shared_pref_helper.dart';
 
