@@ -45,7 +45,7 @@ Widget orderTileDesign(context, OrderHeader model, scWidth, scHeight) {
                 child: Container(
                   width: 6,
                   height: scHeight * 0.12,
-                  color:statusColor,
+                  color:kLogoGreen,
                 )),
             //background container
             Container(
@@ -55,7 +55,7 @@ Widget orderTileDesign(context, OrderHeader model, scWidth, scHeight) {
               height: scHeight * 0.12,
               // scHeight*0.12
               decoration: BoxDecoration(
-                border: Border.all(color: statusColor),
+                border: Border.all(color: kLogoGreen),
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(50),
                   bottomRight: Radius.circular(50),
