@@ -90,6 +90,11 @@ abstract class  LocaleKeys {
   static const stc_pay = "stc_pay";
   static const items = "items";
   static const products_in_order = "products_in_order";
+  static const order_branch_info = "branch_info";
+  static const branch_name = "branch_name";
+  static const branch_phone = "branch_phone";
+  static const branch_address = "branch_address";
+  static const map_location = "map_location";
   static const payment_method = "payment_method";
   static const discount = "discount";
   static const discount_percentage = "discount_percentage";

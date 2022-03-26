@@ -2,6 +2,7 @@ import 'package:alkhudhrah_app/constants/colors.dart';
 import 'package:alkhudhrah_app/custom_widgets/green_btn.dart';
 import 'package:alkhudhrah_app/helper/cart_helper.dart';
 import 'package:alkhudhrah_app/network/models/driver_user.dart';
+import 'package:alkhudhrah_app/network/models/orders/branch_model.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:alkhudhrah_app/constants/cont.dart';
@@ -205,7 +206,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                         ),
                         Container(
                           child: Text(
-                            ' × ' + item.userProductQuantity.toString(),
+                            '   × ' + item.userProductQuantity.toString(),
                             style: TextStyle(
                                 color: kLogoGreen,
                                 fontWeight: FontWeight.w500),
@@ -241,49 +242,6 @@ class _OrderDetailsState extends State<OrderDetails> {
     );
   }
 
-// //-------------status line--------------------
-//   //maybe add icon
-//   Container statusChange(String status, bool isActive, isCompleted) {
-//     return Container(
-//       padding: EdgeInsets.symmetric(vertical: 20),
-//       child: Row(
-//         children: [
-//           Container(
-//             width: 25,
-//             height: 25,
-//             decoration: BoxDecoration(
-//               shape: BoxShape.circle,
-//               color: isActive
-//                   ? kLogoGreen
-//                   : isCompleted
-//                       ? kLogoGreen
-//                       : kWhite,
-//               //change color depending on active stage
-//               border: Border.all(
-//                   color: isActive || isCompleted
-//                       ? Colors.transparent
-//                       : kLogoGreen,
-//                   width: 3),
-//             ),
-//           ),
-//           SizedBox(
-//             width: 30,
-//           ),
-//           Container(
-//             child: Text(
-//               status,
-//               style: TextStyle(
-//                   color: isActive
-//                       ? kLogoGreen
-//                       : kDarkGray,
-//                   fontWeight: FontWeight.w600,
-//                   fontSize: 16),
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
 //---------------------------------
 
   pageContent(OrderHeader model) {
@@ -337,14 +295,149 @@ class _OrderDetailsState extends State<OrderDetails> {
     Size size = MediaQuery.of(context).size;
     double scWidth = size.width;
     double scHeight = size.height;
+    BranchModel? branch = model.branchModel;
+
+    String? branchName = branch!.branchName;
+    String? branchAddress = branch!.address;
+    String? branchNo = branch!.phoneNumber;
+    num? branchLong = branch!.longitude;
+    num? branchLat = branch!.latitude;
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SizedBox(
-            height: 10,
+            height: 20,
+          ),
+          //branch info: phone no, address, map btn(lat, long)
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  titleTextDesign(LocaleKeys.order_branch_info.tr()),
+                ],
+              ),
+              SizedBox(height: 20,),
+              //branch name
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 40),
+                child: RichText(
+                  text: TextSpan(
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: 'Almarai',
+                      color: kLogoGreen,
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(
+                          text: LocaleKeys.branch_name.tr() + ': ',
+                          style: TextStyle(color: kDarkBlue)),
+                      TextSpan(
+                          text: branchName,
+                          style: TextStyle(
+                            color: kLogoGreen,
+                            fontFamily: 'Almarai',
+                          )),
+                    ]),
+                ),
+              ),
+              SizedBox(height: 15,),
+              //branch address
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 40),
+                child: RichText(
+                  text: TextSpan(
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: 'Almarai',
+                      color: kLogoGreen,
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(
+                          text: LocaleKeys.branch_address.tr() + ': ',
+                          style: TextStyle(color: kDarkBlue)),
+                      TextSpan(
+                          text: branchAddress,
+                          style: TextStyle(
+                            color: kLogoGreen,
+                            fontFamily: 'Almarai',
+                          )),
+                    ]),
+                ),
+              ),
+              SizedBox(height: 15,),
+              //branch phone number
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 40),
+                child: RichText(
+                  text: TextSpan(
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: 'Almarai',
+                      color: kLogoGreen,
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(
+                          text: LocaleKeys.branch_phone.tr() + ': ',
+                          style: TextStyle(color: kDarkBlue)),
+                      TextSpan(
+                          text: branchNo,
+                          style: TextStyle(
+                            color: kLogoGreen,
+                            fontFamily: 'Almarai',
+                          )),
+                    ]),
+                ),
+              ),
+              // SizedBox(height: 10,),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 40),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      // margin: EdgeInsets.symmetric(horizontal: 30),
+                      child: Text(LocaleKeys.map_location.tr() + ' :', 
+                      style: TextStyle(
+                        fontSize: 16
+                      ),),
+                    ),
+                    Container(
+                      width: scWidth * 0.13,
+                      height: scHeight * 0.06,
+                      decoration: BoxDecoration(
+                        color: kLogoGreen,
+                        borderRadius: BorderRadius.circular(50)
+                      ),
+                      child: TextButton(
+                        child: Icon(FontAwesomeIcons.mapMarkedAlt, color: kWhite,),
+                        // Text('Location', style: TextStyle(
+                        //   color: kWhite
+                        // ),),
+                        onPressed: () {
+                          openMap(branchLat!, branchLong!);
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 30,
           ),
           //deleted tracking tile
+          Row(
+            children: [
+              titleTextDesign(LocaleKeys.products_in_order.tr()),
+            ],
+          ),
           SizedBox(
             height: 15,
           ),
@@ -354,8 +447,8 @@ class _OrderDetailsState extends State<OrderDetails> {
               children: [
                 Container(
                   margin: EdgeInsets.only(top: 5),
-                  width: scWidth * 0.9,
-                  height: scHeight * 0.12,
+                  width: scWidth * 0.84,
+                  height: scHeight * 0.11,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
                       topRight: Radius.circular(55),
@@ -383,7 +476,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                           decoration: BoxDecoration(
                               image: DecorationImage(
                                   image:
-                                      AssetImage('assets/images/ic_fruit_green.png'))),
+                                    AssetImage('assets/images/ic_fruit_green.png'))),
                         ),
                       ),
                       Column(
@@ -395,7 +488,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
-                                //replace by order no
+                                //Order no
                                 child: Text(
                                   '#' + model.invoiceNumber.toString(),
                                   style: TextStyle(
@@ -406,7 +499,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                 ),
                               ),
                               Container(
-                                //replace by actual date
+                                //Order Date
                                 child: Text(
                                   orderDate,
                                   style: TextStyle(
@@ -442,14 +535,14 @@ class _OrderDetailsState extends State<OrderDetails> {
             height: 30,
           ),
           //ordered products title
-          Row(
-            children: [
-              titleTextDesign(LocaleKeys.products_in_order.tr()),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
+          // Row(
+          //   children: [
+          //     titleTextDesign(LocaleKeys.products_in_order.tr()),
+          //   ],
+          // ),
+          // SizedBox(
+          //   height: 10,
+          // ),
           //list of ordered products
           LimitedBox(
             maxHeight: scHeight * 20,
@@ -476,9 +569,9 @@ class _OrderDetailsState extends State<OrderDetails> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  height: 20,
-                ),
+                // SizedBox(
+                //   height: 5,
+                // ),
                 Row(
                   children: [
                     titleTextDesign(LocaleKeys.payment_method.tr()),
@@ -544,6 +637,8 @@ class _OrderDetailsState extends State<OrderDetails> {
                         LocaleKeys.vat.tr(), getTextWithCurrency(vat!)),
                     if (hasDiscount!)
                       Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           cartDetailsItem(LocaleKeys.discount_percentage.tr(),
                               getTextWithPercentage(discount!)),
@@ -556,25 +651,28 @@ class _OrderDetailsState extends State<OrderDetails> {
                 SizedBox(
                   height: 10,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    //total
-                    cartTotalDesign(total!),
-                    //Receipt download button
-                    InkWell(
-                      child: Container(
-                          width: 50,
-                          height: 50,
-                          child: Image.asset('assets/images/ic_file_pdf.png')),
-                      onTap: () {
-                        print(widget.orderModel.invoicePDFPath!);
-                        OrderHelper.displayInvoice(
-                            widget.orderModel.invoicePDFPath!,
-                            widget.orderModel.hasOrderCreatedFromDashboard!);
-                      },
-                    ),
-                  ],
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 35),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      //total
+                      cartTotalDesign(total!),
+                      //Receipt download button
+                      InkWell(
+                        child: Container(
+                            width: 50,
+                            height: 50,
+                            child: Image.asset('assets/images/ic_file_pdf.png')),
+                        onTap: () {
+                          print(widget.orderModel.invoicePDFPath!);
+                          OrderHelper.displayInvoice(
+                              widget.orderModel.invoicePDFPath!,
+                              widget.orderModel.hasOrderCreatedFromDashboard!);
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

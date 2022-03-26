@@ -64,9 +64,9 @@ class CodegenLoader extends AssetLoader {
   "wrong_email": "Wrong Email, please try again",
   "Fruits": "Fruits",
   "Vegetables": "Vegetables",
-  "Subtotal": "Subtotal:",
-  "VAT": "VAT:",
-  "Total": "Total:",
+  "Subtotal": "Subtotal",
+  "VAT": "VAT",
+  "Total": "Total",
   "App Language" : "App Language",
   "Preferred Language for The App" : "Preferred Language for The App",
   "English" : "English",
@@ -109,6 +109,11 @@ class CodegenLoader extends AssetLoader {
   "payment_method": "Payment Method",
   "discount": " Discount",
   "discount_percentage": "Discount Percentage",
+  "branch_info": "Branch Info",
+  "branch_name": "Branch Name",
+  "branch_phone": "Branch Phone Number",
+  "branch_address": "Branch Address",
+  "map_location": "Branch\'s Location On The Map",
 };
 static const Map<String,dynamic> ar = {
   "SIGN IN": "تسجيل الدخول",
@@ -205,6 +210,11 @@ static const Map<String,dynamic> ar = {
   "payment_method": "طريقة الدفع",
   "discount": "الخصم",
   "discount_percentage": "نسبة الخصم",
+  "branch_info": "معلومات الفرع",
+  "branch_name": "اسم الفرع",
+  "branch_phone": "رقم هاتف الفرع",
+  "branch_address": "عنوان الفرع",
+  "map_location": "موقع الفرع على الخريطة",
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "ar": ar};
  }
