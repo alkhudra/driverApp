@@ -14,10 +14,11 @@ const String mainRoute = "mainRoute";
 const String contactUs = "contactUs";
 const String dashBoardRoute = "dashBoard";
 const String walletRoute = "wallet";
+const String detailsRoute = "orderDetails";
+const String deliveredRoute = "orderDelivered";
 
 final Map<String, WidgetBuilder> routMap = {
   mainRoute: (BuildContext context) => new MyApp(),
   loginRoute: (BuildContext context) => new LoginEmail(),
   dashBoardRoute: (BuildContext context) => new DashboardPage(),
-/* branchListRoute: (BuildContext context) => new BranchList(list: []),*/
 };

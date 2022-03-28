@@ -1,8 +1,10 @@
 import 'package:alkhudhrah_app/constants/colors.dart';
 import 'package:alkhudhrah_app/custom_widgets/green_btn.dart';
 import 'package:alkhudhrah_app/helper/cart_helper.dart';
+import 'package:alkhudhrah_app/helper/route_helper.dart';
 import 'package:alkhudhrah_app/network/models/driver_user.dart';
 import 'package:alkhudhrah_app/network/models/orders/branch_model.dart';
+import 'package:alkhudhrah_app/router/route_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:alkhudhrah_app/constants/cont.dart';
@@ -46,6 +48,8 @@ class _OrderDetailsState extends State<OrderDetails> {
     DriverUser driverUser = DriverUser();
     if (widget.orderModel.driverUser != null)
       driverUser = widget.orderModel.driverUser!;
+    BranchModel? branch = model.branchModel;
+    String? branchNo = branch!.phoneNumber;
     return Scaffold(
       appBar:  appBarDesign(context, LocaleKeys.order_details.tr()),
       body: model.orderStatus == onDelivery
@@ -100,6 +104,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                     model.companyId != null
                                         ? model.companyId!
                                         : '',
+                                        overflow: TextOverflow.clip,
                                     style: TextStyle(
                                         color: kDarkBlue,
                                         fontSize: 16,
@@ -112,8 +117,8 @@ class _OrderDetailsState extends State<OrderDetails> {
                                 //driver number
                                 Container(
                                   child: Text(
-                                    driverUser.phoneNumber != null
-                                        ? driverUser.phoneNumber!
+                                    branchNo != null
+                                        ? branchNo
                                         : '',
                                     style: TextStyle(
                                         color: kDarkGray
@@ -161,9 +166,6 @@ class _OrderDetailsState extends State<OrderDetails> {
       title: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          SizedBox(
-            height: 5,
-          ),
           Container(
             width: double.infinity,
             height: scHeight * 0.1,
@@ -234,9 +236,6 @@ class _OrderDetailsState extends State<OrderDetails> {
               ],
             ),
           ),
-          SizedBox(
-            height: 10,
-          ),
         ],
       ),
     );
@@ -298,10 +297,10 @@ class _OrderDetailsState extends State<OrderDetails> {
     BranchModel? branch = model.branchModel;
 
     String? branchName = branch!.branchName;
-    String? branchAddress = branch!.address;
-    String? branchNo = branch!.phoneNumber;
-    num? branchLong = branch!.longitude;
-    num? branchLat = branch!.latitude;
+    String? branchAddress = branch.address;
+    String? branchNo = branch.phoneNumber;
+    num? branchLong = branch.longitude;
+    num? branchLat = branch.latitude;
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -314,10 +313,13 @@ class _OrderDetailsState extends State<OrderDetails> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  titleTextDesign(LocaleKeys.order_branch_info.tr()),
-                ],
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 3),
+                child: Row(
+                  children: [
+                    titleTextDesign(LocaleKeys.order_branch_info.tr()),
+                  ],
+                ),
               ),
               SizedBox(height: 20,),
               //branch name
@@ -674,11 +676,16 @@ class _OrderDetailsState extends State<OrderDetails> {
                     ],
                   ),
                 ),
+                Container(
+                  child: greenBtn('Delivered To Client', EdgeInsets.symmetric(horizontal: 30, vertical: 15), () {
+                    moveToNewStack(context, deliveredRoute);
+                  }),
+                ),
               ],
             ),
           ),
           SizedBox(
-            height: 220,
+            height: 240,
           ),
         ],
       ),

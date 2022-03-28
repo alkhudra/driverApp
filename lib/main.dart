@@ -81,7 +81,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   static  bool isUserFirstLogin=false;
-  static  bool isUserLoggedIn=true;
+  static  bool isUserLoggedIn=false;
   static int counter = 0;
   @override
   void initState() {

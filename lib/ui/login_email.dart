@@ -57,7 +57,7 @@ class _LoginEmailState extends State<LoginEmail> {
             height: MediaQuery
                 .of(context)
                 .size
-                .height / 1.8,
+                .height / 1.9,
             decoration: CardDesign.largeCardDesign(),
           ),
           // SizedBox(
@@ -67,6 +67,7 @@ class _LoginEmailState extends State<LoginEmail> {
           // SizedBox(
           //   height: 10,
           // ),
+          SizedBox(height: scHeight*0.19,),
           Container(
             margin: EdgeInsets.only(
                 top: scHeight * 0.13,
@@ -77,10 +78,7 @@ class _LoginEmailState extends State<LoginEmail> {
                 .of(context)
                 .size
                 .width,
-            height: MediaQuery
-                .of(context)
-                .size
-                .height,
+            height: MediaQuery.of(context).size.height,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -106,11 +104,11 @@ class _LoginEmailState extends State<LoginEmail> {
                     lbTxt:  LocaleKeys.password_textfield.tr(),
                 ),
                 SizedBox(
-                  height: scHeight / 20,
+                  height: scHeight * 0.04,
                 ),
                 Container(
-                    height: scHeight / 30,
-                    padding: EdgeInsets.only(right: 10, left: 10),
+                    // height: scHeight * 0.04,
+                    padding: EdgeInsets.only(right: 10, left: 10, bottom: 15),
                     child: GestureDetector(
                       onTap: () {
                         if (isForgetPassBtnEnabled)
@@ -121,18 +119,20 @@ class _LoginEmailState extends State<LoginEmail> {
                       },
                       child: Text(LocaleKeys.forgot_PW_Btn.tr(),
                           style: TextStyle(
-                              color: kLogoGreen)),
+                              color: kLogoGreen,
+                              fontWeight: FontWeight.w600)),
                     )),
 
                 SizedBox(
-                  height: scHeight * 0.05,
+                  height: scHeight * 0.04,
                 ),
                 greenBtn(LocaleKeys.SIGN_IN.tr(),
-                    EdgeInsets.only(left: 50, right: 50, top: 30, bottom: 60), () {
+                    EdgeInsets.only(left: 50, right: 50), () {
                       if (isBtnEnabled) logIn();
-                    })
-
-                ,
+                    }),
+                SizedBox(
+                  height: scHeight * 0.07,
+                ),
               ],
             ),
           ),

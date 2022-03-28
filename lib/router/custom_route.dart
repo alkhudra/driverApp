@@ -1,6 +1,7 @@
 import 'package:alkhudhrah_app/ui/dashboard_page.dart';
 import 'package:alkhudhrah_app/ui/home.dart';
 import 'package:alkhudhrah_app/ui/language_page.dart';
+import 'package:alkhudhrah_app/ui/order_delivered.dart';
 import 'package:flutter/material.dart';
 import 'package:alkhudhrah_app/ui/language_setting.dart';
 import 'package:alkhudhrah_app/ui/login.dart';
@@ -17,6 +18,8 @@ class CustomRouter {
         return MaterialPageRoute(builder: (_) => Homescreen());
       case languageRoute:
         return MaterialPageRoute(builder: (_) => LanguagePage());
+      case deliveredRoute:
+        return MaterialPageRoute(builder: (_) => OrderDelivered());
       default:
         return MaterialPageRoute(builder: (_) => DashboardPage());
     }
