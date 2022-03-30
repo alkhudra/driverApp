@@ -79,3 +79,22 @@ InputDecoration textFieldDecoration(String hint) {
     ),
   );
 }
+
+Widget deliveryCheckedCode(code) {
+  return Container(
+    width: 50,
+    child: TextField(
+      enabled: false,
+      // readOnly: true,
+      decoration: InputDecoration(
+        hintText: code,
+        hintStyle: TextStyle(
+          color: kDarkGreen,
+          fontSize: 30,
+          fontFamily: 'Almarai'
+        ),
+        contentPadding: EdgeInsets.all(16)
+      ),
+    ),
+  );
+}

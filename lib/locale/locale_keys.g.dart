@@ -98,4 +98,11 @@ abstract class  LocaleKeys {
   static const payment_method = "payment_method";
   static const discount = "discount";
   static const discount_percentage = "discount_percentage";
+  static const delivery_completed = "delivery_completed";
+  static const delivery_confirmation = "delivery_confirmation";
+  static const delivery_code = "delivery_code";
+  static const delivery_desc = "delivery_desc";
+  static const cash_desc = "cash_desc";
+  static const cash_info = "cash_info";
+  static const confirm_Delivery = "confirm_Delivery";
 }

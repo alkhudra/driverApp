@@ -1,3 +1,4 @@
+import 'package:alkhudhrah_app/ui/order_delivered.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:alkhudhrah_app/ui/login_email.dart';
 import 'package:alkhudhrah_app/ui/dashboard_page.dart';
@@ -14,11 +15,11 @@ const String mainRoute = "mainRoute";
 const String contactUs = "contactUs";
 const String dashBoardRoute = "dashBoard";
 const String walletRoute = "wallet";
-const String detailsRoute = "orderDetails";
 const String deliveredRoute = "orderDelivered";
 
 final Map<String, WidgetBuilder> routMap = {
   mainRoute: (BuildContext context) => new MyApp(),
   loginRoute: (BuildContext context) => new LoginEmail(),
   dashBoardRoute: (BuildContext context) => new DashboardPage(),
+  deliveredRoute: (BuildContext context) => new OrderDelivered(),
 };

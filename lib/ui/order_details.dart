@@ -5,6 +5,7 @@ import 'package:alkhudhrah_app/helper/route_helper.dart';
 import 'package:alkhudhrah_app/network/models/driver_user.dart';
 import 'package:alkhudhrah_app/network/models/orders/branch_model.dart';
 import 'package:alkhudhrah_app/router/route_constants.dart';
+import 'package:alkhudhrah_app/ui/order_delivered.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:alkhudhrah_app/constants/cont.dart';
@@ -31,7 +32,6 @@ class OrderDetails extends StatefulWidget {
 }
 
 class _OrderDetailsState extends State<OrderDetails> {
-  bool isTrashBtnEnabled = true;
   static String productId = '';
 
   @override
@@ -677,8 +677,11 @@ class _OrderDetailsState extends State<OrderDetails> {
                   ),
                 ),
                 Container(
-                  child: greenBtn('Delivered To Client', EdgeInsets.symmetric(horizontal: 30, vertical: 15), () {
-                    moveToNewStack(context, deliveredRoute);
+                  child: greenBtn(LocaleKeys.delivery_completed.tr(), EdgeInsets.symmetric(horizontal: 30, vertical: 15), () {
+                    print(model.orderCheckCode);
+                    moveToNewStackWithArgs(context, MaterialPageRoute(builder: (context) {
+                      return OrderDelivered(model: model,);
+                    }));
                   }),
                 ),
               ],

@@ -114,6 +114,13 @@ class CodegenLoader extends AssetLoader {
   "branch_phone": "Branch Phone Number",
   "branch_address": "Branch Address",
   "map_location": "Branch\'s Location On The Map",
+  "delivery_completed": "Delivered To Client",
+  "delivery_confirmation": "Delivery Confirmation",
+  "delivery_code": "Delivery Code",
+  "delivery_desc": "Please ask the client for the confirmation code before proceeding with delivery.",
+  "cash_desc": "Has the Client Paid in Cash?",
+  "cash_info": "Please Confirm Whether You Have Received a Cash Payment from the Client.",
+  "confirm_Delivery": "Confirm Delivery",
 };
 static const Map<String,dynamic> ar = {
   "SIGN IN": "تسجيل الدخول",
@@ -215,6 +222,13 @@ static const Map<String,dynamic> ar = {
   "branch_phone": "رقم هاتف الفرع",
   "branch_address": "عنوان الفرع",
   "map_location": "موقع الفرع على الخريطة",
+  "delivery_completed": "تم تسليم الطلب",
+  "delivery_confirmation": "تأكيد تسليم الطلب",
+  "delivery_code": "رمز التسليم",
+  "delivery_desc": "يرجى مطابقة رمز التأكيد مع العميل قبل تسليم الطلب.",
+  "cash_desc": "هل أتم العميل الدفع نقدًا؟",
+  "cash_info": "يرجى تأكيد إذا تم استلام دفعة نقدية كاملة من العميل.",
+  "confirm_Delivery": "إنهاء التسليم",
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "ar": ar};
  }

@@ -71,7 +71,9 @@ class OrderHelper {
   static viewCompleteOrderPage(context , isSuccess,{model}){
 
     moveToNewStackWithArgs(context ,MaterialPageRoute(builder: (context) {
-      return OrderDelivered(isSuccess: isSuccess,model: model);
+      return OrderDelivered(
+        // isSuccess: isSuccess,
+        model: model);
     } ));
 
   }
