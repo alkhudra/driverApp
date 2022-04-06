@@ -30,17 +30,20 @@ class AuthRepository {
 
   Future<ApiResponse> loginUser(
       String email,
-      String password, 
-      bool rememberMe) async {
+      String password,
+      deviceId,
+      isAndroiodDevice) async {
     if (email == null ||
-        password == null ) {
+        password == null || 
+        deviceId == null) {
       return ApiResponse(ApiResponseType.BadRequest, null, '');
     }
 
     Map<String, dynamic> hashMap = {
       "email": email,
       "password": password,
-      "rememberMe" : rememberMe,
+      "isAndroiodDevice": isAndroiodDevice,
+      "deviceId": deviceId
     };
 
     return await _client

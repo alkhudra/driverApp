@@ -11,7 +11,6 @@ class GetOrdersResponseModel {
       _orderList; //BranchListResponseModel(this._branches, this.message);
 
   GetOrdersResponseModel.fromJson(dynamic json) {
-    //  message = json['message'];
 
     if (json != null) {
       _orderList = [];

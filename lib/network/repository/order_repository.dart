@@ -27,7 +27,6 @@ late final RestClient _client;
     }
 
     return await _client
-        //TODO: should productName be included
         .getOrders(pageNumber, pageSize, productName)
         .then((value) => ApiResponse(ApiResponseType.OK, value, ''))
         .catchError((e) {

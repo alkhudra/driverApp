@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:alkhudhrah_app/constants/colors.dart';
 import 'package:alkhudhrah_app/custom_widgets/brandname.dart';
 import 'package:alkhudhrah_app/custom_widgets/green_btn.dart';
@@ -17,6 +19,7 @@ import 'package:alkhudhrah_app/network/models/driver_user.dart';
 import 'package:alkhudhrah_app/network/repository/login_repository.dart';
 import 'package:alkhudhrah_app/router/route_constants.dart';
 import 'package:another_flushbar/flushbar.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -33,13 +36,10 @@ class _LoginEmailState extends State<LoginEmail> {
   final TextEditingController passController = TextEditingController();
   bool isBtnEnabled = true;
   bool isForgetPassBtnEnabled = true;
-  static bool isHasBranches = false;
 
   @override
   Widget build(BuildContext context) {
-    Size? size = MediaQuery
-        .of(context)
-        .size;
+    Size? size = MediaQuery.of(context).size;
     double scWidth = size.width;
     double scHeight = size.height;
 
@@ -50,23 +50,11 @@ class _LoginEmailState extends State<LoginEmail> {
         children: [
           Container(
             margin: EdgeInsets.only(top: 120, left: 30, right: 30),
-            width: MediaQuery
-                .of(context)
-                .size
-                .width / 0.3,
-            height: MediaQuery
-                .of(context)
-                .size
-                .height / 1.9,
+            width: MediaQuery.of(context).size.width / 0.3,
+            height: MediaQuery.of(context).size.height / 1.9,
             decoration: CardDesign.largeCardDesign(),
           ),
-          // SizedBox(
-          //   height: 10,
-          // ),
           brandNameMiddle(),
-          // SizedBox(
-          //   height: 10,
-          // ),
           SizedBox(height: scHeight*0.19,),
           Container(
             margin: EdgeInsets.only(
@@ -178,10 +166,11 @@ class _LoginEmailState extends State<LoginEmail> {
     showLoaderDialog(context);
     //----------start api ----------------
     Map<String, dynamic> headerMap = await getAuthHeaderMap();
-    
+
+    String? token = await FirebaseMessaging.instance.getToken();
     AuthRepository loginRepository = AuthRepository(headerMap);
     loginRepository
-        .loginUser(emailController.text, passController.text, true)
+        .loginUser(emailController.text, passController.text, token, Platform.isAndroid)
         .then((result) async {
       //-------- fail response ---------
 

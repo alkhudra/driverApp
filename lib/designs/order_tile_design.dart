@@ -111,7 +111,7 @@ Widget orderTileDesign(context, OrderHeader model, scWidth, scHeight) {
                   ),
                   //Order quantity
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: scWidth * 0.145),
+                    padding: EdgeInsets.symmetric(horizontal: scWidth * 0.16),
                     child: Text(
                       orderStatus,
                       style: TextStyle(

@@ -2,6 +2,7 @@ import 'package:alkhudhrah_app/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:alkhudhrah_app/locale/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 AppBar appBarDesign(context, title) {
   return AppBar(
@@ -50,7 +51,7 @@ AppBar appBarDesign(context, title) {
 AppBar appBarWithActions(context, title, Function() action) {
   return AppBar(
     leading: GestureDetector(
-      child: Icon(Icons.arrow_back_ios),
+      child: Icon(FontAwesomeIcons.history, size: 23,),
       onTap: action,
     ),
 

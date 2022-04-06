@@ -23,11 +23,11 @@ void openTwitterApp(String address)async{
 //--------------
 void openURL(String url) async {
 
-  if (await canLaunch(url)) {
+  // if (await canLaunch(url)) {
     await launch(url);
-  } else {
-    throw 'Could not launch $url';
-  }
+  // } else {
+    // throw 'Could not launch $url';
+  // }
 }
 //--------------
 void directToPhoneCall(String number) async {

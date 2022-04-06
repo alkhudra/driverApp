@@ -12,6 +12,7 @@ import 'package:alkhudhrah_app/network/helper/network_helper.dart';
 import 'package:alkhudhrah_app/network/models/orders/get_orders_response_model.dart';
 import 'package:alkhudhrah_app/network/models/orders/order_header.dart';
 import 'package:alkhudhrah_app/network/repository/order_repository.dart';
+import 'package:alkhudhrah_app/ui/order_history.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -54,7 +55,11 @@ class _HomescreenState extends State<Homescreen>  with SingleTickerProviderState
             return errorCase(snapshot);
         },
       ),
-      appBar: bnbAppBar(context, LocaleKeys.orders.tr()),
+      appBar: appBarWithActions(context, LocaleKeys.orders.tr(), () {
+        //display order history
+        Navigator.push(context, MaterialPageRoute(
+          builder: (context) => OrderHistory()));
+      }),
       endDrawer: drawerDesign(context),
     );
   }

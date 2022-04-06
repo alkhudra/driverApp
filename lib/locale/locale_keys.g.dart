@@ -58,6 +58,7 @@ abstract class  LocaleKeys {
   static const wallet ="Wallet";
   static const current_orders ="Current";
   static const completed_orders ="Completed";
+  static const order_history ="order_history";
   static const orders ="Orders";
   static const notifications_tab ="Notifications";
   static const home ="Home";

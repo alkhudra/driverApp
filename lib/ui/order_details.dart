@@ -668,6 +668,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                             child: Image.asset('assets/images/ic_file_pdf.png')),
                         onTap: () {
                           print(widget.orderModel.invoicePDFPath!);
+                          print(widget.orderModel.hasOrderCreatedFromDashboard!);
                           OrderHelper.displayInvoice(
                               widget.orderModel.invoicePDFPath!,
                               widget.orderModel.hasOrderCreatedFromDashboard!);
@@ -688,7 +689,7 @@ class _OrderDetailsState extends State<OrderDetails> {
             ),
           ),
           SizedBox(
-            height: 240,
+            height: 160,
           ),
         ],
       ),

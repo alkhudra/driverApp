@@ -1,5 +1,7 @@
 import 'package:alkhudhrah_app/locale/codegen_loader.g.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:alkhudhrah_app/ui/login_email.dart';
@@ -9,29 +11,31 @@ import 'package:alkhudhrah_app/constants/colors.dart';
 import 'package:alkhudhrah_app/router/route_constants.dart';
 import 'helper/shared_pref_helper.dart';
 
-// const AndroidNotificationChannel channel = AndroidNotificationChannel(
-//   'high_importance_channel', //id
-//   'High Importance Notifications', //title
-//   description: 'This channel is used for important notifications',
-//   importance: Importance.high,
-//   playSound: true
-// );
+const AndroidNotificationChannel channel = AndroidNotificationChannel(
+  'high_importance_channel', //id
+  'High Importance Notifications', //title
+  description: 'This channel is used for important notifications',
+  importance: Importance.high,
+  playSound: true
+);
+
+FirebaseMessaging messaging = messaging;
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
-// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-//   await Firebase.initializeApp();
-//   print('A bg msg just showed up : ${message.messageId}');
-// }
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  print('A bg msg just showed up : ${message.messageId}');
+}
 
 
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp();
+  await Firebase.initializeApp();
   await EasyLocalization.ensureInitialized();
 
-  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   runApp(
     EasyLocalization(
@@ -43,32 +47,32 @@ Future<void> main() async {
   );
 
 
-  // await flutterLocalNotificationsPlugin
-  // .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
-  // ?.createNotificationChannel(channel);
+  await flutterLocalNotificationsPlugin
+  .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+  ?.createNotificationChannel(channel);
 
-  // await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-  //   alert: true,
-  //   badge: true,
-  //   sound: true
-  // );
+  await messaging.setForegroundNotificationPresentationOptions(
+    alert: true,
+    badge: true,
+    sound: true
+  );
 }
 
-// Future init() async {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp();
-  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+Future init() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-  // await flutterLocalNotificationsPlugin
-  // .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
-  // ?.createNotificationChannel(channel);
+  await flutterLocalNotificationsPlugin
+  .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+  ?.createNotificationChannel(channel);
 
-  // await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-  //   alert: true,
-  //   badge: true,
-  //   sound: true
-  // );
-// }
+  await messaging.setForegroundNotificationPresentationOptions(
+    alert: true,
+    badge: true,
+    sound: true
+  );
+}
 
 class MyApp extends StatefulWidget {
   const MyApp({
@@ -88,74 +92,79 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     setValues();
 
-    // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    //   RemoteNotification? notification = message.notification;
-    //   AndroidNotification? android = message.notification?.android;
-    //   if(notification  != null && android != null) {
-    //     flutterLocalNotificationsPlugin.show(
-    //       notification.hashCode, 
-    //       notification.title, 
-    //       notification.body, 
-    //       NotificationDetails(
-    //         android: AndroidNotificationDetails(
-    //           channel.id,
-    //           channel.name,
-    //           channelDescription: channel.description,
-    //           color: kLogoGreen,
-    //           playSound: true,
-    //           //TODO: Add custom icon
-    //           icon: '@mipmap/ic_launcher'
-    //         )
-    //       )
-    //     );
-    //   }
-    // });
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
+      if(notification  != null && android != null) {
+        flutterLocalNotificationsPlugin.show(
+          notification.hashCode, 
+          notification.title, 
+          notification.body, 
+          NotificationDetails(
+            android: AndroidNotificationDetails(
+              channel.id,
+              channel.name,
+              channelDescription: channel.description,
+              color: kLogoGreen,
+              playSound: true,
+              //TODO: Add custom icon
+              icon: '@mipmap/ic_launcher'
+            ),
+            iOS: IOSNotificationDetails()
+          )
+        );
+      }
+    });
 
-    // FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-    //   print('A new onMessageOpenedApp event was published');
-    //   RemoteNotification? notification = message.notification;
-    //   AndroidNotification? android = message.notification?.android;
-    //   if(notification != null && android != null) {
-    //     showDialog(context: context,
-    //       builder: (_) {
-    //         return AlertDialog(
-    //           title: Text('Notification.title'),
-    //           content:  SingleChildScrollView(
-    //             child: Column(
-    //               crossAxisAlignment: CrossAxisAlignment.start,
-    //               children: [
-    //                 Text(notification.body!)
-    //               ],
-    //             ),
-    //           ),
-    //         );
-    //       });
-    //   }
-    // });
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print('A new onMessageOpenedApp event was published');
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
+      if(notification != null && android != null) {
+        showDialog(context: context,
+          builder: (_) {
+            return AlertDialog(
+              title: Text('Notification.title'),
+              content:  SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(notification.body!)
+                  ],
+                ),
+              ),
+            );
+          });
+      }
+    });
   }
 
-  // void showNotification() {
-  //   setState(() {
-  //     counter++;
-  //   });
+  void showNotification() async{
+    setState(() {
+      counter++;
+    });
 
-  //   flutterLocalNotificationsPlugin.show(
-  //     0, 
-  //     'Testing $counter', 
-  //     'How you doin?', 
-  //     NotificationDetails(
-  //       android: AndroidNotificationDetails(
-  //         channel.id, 
-  //         channel.name,
-  //         channelDescription: channel.description,
-  //         importance: Importance.high,
-  //         color: kLogoGreen,
-  //         playSound: true,
-  //         //TODO: Add custom icon
-  //         icon: '@mipmap/ic_launcher'
-  //       )
-  //     ));
-  // }
+    String? token = await messaging.getToken();
+    print('token: ' + token!);
+
+    flutterLocalNotificationsPlugin.show(
+      0, 
+      'Testing $counter', 
+      'How you doin?', 
+      NotificationDetails(
+        android: AndroidNotificationDetails(
+          channel.id, 
+          channel.name,
+          channelDescription: channel.description,
+          importance: Importance.high,
+          color: kLogoGreen,
+          playSound: true,
+          //TODO: Add custom icon
+          icon: '@mipmap/ic_launcher'
+        ),
+        iOS: IOSNotificationDetails()
+      ));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -176,9 +185,8 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  //replace getRout widget with tempHome to test local notifs
+    //replace getRout widget with tempHome to test local notifs
   Widget tempHome() {
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Testing Notifications'),
@@ -187,10 +195,10 @@ class _MyAppState extends State<MyApp> {
       body: Column(
         children: [
           Center(
-            // child: TextButton(
-            //   child: Text('Send local Notif'),
-            //   // onPressed: showNotification,
-            // ),
+            child: TextButton(
+              child: Text('Send local Notif'),
+              onPressed: showNotification,
+            ),
           ),
         ],
       ),
