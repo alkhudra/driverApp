@@ -6,6 +6,7 @@ abstract class ApiConst {
     'http://alkhudrahproject-001-site2.ctempurl.com';
 
   static const String login_url = '/AccountDriver/login';
+  static const String logout_url =  ' /AccountDriver/logout';
   //requires String id
   static const String get_user_info_url = '/AccountDriver/getRegisteredUser/';
   static const String reset_password_url = '/AccountDriver/resetPassword';

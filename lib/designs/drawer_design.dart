@@ -164,11 +164,7 @@ Drawer drawerDesign(context) {
           ),
           onTap: () {
             Navigator.pop(context);
-            PreferencesHelper.setUser(null);
-            PreferencesHelper.setUserLoggedIn(false);
-            PreferencesHelper.setUserFirstLogIn(false);
-
-            moveToNewStack(context, loginRoute);
+            logoutUser(context);
           },
         ),
       ],

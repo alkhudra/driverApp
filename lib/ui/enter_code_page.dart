@@ -196,7 +196,7 @@ class _EnterCodePageState extends State<EnterCodePage> {
     //----------start api ----------------
     Map<String, dynamic> headerMap = await getAuthHeaderMap();
     
-    AuthRepository loginRepository = AuthRepository(headerMap);
+    AuthRepository loginRepository = AuthRepository();
     loginRepository.forgetPassword(userEmail).then((result) async {
       //-------- fail response ---------
 

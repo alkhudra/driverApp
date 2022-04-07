@@ -168,7 +168,7 @@ class _LoginEmailState extends State<LoginEmail> {
     Map<String, dynamic> headerMap = await getAuthHeaderMap();
 
     String? token = await FirebaseMessaging.instance.getToken();
-    AuthRepository loginRepository = AuthRepository(headerMap);
+    AuthRepository loginRepository = AuthRepository();
     loginRepository
         .loginUser(emailController.text, passController.text, token, Platform.isAndroid)
         .then((result) async {

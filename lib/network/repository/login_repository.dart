@@ -17,9 +17,9 @@ class AuthRepository {
 
   // AuthRepository([RestClient? client])
   //     : _client = client ?? RestClient(Dio());
-  AuthRepository(Map<String,dynamic> headerMap) {
+  AuthRepository() {
     _client = RestClient(Dio(
-    BaseOptions(contentType: 'application/json', headers: headerMap),
+    BaseOptions(contentType: 'application/json'),
   ));
 }
 

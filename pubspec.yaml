@@ -43,7 +43,7 @@ dependencies:
   lottie: ^1.2.1
   flutter_slidable: ^1.2.0
   sliding_up_panel: ^2.0.0+1
-  firebase_core: ^1.14.0
+  firebase_core: ^1.12.0
   firebase_dynamic_links: ^4.0.5
   flutter_local_notifications: ^9.3.2
   widget_mask: ^1.0.0
