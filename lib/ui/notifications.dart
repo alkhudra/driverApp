@@ -186,8 +186,7 @@ static String name = '', email = '';
       itemBuilder: (context, index) {
         return notifCard(getOrdersResponseModel.notificationList[index]);
       },
-      //replace count by array.length
-      itemCount: 10,
+      itemCount: getOrdersResponseModel.notificationList.length,
       shrinkWrap: true,
       scrollDirection: Axis.vertical,
       padding: EdgeInsets.only(bottom: 25),
