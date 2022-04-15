@@ -98,23 +98,23 @@ class _OrderDetailsState extends State<OrderDetails> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                //TODO: Need client name
+                                //client name
                                 Container(
                                   child: Text(
-                                    model.companyId != null
-                                        ? model.companyId!
+                                    model.companyName != null
+                                        ? model.companyName!
                                         : '',
                                         overflow: TextOverflow.clip,
                                     style: TextStyle(
                                         color: kDarkBlue,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600),
+                                        fontSize: 17.5,
+                                        fontWeight: FontWeight.w700),
                                   ),
                                 ),
                                 SizedBox(
                                   height: 5,
                                 ),
-                                //driver number
+                                //client number
                                 Container(
                                   child: Text(
                                     branchNo != null
@@ -130,7 +130,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                             ),
                           ],
                         ),
-                        //Call driver button
+                        //Call client button
                         Container(
                             width: 45,
                             height: 45,

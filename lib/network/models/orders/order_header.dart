@@ -9,6 +9,7 @@ class OrderHeader {
   OrderHeader({
       num? id, 
       String? companyId, 
+      String? companyName, 
       String? branchId, 
       BranchModel? branchModel,
       String? warehouseCode, 
@@ -34,6 +35,7 @@ class OrderHeader {
       List<OrderItems>? orderItems,}){
     _id = id;
     _companyId = companyId;
+    _companyName = companyName;
     _branchId = branchId;
     _branchModel = branchModel;
     _warehouseCode = warehouseCode;
@@ -62,6 +64,7 @@ class OrderHeader {
   OrderHeader.fromJson(dynamic json) {
     _id = json['id'];
     _companyId = json['companyId'];
+    _companyName = json['companyName'];
     _branchId = json['branchId'];
     //branch mapping correct?
     _branchModel = json['branch'] != null ? BranchModel.fromJson(json['branch']) : null;
@@ -94,6 +97,7 @@ class OrderHeader {
   }
   num? _id;
   String? _companyId;
+  String? _companyName;
   String? _branchId;
   BranchModel? _branchModel;
   String? _warehouseCode;
@@ -120,6 +124,7 @@ class OrderHeader {
 
   num? get id => _id;
   String? get companyId => _companyId;
+  String? get companyName => _companyName;
   String? get branchId => _branchId;
   BranchModel? get branchModel => _branchModel;
   String? get warehouseCode => _warehouseCode;
@@ -148,6 +153,7 @@ class OrderHeader {
     final map = <String, dynamic>{};
     map['id'] = _id;
     map['companyId'] = _companyId;
+    map['companyName'] = _companyName;
     map['branchId'] = _branchId;
     if (_branchModel != null) {
       map['branch'] = _branchModel?.toJson();
