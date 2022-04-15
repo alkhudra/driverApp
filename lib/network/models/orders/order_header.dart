@@ -15,7 +15,7 @@ class OrderHeader {
       String? warehouseCode, 
       String? orderStatus, 
       String? orderCheckCode, 
-      num? invoiceNumber, 
+      int? invoiceNumber, 
       String? orderInitializedDate, 
       String? onDeliveryStatusDate, 
       String? deliveredStatusDate, 
@@ -103,7 +103,7 @@ class OrderHeader {
   String? _warehouseCode;
   String? _orderStatus;
   String? _orderCheckCode;
-  num? _invoiceNumber;
+  int? _invoiceNumber;
   String? _orderInitializedDate;
   String? _onDeliveryStatusDate;
   String? _deliveredStatusDate;
@@ -130,7 +130,7 @@ class OrderHeader {
   String? get warehouseCode => _warehouseCode;
   String? get orderStatus => _orderStatus;
   String? get orderCheckCode => _orderCheckCode;
-  num? get invoiceNumber => _invoiceNumber;
+  int? get invoiceNumber => _invoiceNumber;
   String? get orderInitializedDate => _orderInitializedDate;
   String? get onDeliveryStatusDate => _onDeliveryStatusDate;
   String? get deliveredStatusDate => _deliveredStatusDate;

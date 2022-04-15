@@ -1,7 +1,14 @@
 import 'package:alkhudhrah_app/designs/appbar_design.dart';
 import 'package:alkhudhrah_app/designs/textfield_design.dart';
+import 'package:alkhudhrah_app/dialogs/progress_dialog.dart';
 import 'package:alkhudhrah_app/helper/custom_btn.dart';
 import 'package:alkhudhrah_app/helper/order_helper.dart';
+import 'package:alkhudhrah_app/network/API/api_response.dart';
+import 'package:alkhudhrah_app/network/API/api_response_type.dart';
+import 'package:alkhudhrah_app/network/helper/exception_helper.dart';
+import 'package:alkhudhrah_app/network/helper/network_helper.dart';
+import 'package:alkhudhrah_app/network/models/orders/get_orders_response_model.dart';
+import 'package:alkhudhrah_app/network/repository/order_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:alkhudhrah_app/locale/locale_keys.g.dart';
 import 'package:alkhudhrah_app/helper/route_helper.dart';
@@ -12,12 +19,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'dart:ui' as ui;
 
 class OrderDelivered extends StatefulWidget {
-  // final bool? isSuccess;
-  // final OrderDeliveredSuccessResponseModel? model;
   final OrderHeader? model;
 
   const OrderDelivered({Key? key, 
-    // this.isSuccess, 
+
     this.model
   })
     : super(key: key);
@@ -186,9 +191,31 @@ class _OrderDeliveredState extends State<OrderDelivered> {
                 ),
                 Container(
                   alignment: Alignment.bottomCenter,
-                  child: greenBtn(LocaleKeys.confirm_Delivery.tr(), EdgeInsets.symmetric(horizontal: 60), () {
+                  child: greenBtn(LocaleKeys.confirm_Delivery.tr(), EdgeInsets.symmetric(horizontal: 60), () async {
                     //invoke orderDelivered and movestack to home
                     hasPaid = hasPaid;
+
+                    //----------show progress----------------
+
+                    showLoaderDialog(context);
+
+                    //----------start api ----------------
+                    
+                    Map<String, dynamic> headerMap = await getHeaderMap();
+
+                    OrderRepository orderRepository = OrderRepository(headerMap);
+
+                    ApiResponse apiResponse =
+                        await orderRepository.orderDelivered(orderModel.invoiceNumber!, hasPaid);
+
+                    if (apiResponse.apiStatus.code == ApiResponseType.OK.code) {
+                      GetOrdersResponseModel? responseModel =
+                          GetOrdersResponseModel.fromJson(apiResponse.result);
+                      return responseModel;
+                    } else {
+                      throw ExceptionHelper(apiResponse.message);
+                    }
+
                     moveToNewStack(context, dashBoardRoute);
                   }),
                 ),

@@ -200,7 +200,6 @@ class _HomescreenState extends State<Homescreen>  with SingleTickerProviderState
 
     ApiResponse apiResponse =
         await orderRepository.getOrders(pageNumber, pageSize, '');
-        //TODO: add productName to getOrders? 
 
     if (apiResponse.apiStatus.code == ApiResponseType.OK.code) {
       GetOrdersResponseModel? responseModel =
