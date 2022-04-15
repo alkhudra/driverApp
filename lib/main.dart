@@ -110,7 +110,7 @@ class _MyAppState extends State<MyApp> {
               //TODO: Add custom icon
               icon: '@mipmap/ic_launcher'
             ),
-            iOS: IOSNotificationDetails()
+            // iOS: IOSNotificationDetails()
           )
         );
       }
@@ -145,7 +145,7 @@ class _MyAppState extends State<MyApp> {
     });
 
     String? token = await messaging.getToken();
-    print('token: ' + token!);
+    print('Notification token: ' + token!);
 
     flutterLocalNotificationsPlugin.show(
       0, 
@@ -162,8 +162,28 @@ class _MyAppState extends State<MyApp> {
           //TODO: Add custom icon
           icon: '@mipmap/ic_launcher'
         ),
-        iOS: IOSNotificationDetails()
+        // iOS: IOSNotificationDetails()
       ));
+
+
+        await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+          alert: true, // Required to display a heads up notification
+          badge: true,
+          sound: true,
+        );
+
+
+        NotificationSettings settings = await FirebaseMessaging.instance.requestPermission(
+          alert: true,
+          announcement: false,
+          badge: true,
+          carPlay: false,
+          criticalAlert: false,
+          provisional: false,
+          sound: true,
+        );
+
+        print('User granted permission: ${settings.authorizationStatus}');
   }
 
   @override

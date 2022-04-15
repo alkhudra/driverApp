@@ -14,12 +14,13 @@ abstract class ApiConst {
   //check if account or accountdriver for check pw token
   static const String check_password_token_url = '/AccountDriver/checkPasswordToken';
   static const String get_contact_url = "/HomeD/getContactUs";
-  static const String get_orders = "/Orders/getOrders";
-  static const String order_delivered = "/Orders/orderDelivered";
   // static const String send_code_url = '/account/sendCode';
  // static const String check_password_token = '/AccountDriver/checkPasswordToken';
+  //--------------- orders ----------------
+  static const String get_orders = "/Orders/getOrders";
+  static const String order_delivered = "/Orders/orderDelivered";
 
- //--------------- orders ----------------
-
-
+ //--------------- Notifications ----------------
+static const String send_notification = "/NotificationD/send";
+static const String get_user_notification = "/NotificationD/getUserNotifications";
 }

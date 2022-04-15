@@ -40,4 +40,12 @@ abstract class RestClient {
 
   @POST(ApiConst.order_delivered)
   Future<dynamic> orderDelivered(@Query('invoiceNumber') int invoiceNumber, @Query('hasPaid') bool hasPaid,);
+
+  //--------------- Notifications ----------------
+  @POST(ApiConst.send_notification)
+  Future<dynamic> sendNotification(@Body() Map<String, dynamic> hashMap);
+
+  @GET(ApiConst.get_user_notification)
+  Future<dynamic> getUserNotification();
+
 }

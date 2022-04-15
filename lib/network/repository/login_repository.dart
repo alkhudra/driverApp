@@ -2,21 +2,17 @@ import 'dart:collection';
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:alkhudhrah_app/locale/locale_keys.g.dart';
 import 'package:alkhudhrah_app/network/api/api_config.dart';
 import 'package:alkhudhrah_app/network/api/api_response.dart';
 import 'package:alkhudhrah_app/network/api/api_response_type.dart';
 import 'package:alkhudhrah_app/network/models/auth/fail_reset_password_response_model.dart';
 import 'package:alkhudhrah_app/network/models/error_response_model.dart';
 import 'package:alkhudhrah_app/network/models/message_response_model.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:dio/dio.dart';
 
 class AuthRepository {
    late final RestClient _client;
 
-  // AuthRepository([RestClient? client])
-  //     : _client = client ?? RestClient(Dio());
   AuthRepository() {
     _client = RestClient(Dio(
     BaseOptions(contentType: 'application/json'),
