@@ -51,7 +51,7 @@ class _OrderDetailsState extends State<OrderDetails> {
     BranchModel? branch = model.branchModel;
     String? branchNo = branch!.phoneNumber;
     return Scaffold(
-      appBar:  appBarDesign(context, LocaleKeys.order_details.tr()),
+      appBar: appBarDesign(context, LocaleKeys.order_details.tr()),
       body: model.orderStatus == onDelivery
           ? SlidingUpPanel(
               body: pageContent(model),

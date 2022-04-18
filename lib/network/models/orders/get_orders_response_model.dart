@@ -8,7 +8,7 @@ class GetOrdersResponseModel {
   String? message;
 
   List<OrderHeader> get orderList =>
-      _orderList; //BranchListResponseModel(this._branches, this.message);
+      _orderList; 
 
   GetOrdersResponseModel.fromJson(dynamic json) {
 

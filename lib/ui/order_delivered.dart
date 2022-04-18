@@ -194,6 +194,7 @@ class _OrderDeliveredState extends State<OrderDelivered> {
                   child: greenBtn(LocaleKeys.confirm_Delivery.tr(), EdgeInsets.symmetric(horizontal: 60), () async {
                     //invoke orderDelivered and movestack to home
                     hasPaid = hasPaid;
+                    print(orderModel.invoiceNumber!);
 
                     //----------show progress----------------
 

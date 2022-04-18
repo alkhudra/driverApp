@@ -28,7 +28,6 @@ class _HomescreenState extends State<Homescreen>  with SingleTickerProviderState
  late TabController _tabController;
   int pageNumber = 1;
   int pageSize = listItemsCount;
- // List<OrderHeader> list = [];
   bool isThereMoreItems = false;
   List<OrderHeader> orderList = [];
   @override
@@ -66,14 +65,12 @@ class _HomescreenState extends State<Homescreen>  with SingleTickerProviderState
 //---------------------
 
   pageDesign(BuildContext context, GetOrdersResponseModel model) {
-/*    List<OrderHeader> currentOrder = [], finishedOrder = [];
+    List<OrderHeader> currentOrder = [];
     for (OrderHeader orderItems in model.orderList) {
-      if (orderItems.orderStatus == delivered) {
-        finishedOrder.add(orderItems);
-      } else {
+      if (orderItems.orderStatus == underProcess || orderItems.orderStatus == onDelivery) {
         currentOrder.add(orderItems);
       }
-    }*/
+    }
     Size size = MediaQuery.of(context).size;
     double scWidth = size.width;
     double scHeight = size.height;
@@ -87,9 +84,9 @@ class _HomescreenState extends State<Homescreen>  with SingleTickerProviderState
                 ? ListView.builder(
               itemBuilder: ((context, index) {
                 return orderTileDesign(
-                    context, orderList[index], scWidth, scHeight);
+                    context, currentOrder[index], scWidth, scHeight);
               }),
-              itemCount: orderList.length,
+              itemCount: currentOrder.length,
             )
                 : noItemDesign(
                 LocaleKeys.no_finished_orders.tr(), 'images/not_found.png'),

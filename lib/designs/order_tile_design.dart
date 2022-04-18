@@ -34,7 +34,8 @@ Widget orderTileDesign(context, OrderHeader model, scWidth, scHeight) {
     title: Center(
       child: GestureDetector(
         onTap: () {
-          // navigate to order status page
+          // navigate to order details page
+          // print(model.orderStatus);
           directToOrderDetails(context,model);
         },
         child: Stack(
