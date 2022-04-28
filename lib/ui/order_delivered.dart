@@ -210,6 +210,7 @@ class _OrderDeliveredState extends State<OrderDelivered> {
                         await orderRepository.orderDelivered(orderModel.invoiceNumber!, hasPaid);
 
                     if (apiResponse.apiStatus.code == ApiResponseType.OK.code) {
+                      print(apiResponse.result);
                       GetOrdersResponseModel? responseModel =
                           GetOrdersResponseModel.fromJson(apiResponse.result);
                       return responseModel;

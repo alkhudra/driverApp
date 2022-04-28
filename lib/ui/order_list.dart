@@ -57,9 +57,8 @@ class _OrderListState extends State<OrderList>
             return errorCase(snapshot);
         },
       ),
-      // endDrawer: drawerDesign(context),
       appBar: bnbAppBar(context, LocaleKeys.orders.tr()),
-      endDrawer: drawerDesign(context),
+      // endDrawer: drawerDesign(context),
     );
   }
 //---------------------

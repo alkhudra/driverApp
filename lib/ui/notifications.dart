@@ -24,7 +24,8 @@ class NotificationsScreen extends StatefulWidget {
 
 class _NotificationsScreenState extends State<NotificationsScreen> {
 
-static String name = '', email = '';
+static String name = '', email = '', image = '';
+    
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,7 @@ static String name = '', email = '';
       ),
       appBar: bnbAppBar(context, LocaleKeys.notifications_tab.tr()),
       //TODO: replace with drawer(name & email)
-      endDrawer: drawerDesign(context),
+      endDrawer: drawerDesign(context, name, email, image),
     );
   }
   Widget notifCard(NotificationModel model) {
@@ -154,6 +155,7 @@ static String name = '', email = '';
     DriverUser user = await PreferencesHelper.getUser;
     name = user.driverName!;
     email = user.email!;
+    image = user.image!;
   }
 
 

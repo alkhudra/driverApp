@@ -127,7 +127,7 @@ final TextEditingController phoneController = TextEditingController();
           ),
         ],
       ),
-      endDrawer: drawerDesign(context),
+      // endDrawer: drawerDesign(context),
     );
   }
 }

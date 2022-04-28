@@ -4,15 +4,19 @@ import 'package:alkhudhrah_app/designs/drawer_design.dart';
 import 'package:alkhudhrah_app/designs/no_item_design.dart';
 import 'package:alkhudhrah_app/designs/order_tile_design.dart';
 import 'package:alkhudhrah_app/helper/custom_btn.dart';
+import 'package:alkhudhrah_app/helper/shared_pref_helper.dart';
 import 'package:alkhudhrah_app/locale/locale_keys.g.dart';
 import 'package:alkhudhrah_app/network/API/api_response.dart';
 import 'package:alkhudhrah_app/network/API/api_response_type.dart';
 import 'package:alkhudhrah_app/network/helper/exception_helper.dart';
 import 'package:alkhudhrah_app/network/helper/network_helper.dart';
+import 'package:alkhudhrah_app/network/models/driver_user.dart';
 import 'package:alkhudhrah_app/network/models/orders/get_orders_response_model.dart';
 import 'package:alkhudhrah_app/network/models/orders/order_header.dart';
+import 'package:alkhudhrah_app/network/models/orders/order_items.dart';
 import 'package:alkhudhrah_app/network/repository/order_repository.dart';
 import 'package:alkhudhrah_app/ui/order_history.dart';
+import 'package:alkhudhrah_app/ui/order_list.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -30,9 +34,25 @@ class _HomescreenState extends State<Homescreen>  with SingleTickerProviderState
   int pageSize = listItemsCount;
   bool isThereMoreItems = false;
   List<OrderHeader> orderList = [];
+  String name = '', email = '', image = '';
+
+
+    //------------------------
+  void setValues() async {
+    DriverUser user = await PreferencesHelper.getUser;
+    name = user.driverName!;
+    email = user.email!;
+    image = user.image!;
+
+    print('Driver Name:' + name);
+    print('Driver Email:' + email);
+    print('Driver Image:' + image);
+  }
+
   @override
   void initState() {
     _tabController = TabController(length: 2, vsync: this);
+    setValues();
     super.initState();
   }
 
@@ -59,7 +79,7 @@ class _HomescreenState extends State<Homescreen>  with SingleTickerProviderState
         Navigator.push(context, MaterialPageRoute(
           builder: (context) => OrderHistory()));
       }),
-      endDrawer: drawerDesign(context),
+      endDrawer: drawerDesign(context, name, email, image),
     );
   }
 //---------------------

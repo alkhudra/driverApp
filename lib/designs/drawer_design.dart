@@ -9,7 +9,7 @@ import 'package:alkhudhrah_app/ui/language_setting.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-Drawer drawerDesign(context) {
+Drawer drawerDesign(context, name, email, image) {
 
   //TODO: Add name, email and image url
 
@@ -35,12 +35,14 @@ Drawer drawerDesign(context) {
                 margin: EdgeInsets.only(top: 40),
                 child: CircleAvatar(
                  backgroundImage: AssetImage('assets/images/male_avatar.png'),
+                 foregroundImage: NetworkImage('https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZmlsZSUyMHBpY3R1cmV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60'),
+                //  foregroundImage: NetworkImage(ApiConst.dashboard_url + image),
                 ),
               ),
               SizedBox(height: 20,),
               Container(
                 //TODO: replace with company variable from DB
-                child: Text('name', style: TextStyle(
+                child: Text(name, style: TextStyle(
                   color: kWhite,
                   fontSize: 21,
                   fontWeight: FontWeight.w600,
@@ -49,7 +51,7 @@ Drawer drawerDesign(context) {
               SizedBox(height: 10,),
               Container(
                 //TODO: replace with email variable from DB
-                child: Text('email', style: TextStyle(
+                child: Text(email, style: TextStyle(
                   color: kWhite,
                   fontSize: 15,
                   fontWeight: FontWeight.w300,
