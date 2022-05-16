@@ -1,3 +1,7 @@
+import 'package:alkhudhrah_app/network/API/api_response.dart';
+import 'package:alkhudhrah_app/network/API/api_response_type.dart';
+import 'package:alkhudhrah_app/network/helper/network_helper.dart';
+import 'package:alkhudhrah_app/network/repository/order_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:alkhudhrah_app/constants/cont.dart';
 import 'package:alkhudhrah_app/locale/locale_keys.g.dart';
@@ -36,7 +40,7 @@ Widget orderTileDesign(context, OrderHeader model, scWidth, scHeight) {
         onTap: () {
           // navigate to order details page
           // print(model.orderStatus);
-          directToOrderDetails(context,model);
+          directToOrderDetails(context, model: model);
         },
         child: Stack(
           children: [
@@ -132,14 +136,36 @@ Widget orderTileDesign(context, OrderHeader model, scWidth, scHeight) {
   );
 }
 
-void directToOrderDetails(context,model)async {
+
+void directToOrderDetails(context, {model, orderId}) async {
   String language = await PreferencesHelper.getSelectedLanguage;
 
+  //todo: test
+  if (model == null) {
+    Map<String, dynamic> headerMap = await getHeaderMap();
+
+    OrderRepository orderRepository = OrderRepository(headerMap);
+
+    ApiResponse apiResponse = await orderRepository.getOrderById(orderId);
+
+    if (apiResponse.apiStatus.code == ApiResponseType.OK.code) {
+      OrderHeader? responseModel = OrderHeader.fromJson(apiResponse.result);
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => OrderDetails(
+                orderModel: responseModel,
+                language: language,
+              )));
+
+    }
+  } else
   Navigator.push(
       context,
       MaterialPageRoute(
           builder: (context) => OrderDetails(
-            orderModel: model,
-            language:language ,
-          )));
+                orderModel: model,
+                language: language,
+              )));
 }
+

@@ -58,21 +58,21 @@ Future<void> main() async {
   );
 }
 
-Future init() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+// Future init() async {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   await Firebase.initializeApp();
+//   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-  await flutterLocalNotificationsPlugin
-  .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
-  ?.createNotificationChannel(channel);
+//   await flutterLocalNotificationsPlugin
+//   .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+//   ?.createNotificationChannel(channel);
 
-  await messaging.setForegroundNotificationPresentationOptions(
-    alert: true,
-    badge: true,
-    sound: true
-  );
-}
+//   await messaging.setForegroundNotificationPresentationOptions(
+//     alert: true,
+//     badge: true,
+//     sound: true
+//   );
+// }
 
 class MyApp extends StatefulWidget {
   const MyApp({
