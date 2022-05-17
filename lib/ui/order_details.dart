@@ -678,19 +678,20 @@ class _OrderDetailsState extends State<OrderDetails> {
                   ),
                 ),
                 Container(
-                  child: greenBtn(LocaleKeys.delivery_completed.tr(), EdgeInsets.symmetric(horizontal: 30, vertical: 15), () {
+                  child: model.orderStatus == onDelivery ? greenBtn(LocaleKeys.delivery_completed.tr(), EdgeInsets.symmetric(horizontal: 30, vertical: 15), () {
                     print(model.orderCheckCode);
                     moveToNewStackWithArgs(context, MaterialPageRoute(builder: (context) {
                       return OrderDelivered(model: model,);
                     }));
-                  }),
+                  }) : SizedBox(height: 30,),
                 ),
               ],
             ),
           ),
+          model.orderStatus == onDelivery?
           SizedBox(
             height: 160,
-          ),
+          ): SizedBox(height: 10,),
         ],
       ),
     );
