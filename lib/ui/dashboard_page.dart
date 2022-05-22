@@ -137,7 +137,7 @@ class _DashboardPageState extends State<DashboardPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
-                        Icons.notifications_rounded,
+                        FontAwesomeIcons.solidBell,
                         color: currentTab == 2 
                         ? kLogoGreen
                         : kGray,
