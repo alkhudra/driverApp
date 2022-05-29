@@ -105,12 +105,12 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<dynamic> getOrders(pageNumber, pageSize, productName) async {
+  Future<dynamic> getOrders(pageNumber, pageSize) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'PageNumber': pageNumber,
       r'PageSize': pageSize,
-      r'ProductName': productName
+    
     };
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch(_setStreamType<dynamic>(

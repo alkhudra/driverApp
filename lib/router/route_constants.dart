@@ -18,7 +18,6 @@ const String walletRoute = "wallet";
 const String deliveredRoute = "orderDelivered";
 
 final Map<String, WidgetBuilder> routMap = {
-  mainRoute: (BuildContext context) => new MyApp(),
   loginRoute: (BuildContext context) => new LoginEmail(),
   dashBoardRoute: (BuildContext context) => new DashboardPage(),
   deliveredRoute: (BuildContext context) => new OrderDelivered(),

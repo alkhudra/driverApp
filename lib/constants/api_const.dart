@@ -1,9 +1,10 @@
 abstract class ApiConst {
-  static const String basic_url =
-      'http://alkhudrahproject-001-site3.ctempurl.com/api';
-  static const String dashboard_url = 'http://alkhadraunited.com';
+  static const String basic_url = 'https://driver.alkhadraunited.com';
+      // 'http://alkhudrahproject-001-site3.ctempurl.com/api';
+  static const String dashboard_url = 'https://dashboard.alkhadraunited.com/';
+  // 'http://alkhadraunited.com';
   static const String pdf_url =
-    'http://alkhudrahproject-001-site2.ctempurl.com';
+    'https://dashboard.alkhadraunited.com/';
 
   static const String login_url = '/AccountDriver/login';
   static const String logout_url =  ' /AccountDriver/logout';

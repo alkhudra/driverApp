@@ -43,7 +43,7 @@ class _WalletScreenState extends State<WalletScreen> {
     return Scaffold(
       backgroundColor: kBackgroundColor,
       appBar: bnbAppBar(context, LocaleKeys.wallet.tr()),
-      endDrawer: drawerDesign(context, name, email, image),
+      // endDrawer: drawerDesign(context, name, email, image),
       body: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

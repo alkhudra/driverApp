@@ -1,4 +1,7 @@
+import 'package:alkhudhrah_app/designs/order_tile_design.dart';
 import 'package:alkhudhrah_app/locale/codegen_loader.g.dart';
+import 'package:alkhudhrah_app/ui/order_details.dart';
+import 'package:alkhudhrah_app/ui/wallet.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -10,6 +13,10 @@ import 'package:alkhudhrah_app/ui/language_page.dart';
 import 'package:alkhudhrah_app/constants/colors.dart';
 import 'package:alkhudhrah_app/router/route_constants.dart';
 import 'helper/shared_pref_helper.dart';
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey(debugLabel: "Main Navigator");
+late String routeToGo = '/';
+String? payload;
 
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
   'high_importance_channel', //id
@@ -26,12 +33,27 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterL
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
   print('A bg msg just showed up : ${message.messageId}');
+  print("_firebaseMessagingBackgroundHandler Clicked!");
+  //change second to OrderDetails(orderID)
+  routeToGo = '/second';
+  print(message.notification!.body);
 }
 
-
+Future<void> selectNotification(String? payload) async {
+  if (payload != null) {
+    debugPrint('notification payload: $payload');
+    navigatorKey.currentState?.pushNamed('/second');
+  }
+}
 
 Future<void> main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
+  bool isUserLoggedIn = await PreferencesHelper.getIsUserLoggedIn == null ? false:await PreferencesHelper.getIsUserLoggedIn ;
+  bool isUserFirstLogin = await PreferencesHelper.getIsUserFirstLogIn == null ? true:await PreferencesHelper.getIsUserFirstLogIn ;
+
+  
+ 
   await Firebase.initializeApp();
   await EasyLocalization.ensureInitialized();
 
@@ -43,7 +65,7 @@ Future<void> main() async {
         path: 'assets/locale',
         fallbackLocale: Locale('en'),
         assetLoader: CodegenLoader(),
-        child: MyApp()),
+        child: MyApp(isUserFisrtLogin: isUserFirstLogin,isUserLoggedIn:isUserLoggedIn)),
   );
 
 
@@ -56,6 +78,16 @@ Future<void> main() async {
     badge: true,
     sound: true
   );
+
+  final NotificationAppLaunchDetails? notificationAppLaunchDetails =
+    await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+    print('payload=');
+    payload= notificationAppLaunchDetails!.payload;
+  if(payload != null){
+    routeToGo = '/second';
+    navigatorKey.currentState?.pushNamed('/second');
+  }
+
 }
 
 // Future init() async {
@@ -75,22 +107,31 @@ Future<void> main() async {
 // }
 
 class MyApp extends StatefulWidget {
+  final bool isUserLoggedIn ,isUserFisrtLogin;
+  
   const MyApp({
     Key? key,
-  }) : super(key: key);
+required this.isUserFisrtLogin,required this.isUserLoggedIn}) : super(key: key);
 
   @override
   _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-  static  bool isUserFirstLogin=false;
-  static  bool isUserLoggedIn=false;
+
   static int counter = 0;
+
+  late String token;
+
+    getToken() async {
+    token = (await FirebaseMessaging.instance.getToken())!;
+    print(token);
+  }
+
   @override
   void initState() {
     super.initState();
-    setValues();
+    // firebaseTrigger(context);
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       RemoteNotification? notification = message.notification;
@@ -115,11 +156,17 @@ class _MyAppState extends State<MyApp> {
         );
       }
     });
+    getToken();
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       print('A new onMessageOpenedApp event was published');
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification?.android;
+      print(message.notification!.body != null);
+      if (message.notification!.body != null) {
+        navigatorKey.currentState?.pushNamed('/second');
+      }
+
       if(notification != null && android != null) {
         showDialog(context: context,
           builder: (_) {
@@ -192,11 +239,31 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      navigatorKey: navigatorKey,
       color: kLogoGreen,
       supportedLocales: context.supportedLocales,
       localizationsDelegates: context.localizationDelegates,
       locale: context.locale,
       routes: routMap,
+      initialRoute: (routeToGo != null) ? routeToGo : '/',
+      onGenerateRoute: (RouteSettings settings) {
+          switch (settings.name) {
+            case '/':
+              return MaterialPageRoute(
+                builder: (_) => const DashboardPage(),
+              );
+              break;
+            case '/second':
+            Navigator.push(context, MaterialPageRoute(builder: (context) => WalletScreen()));
+            // directToOrderDetails(context);
+              // return MaterialPageRoute(
+              //   builder: (_) => const OrderDetails(),
+              // );
+              break;
+            default:
+              return _errorRoute();
+          }
+      },
       theme: ThemeData(
         fontFamily: 'Almarai',
         accentColor: kLogoGreen,
@@ -206,6 +273,8 @@ class _MyAppState extends State<MyApp> {
       // home: tempHome(),
     );
   }
+
+  
 
     //replace getRout widget with tempHome to test local notifs
   Widget tempHome() {
@@ -229,18 +298,74 @@ class _MyAppState extends State<MyApp> {
 
   Widget getRout() {
 
-    print(isUserFirstLogin);
 
-    if (isUserFirstLogin == false && isUserLoggedIn == true)
+
+    if (widget.isUserFisrtLogin == false && widget.isUserLoggedIn == true)
       return DashboardPage();
-    if (isUserFirstLogin == false && isUserLoggedIn == false)
+    if (widget.isUserFisrtLogin == false && widget.isUserLoggedIn == false)
       return LoginEmail();
     else
       return LanguagePage();
   }
 
-  setValues() async {
-    isUserFirstLogin = await PreferencesHelper.getIsUserFirstLogIn;
-    isUserLoggedIn = await PreferencesHelper.getIsUserLoggedIn;
+
+  
+  static Route<dynamic> _errorRoute() {
+    return MaterialPageRoute(
+        builder: (_){
+          return Scaffold(
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Stack(
+                    children: [
+                      Align(
+                        child:  Container(
+                          width: 150,
+                          height: 150,
+                          child: Icon(
+                            Icons.delete_forever,
+                            size: 48,
+                          ),
+                        ),
+                        alignment: Alignment.center,
+                      ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: SizedBox(
+                          width: 150,
+                          height: 150,
+                          child: CircularProgressIndicator(
+                              strokeWidth: 4,
+                              value: 1.0
+                            // valueColor: AlwaysStoppedAnimation<Color>(Colors.blue.withOpacity(0.5)),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 20,),
+                  Text('Page Not Found'),
+                  SizedBox(height: 10,),
+                  Text('Press back button on your phone', style: TextStyle(color: Color(0xff39399d), fontSize: 28),),
+                  SizedBox(height: 20,),
+                  /*ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop();
+                      return;
+                    },
+                    style: ButtonStyle(
+                      backgroundColor:
+                      MaterialStateProperty.all(Colors.orange),
+                    ),
+                    child: const Text('Back to home'),
+                  ),*/
+                ],
+              ),
+            ),
+          );
+        }
+    );
   }
 }

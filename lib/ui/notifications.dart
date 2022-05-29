@@ -40,8 +40,7 @@ static String name = '', email = '', image = '';
         },
       ),
       appBar: bnbAppBar(context, LocaleKeys.notifications_tab.tr()),
-      //TODO: replace with drawer(name & email)
-      endDrawer: drawerDesign(context, name, email, image),
+      // endDrawer: drawerDesign(context, name, email, image),
     );
   }
   Widget notifCard(NotificationModel model) {

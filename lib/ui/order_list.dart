@@ -196,8 +196,7 @@ class _OrderListState extends State<OrderList>
     OrderRepository orderRepository = OrderRepository(headerMap);
 
     ApiResponse apiResponse =
-        await orderRepository.getOrders(pageNumber, pageSize, '');
-        //TODO: add productName to getOrders?
+        await orderRepository.getOrders(pageNumber, pageSize);
 
     if (apiResponse.apiStatus.code == ApiResponseType.OK.code) {
       GetOrdersResponseModel? responseModel =

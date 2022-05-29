@@ -122,6 +122,7 @@ class CodegenLoader extends AssetLoader {
   "cash_info": "Please Confirm Whether You Have Received a Cash Payment from the Client.",
   "confirm_Delivery": "Confirm Delivery",
   "order_history": "Order History",
+  "transfer": "Bank Transfer",
 };
 static const Map<String,dynamic> ar = {
   "SIGN IN": "تسجيل الدخول",
@@ -231,6 +232,7 @@ static const Map<String,dynamic> ar = {
   "cash_info": "يرجى تأكيد إذا تم استلام دفعة نقدية كاملة من العميل.",
   "confirm_Delivery": "إنهاء التسليم",
   "order_history": "تاريخ الطلبات",
+  "transfer": "تحويل بنكي",
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "ar": ar};
  }

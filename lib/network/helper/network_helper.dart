@@ -52,7 +52,7 @@ Widget errorCase(AsyncSnapshot<dynamic?> snapshot) {
         SizedBox(height: 5,),
         errorText('${snapshot.error}'),
 
-        // Image(image: AssetImage('images/green_fruit.png')),
+        // Image(image: AssetImage('assets/images/product_green.png')),
         // Text('${snapshot.error}' ,),
       ],
     ));

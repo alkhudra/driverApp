@@ -11,10 +11,10 @@ class ImageHelper {
       ApiConst.dashboard_url + imageUrl,
       errorBuilder: (BuildContext context, Object exception,
           StackTrace? stackTrace) {
-        return Image.asset('images/green_fruit.png');
+        return Image.asset('assets/images/product_green.png');
       },
     )
-        : Image.asset('images/green_fruit.png');
+        : Image.asset('assets/images/product_green.png');
   }
 
 //---------------------
@@ -27,12 +27,12 @@ class ImageHelper {
       mask: Image.network(ApiConst.dashboard_url + imageUrl, fit: BoxFit.cover,
         errorBuilder: (BuildContext context, Object exception,
             StackTrace? stackTrace) {
-          return Image.asset('images/green_fruit.png');
+          return Image.asset('assets/images/product_green.png');
         },
       ),
       child: Image.asset('images/product_mask.png', width: 350,),
     )
-        : Image.asset('images/green_fruit.png');
+        : Image.asset('assets/images/product_green.png');
   }
 
 //-----------------------

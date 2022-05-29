@@ -36,7 +36,7 @@ abstract class RestClient {
 
   //--------------- orders ----------------
   @GET(ApiConst.get_orders)
-  Future<dynamic> getOrders(@Query('PageNumber') int pageNumber, @Query('PageSize') int  pageSize, @Query('ProductName') String  productName);
+  Future<dynamic> getOrders(@Query('PageNumber') int pageNumber, @Query('PageSize') int  pageSize);
 
   @POST(ApiConst.order_delivered)
   Future<dynamic> orderDelivered(@Query('invoiceNumber') int invoiceNumber, @Query('hasPaid') bool hasPaid,);

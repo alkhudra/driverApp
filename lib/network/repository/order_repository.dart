@@ -22,14 +22,13 @@ late final RestClient _client;
 
   Future<ApiResponse> getOrders(
       int pageNumber,
-      int  pageSize, 
-      String  productName) async {
+      int  pageSize) async {
     if (pageSize == null || pageNumber == null ) {
       return ApiResponse(ApiResponseType.BadRequest, null, '');
     }
 
     return await _client
-        .getOrders(pageNumber, pageSize, productName)
+        .getOrders(pageNumber, pageSize)
         .then((value) => ApiResponse(ApiResponseType.OK, value, ''))
         .catchError((e) {
       int errorCode = 0;

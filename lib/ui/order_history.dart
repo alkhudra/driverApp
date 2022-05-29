@@ -48,13 +48,8 @@ class _OrderHistoryState extends State<OrderHistory> {
   //---------------------
 
   pageDesign(BuildContext context, GetOrdersResponseModel model) {
-    List<OrderHeader> finishedOrder = [];
-    for (OrderHeader orderItems in model.orderList) {
-      if (orderItems.orderStatus == 'delivered') {
-        print(orderItems.orderStatus);
-        finishedOrder.add(orderItems);
-      }
-    }
+
+    orderList.removeWhere((element) => element.orderStatus != delivered);
     Size size = MediaQuery.of(context).size;
     double scWidth = size.width;
     double scHeight = size.height;
@@ -68,9 +63,9 @@ class _OrderHistoryState extends State<OrderHistory> {
                 ? ListView.builder(
               itemBuilder: ((context, index) {
                 return orderTileDesign(
-                    context, finishedOrder[index], scWidth, scHeight);
+                    context, orderList[index], scWidth, scHeight);
               }),
-              itemCount: finishedOrder.length,
+              itemCount: orderList.length,
             )
                 : noItemDesign(
                 LocaleKeys.no_finished_orders.tr(), 'images/not_found.png'),
@@ -82,89 +77,6 @@ class _OrderHistoryState extends State<OrderHistory> {
         ],
       ),
     );
- /*   return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 20),
-          child: Container(
-            height: 40,
-            width: 320,
-            decoration: BoxDecoration(
-              // color: CustomColors().primaryWhiteColor,
-              borderRadius: BorderRadius.circular(25),
-              border: Border.all(color: CustomColors().primaryGreenColor),
-            ),
-            child: TabBar(
-              controller: _tabController,
-              // give the indicator a decoration (color and border radius)
-              indicator: BoxDecoration(
-                borderRadius: BorderRadius.circular(25),
-                color: CustomColors().primaryGreenColor,
-              ),
-              labelColor: CustomColors().primaryWhiteColor,
-              labelStyle: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontFamily: 'Almarai',
-                  fontSize: 16),
-              unselectedLabelColor: CustomColors().darkBlueColor,
-              tabs: [
-                // first tab [you can add an icon using the icon property]
-                Tab(
-                  text: LocaleKeys.current_orders.tr(),
-                ),
-
-                // second tab [you can add an icon using the icon property]
-                Tab(
-                  text: LocaleKeys.complete_orders.tr(),
-                ),
-              ],
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Expanded(
-          child: TabBarView(
-            controller: _tabController,
-            children: [
-              // first tab bar view widget
-              Container(
-                margin: EdgeInsets.symmetric(
-                  horizontal: 20,
-                ),
-                child: currentOrder.length > 0
-                    ? ListView.builder(
-                        itemBuilder: ((context, index) {
-                          return orderTileDesign(
-                              context, currentOrder[index], scWidth, scHeight);
-                        }),
-                        itemCount: currentOrder.length,
-                      )
-                    : noItemDesign(
-                        LocaleKeys.no_current_orders.tr(), 'images/not_found.png'),
-              ),
-
-              // second tab bar view widget
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 20),
-                child: finishedOrder.length > 0
-                    ? ListView.builder(
-                        itemBuilder: ((context, index) {
-                          return orderTileDesign(
-                              context, finishedOrder[index], scWidth, scHeight);
-                        }),
-                        itemCount: finishedOrder.length,
-                      )
-                    : noItemDesign(
-                        LocaleKeys.no_finished_orders.tr(), 'images/not_found.png'),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );*/
-    
   }
 //---------------------
 
@@ -181,7 +93,7 @@ class _OrderHistoryState extends State<OrderHistory> {
     OrderRepository orderRepository = OrderRepository(headerMap);
 
     ApiResponse apiResponse =
-        await orderRepository.getOrders(pageNumber, pageSize, '');
+        await orderRepository.getOrders(pageNumber, pageSize);
 
     if (apiResponse.apiStatus.code == ApiResponseType.OK.code) {
       GetOrdersResponseModel? responseModel =

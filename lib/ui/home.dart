@@ -28,13 +28,24 @@ class Homescreen extends StatefulWidget {
   _HomescreenState createState() => _HomescreenState();
 }
 
-class _HomescreenState extends State<Homescreen>  with SingleTickerProviderStateMixin {
- late TabController _tabController;
+class _HomescreenState extends State<Homescreen> {
+
+  //return loadmore button
+
   int pageNumber = 1;
-  int pageSize = listItemsCount;
+  int pageSize = 10;//listItemsCount;
   bool isThereMoreItems = false;
   List<OrderHeader> orderList = [];
   String name = '', email = '', image = '';
+  final ScrollController _controller = ScrollController();
+
+    void _scrollListener() {
+      print('listener');
+    if (_controller.position.pixels == _controller.position.maxScrollExtent) {
+   
+   loadMoreInfo();
+    }
+  }
 
 
     //------------------------
@@ -51,16 +62,12 @@ class _HomescreenState extends State<Homescreen>  with SingleTickerProviderState
 
   @override
   void initState() {
-    _tabController = TabController(length: 2, vsync: this);
-    setValues();
     super.initState();
+    setValues();
+   _controller.addListener(_scrollListener);
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    _tabController.dispose();
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -85,16 +92,12 @@ class _HomescreenState extends State<Homescreen>  with SingleTickerProviderState
 //---------------------
 
   pageDesign(BuildContext context, GetOrdersResponseModel model) {
-    List<OrderHeader> currentOrder = [];
-    for (OrderHeader orderItems in model.orderList) {
-      if (orderItems.orderStatus == underProcess || orderItems.orderStatus == onDelivery) {
-        currentOrder.add(orderItems);
-      }
-    }
+    
     Size size = MediaQuery.of(context).size;
     double scWidth = size.width;
     double scHeight = size.height;
 
+print(orderList.length);
     return Container(
       child: Column(
         children: [
@@ -102,11 +105,20 @@ class _HomescreenState extends State<Homescreen>  with SingleTickerProviderState
           Expanded(
             child: orderList.length > 0
                 ? ListView.builder(
+                  controller: _controller,
               itemBuilder: ((context, index) {
+                if(isThereMoreItems == true) {
+                    if (index == orderList.length-1) {
+                      return Center(
+                        child: CircularProgressIndicator(), //value.getLoadMoreDataStatus == true ? CircularProgressIndicator():null,
+                      );
+                    }
+                   
+                  }
                 return orderTileDesign(
-                    context, currentOrder[index], scWidth, scHeight);
+                    context, orderList[index], scWidth, scHeight);
               }),
-              itemCount: currentOrder.length,
+              itemCount: orderList.length,
             )
                 : noItemDesign(
                 LocaleKeys.no_finished_orders.tr(), 'images/not_found.png'),
@@ -114,92 +126,10 @@ class _HomescreenState extends State<Homescreen>  with SingleTickerProviderState
 
           if (isThereMoreItems == true)
             loadMoreBtn(context, loadMoreInfo, 0, 0),
-         SizedBox(height: 32,),
+        //  SizedBox(height: 32,),
         ],
       ),
     );
- /*   return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 20),
-          child: Container(
-            height: 40,
-            width: 320,
-            decoration: BoxDecoration(
-              // color: CustomColors().primaryWhiteColor,
-              borderRadius: BorderRadius.circular(25),
-              border: Border.all(color: CustomColors().primaryGreenColor),
-            ),
-            child: TabBar(
-              controller: _tabController,
-              // give the indicator a decoration (color and border radius)
-              indicator: BoxDecoration(
-                borderRadius: BorderRadius.circular(25),
-                color: CustomColors().primaryGreenColor,
-              ),
-              labelColor: CustomColors().primaryWhiteColor,
-              labelStyle: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontFamily: 'Almarai',
-                  fontSize: 16),
-              unselectedLabelColor: CustomColors().darkBlueColor,
-              tabs: [
-                // first tab [you can add an icon using the icon property]
-                Tab(
-                  text: LocaleKeys.current_orders.tr(),
-                ),
-
-                // second tab [you can add an icon using the icon property]
-                Tab(
-                  text: LocaleKeys.complete_orders.tr(),
-                ),
-              ],
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Expanded(
-          child: TabBarView(
-            controller: _tabController,
-            children: [
-              // first tab bar view widget
-              Container(
-                margin: EdgeInsets.symmetric(
-                  horizontal: 20,
-                ),
-                child: currentOrder.length > 0
-                    ? ListView.builder(
-                        itemBuilder: ((context, index) {
-                          return orderTileDesign(
-                              context, currentOrder[index], scWidth, scHeight);
-                        }),
-                        itemCount: currentOrder.length,
-                      )
-                    : noItemDesign(
-                        LocaleKeys.no_current_orders.tr(), 'images/not_found.png'),
-              ),
-
-              // second tab bar view widget
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 20),
-                child: finishedOrder.length > 0
-                    ? ListView.builder(
-                        itemBuilder: ((context, index) {
-                          return orderTileDesign(
-                              context, finishedOrder[index], scWidth, scHeight);
-                        }),
-                        itemCount: finishedOrder.length,
-                      )
-                    : noItemDesign(
-                        LocaleKeys.no_finished_orders.tr(), 'images/not_found.png'),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );*/
   }
 //---------------------
 
@@ -209,6 +139,7 @@ class _HomescreenState extends State<Homescreen>  with SingleTickerProviderState
     });
 
   }
+
   //--------------------------
   Future<GetOrdersResponseModel> getListData() async {
     Map<String, dynamic> headerMap = await getHeaderMap();
@@ -216,15 +147,17 @@ class _HomescreenState extends State<Homescreen>  with SingleTickerProviderState
     OrderRepository orderRepository = OrderRepository(headerMap);
 
     ApiResponse apiResponse =
-        await orderRepository.getOrders(pageNumber, pageSize, '');
+        await orderRepository.getOrders(pageNumber, pageSize);
 
     if (apiResponse.apiStatus.code == ApiResponseType.OK.code) {
       GetOrdersResponseModel? responseModel =
           GetOrdersResponseModel.fromJson(apiResponse.result);
 
-    //  orderList = responseModel.orderList;
+
       if (pageNumber == 1) orderList = responseModel.orderList;
       else  orderList.addAll(responseModel.orderList);
+
+orderList.removeWhere((element) => element.orderStatus == delivered);
 
       if (responseModel.orderList.length > 0) {
         if (responseModel.orderList.length < listItemsCount) {
@@ -235,8 +168,10 @@ class _HomescreenState extends State<Homescreen>  with SingleTickerProviderState
 
       }else{
         isThereMoreItems = false;
-        pageNumber = 1;
+      
+        //pageNumber = 1;
       }
+        print('loadmore is $isThereMoreItems');
       //-----------------------------------
       return responseModel;
     } else {

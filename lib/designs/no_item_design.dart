@@ -23,7 +23,7 @@ Widget noItemDesign(String txt, String imageUrl) {
           // ),),
           SizedBox(height: 5,),
           errorText(txt),
-          // Image(image: AssetImage('images/green_fruit.png')),
+          // Image(image: AssetImage('assets/images/product_green.png')),
           // Text('${snapshot.error}' ,),
         ],
       ));
