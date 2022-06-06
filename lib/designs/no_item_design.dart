@@ -9,22 +9,15 @@ Widget noItemDesign(String txt, String imageUrl) {
         children: [
           Container(
             child: Lottie.asset(
-              'images/tree_anim.json',
+              'assets/images/tree_anim.json',
               width: 230,
               height: 230,
               fit: BoxFit.cover,
             ),
           ),
           SizedBox(height: 15,),
-          // Text('Oops!', style: TextStyle(
-          //   color: CustomColors().darkBlueColor,
-          //   fontSize: 16,
-          //   fontWeight: FontWeight.w700
-          // ),),
           SizedBox(height: 5,),
           errorText(txt),
-          // Image(image: AssetImage('assets/images/product_green.png')),
-          // Text('${snapshot.error}' ,),
         ],
       ));
 }

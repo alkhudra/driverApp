@@ -1,8 +1,10 @@
 import 'package:alkhudhrah_app/designs/appbar_design.dart';
 import 'package:alkhudhrah_app/designs/textfield_design.dart';
+import 'package:alkhudhrah_app/dialogs/message_dialog.dart';
 import 'package:alkhudhrah_app/dialogs/progress_dialog.dart';
 import 'package:alkhudhrah_app/helper/custom_btn.dart';
 import 'package:alkhudhrah_app/helper/order_helper.dart';
+import 'package:alkhudhrah_app/helper/snack_message.dart';
 import 'package:alkhudhrah_app/network/API/api_response.dart';
 import 'package:alkhudhrah_app/network/API/api_response_type.dart';
 import 'package:alkhudhrah_app/network/helper/exception_helper.dart';
@@ -209,34 +211,22 @@ class _OrderDeliveredState extends State<OrderDelivered> {
                     ApiResponse apiResponse =
                         await orderRepository.orderDelivered(orderModel.invoiceNumber!, hasPaid);
 
-                    if (apiResponse.apiStatus.code == ApiResponseType.OK.code) {
-                      print(apiResponse.result);
-                      GetOrdersResponseModel? responseModel =
-                          GetOrdersResponseModel.fromJson(apiResponse.result);
-                      return responseModel;
-                    } else {
-                      throw ExceptionHelper(apiResponse.message);
+                    if(apiResponse.apiStatus.code != ApiResponseType.OK.code) {
+                      Navigator.pop(context);
+                      showErrorMessageDialog(context, apiResponse.message);
+                      return;
                     }
 
-                    moveToNewStack(context, dashBoardRoute);
+                    showDialog<String>(
+                      context: context, 
+                      builder: (BuildContext context) => showMessageDialog(context, LocaleKeys.completed_order.tr(), LocaleKeys.completed_thanks.tr(), dashBoardRoute)
+                    );
+
+                    showSuccessMessage(context, 'Order Successfully Delivered!');
+
+                    
                   }),
                 ),
-                // GestureDetector(
-                //   onTap: () {
-                //     print(frstNum);
-                //     print(scndNum);
-                //     print(thrdNum);
-                //     print(frthNum);
-                //     moveToNewStack(context, dashBoardRoute);
-                //   },
-                //   child: Padding(
-                //     padding: const EdgeInsets.all(8.0),
-                //     child: Text(LocaleKeys.main_page.tr(),
-                //         style: TextStyle(
-                //             fontSize: 15,
-                //             color: kLogoGreen)),
-                //   ),
-                // ),
               ],
             ),
           ),

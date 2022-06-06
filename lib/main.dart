@@ -1,7 +1,14 @@
 import 'package:alkhudhrah_app/designs/order_tile_design.dart';
 import 'package:alkhudhrah_app/locale/codegen_loader.g.dart';
+import 'package:alkhudhrah_app/network/API/api_response.dart';
+import 'package:alkhudhrah_app/network/API/api_response_type.dart';
+import 'package:alkhudhrah_app/network/helper/network_helper.dart';
+import 'package:alkhudhrah_app/network/models/orders/order_header.dart';
+import 'package:alkhudhrah_app/network/repository/order_repository.dart';
+import 'package:alkhudhrah_app/ui/language_setting.dart';
 import 'package:alkhudhrah_app/ui/order_details.dart';
 import 'package:alkhudhrah_app/ui/wallet.dart';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -33,7 +40,6 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterL
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
   print('A bg msg just showed up : ${message.messageId}');
-  print("_firebaseMessagingBackgroundHandler Clicked!");
   //change second to OrderDetails(orderID)
   routeToGo = '/second';
   print(message.notification!.body);
@@ -133,7 +139,13 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     // firebaseTrigger(context);
 
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    // FirebaseMessaging.instance.getInitialMessage().then((RemoteMessage message) {
+    //   if (message != null) {
+    //     Navigator.pushNamed(context, '/message'); //map[orderId] route
+    //   }
+    // });
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification?.android;
       if(notification  != null && android != null) {
@@ -152,20 +164,63 @@ class _MyAppState extends State<MyApp> {
               icon: '@mipmap/ic_launcher'
             ),
             // iOS: IOSNotificationDetails()
-          )
+          ),
+          // payload: 
         );
       }
+
+      print('Title is ' + notification!.title.toString());
+      print('Data is ' + message.data.toString());
+      print('Body is ' + notification.body.toString());
+
+      if(message.data != null) {
+        Map<String, dynamic> map = message.data;
+        if (map.containsKey('orderId') && map['orderId'] != '0') {
+          print(map.containsKey('orderId'));
+          print(map['orderId'] != 0);
+          print(map['orderId']);
+
+
+        print('Navigation reached here!');
+          // navigatorKey.currentState!.push(MaterialPageRoute(builder: ((context) => WalletScreen())));
+          // directToOrderDetails(context, orderId: message.data['orderId']);
+
+        String language = await PreferencesHelper.getSelectedLanguage;
+
+        Map<String, dynamic> headerMap = await getHeaderMap();
+
+        OrderRepository orderRepository = OrderRepository(headerMap);
+
+        ApiResponse apiResponse = await orderRepository.getOrderById(int.parse(map['orderId']));
+
+        if (apiResponse.apiStatus.code == ApiResponseType.OK.code) {
+          OrderHeader? responseModel = OrderHeader.fromJson(apiResponse.result);
+
+          navigatorKey.currentState!.push(MaterialPageRoute(builder: ((context) => 
+          OrderDetails(
+                    orderModel: responseModel,
+                    language: language,
+                  ))));
+        }
+
+      }
+    }
+
+      print('navigation successful');
     });
     getToken();
 
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+
+
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
       print('A new onMessageOpenedApp event was published');
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification?.android;
       print(message.notification!.body != null);
-      if (message.notification!.body != null) {
-        navigatorKey.currentState?.pushNamed('/second');
-      }
+      // if (message.notification!.body != null) {
+      //   navigatorKey.currentState?.pushNamed('/second');
+      // }
 
       if(notification != null && android != null) {
         showDialog(context: context,
@@ -184,6 +239,43 @@ class _MyAppState extends State<MyApp> {
           });
           // Navigator.push(context, MaterialPageRoute(
             // builder: (context) => OrderDea));
+      }
+
+      print('Title is ' + notification!.title.toString());
+      print('Data is ' + message.data.toString());
+      // print('Body is ' + notification.body.toString());
+
+      if(message.data != null) {
+        Map<String, dynamic> map = message.data;
+        if (map.containsKey('orderId') && map['orderId'] != '0') {
+          print(map.containsKey('orderId'));
+          print(map['orderId'] != 0);
+          print(map['orderId']);
+
+          // navigatorKey.currentState!.push(MaterialPageRoute(builder: ((context) => WalletScreen())));
+          // directToOrderDetails(context, orderId: message.data['orderId']);
+
+        String language = await PreferencesHelper.getSelectedLanguage;
+
+        Map<String, dynamic> headerMap = await getHeaderMap();
+
+        OrderRepository orderRepository = OrderRepository(headerMap);
+
+        ApiResponse apiResponse = await orderRepository.getOrderById(int.parse(map['orderId']));
+
+        if (apiResponse.apiStatus.code == ApiResponseType.OK.code) {
+          OrderHeader? responseModel = OrderHeader.fromJson(apiResponse.result);
+
+          navigatorKey.currentState!.push(MaterialPageRoute(builder: ((context) => 
+          OrderDetails(
+                    orderModel: responseModel,
+                    language: language,
+                  ))));
+
+          // print('Navigation reached here!');
+        }
+
+        }
       }
     });
   }
@@ -245,25 +337,25 @@ class _MyAppState extends State<MyApp> {
       localizationsDelegates: context.localizationDelegates,
       locale: context.locale,
       routes: routMap,
-      initialRoute: (routeToGo != null) ? routeToGo : '/',
-      onGenerateRoute: (RouteSettings settings) {
-          switch (settings.name) {
-            case '/':
-              return MaterialPageRoute(
-                builder: (_) => const DashboardPage(),
-              );
-              break;
-            case '/second':
-            Navigator.push(context, MaterialPageRoute(builder: (context) => WalletScreen()));
-            // directToOrderDetails(context);
-              // return MaterialPageRoute(
-              //   builder: (_) => const OrderDetails(),
-              // );
-              break;
-            default:
-              return _errorRoute();
-          }
-      },
+      // initialRoute: (routeToGo != null) ? routeToGo : '/',
+      // onGenerateRoute: (RouteSettings settings) {
+      //     switch (settings.name) {
+      //       case '/':
+      //         return MaterialPageRoute(
+      //           builder: (_) => const DashboardPage(),
+      //         );
+      //         break;
+      //       case '/second':
+      //       Navigator.push(context, MaterialPageRoute(builder: (context) => WalletScreen()));
+      //       // directToOrderDetails(context);
+      //         // return MaterialPageRoute(
+      //         //   builder: (_) => const OrderDetails(),
+      //         // );
+      //         break;
+      //       default:
+      //         return _errorRoute();
+      //     }
+      // },
       theme: ThemeData(
         fontFamily: 'Almarai',
         accentColor: kLogoGreen,
@@ -274,27 +366,7 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  
 
-    //replace getRout widget with tempHome to test local notifs
-  Widget tempHome() {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Testing Notifications'),
-        centerTitle: true,
-      ),
-      body: Column(
-        children: [
-          Center(
-            child: TextButton(
-              child: Text('Send local Notif'),
-              onPressed: showNotification,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
   Widget getRout() {
 
@@ -369,3 +441,33 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+
+
+// void navigatorKeyToOrderDetails(navigatorKey, {model, orderId}) async {
+//   String language = await PreferencesHelper.getSelectedLanguage;
+
+//   //todo: test
+//   if (model == null) {
+//     Map<String, dynamic> headerMap = await getHeaderMap();
+
+//     OrderRepository orderRepository = OrderRepository(headerMap);
+
+//     ApiResponse apiResponse = await orderRepository.getOrderById(orderId);
+
+//     if (apiResponse.apiStatus.code == ApiResponseType.OK.code) {
+//       OrderHeader? responseModel = OrderHeader.fromJson(apiResponse.result);
+//       navigatorKey.currentState!.push(MaterialPageRoute(builder: ((context) => 
+//       OrderDetails(
+//                 orderModel: responseModel,
+//                 language: language,
+//               ))));
+
+//     }
+//   } else
+//       navigatorKey.currentState!.push(
+//       MaterialPageRoute(
+//           builder: (context) => OrderDetails(
+//                 orderModel: model,
+//                 language: language,
+//               )));
+// }

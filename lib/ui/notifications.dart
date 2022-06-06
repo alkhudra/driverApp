@@ -1,6 +1,7 @@
 import 'package:alkhudhrah_app/constants/colors.dart';
 import 'package:alkhudhrah_app/designs/appbar_design.dart';
 import 'package:alkhudhrah_app/designs/drawer_design.dart';
+import 'package:alkhudhrah_app/designs/no_item_design.dart';
 import 'package:alkhudhrah_app/designs/order_tile_design.dart';
 import 'package:alkhudhrah_app/helper/shared_pref_helper.dart';
 import 'package:alkhudhrah_app/locale/locale_keys.g.dart';
@@ -183,7 +184,7 @@ static String name = '', email = '', image = '';
 
     Widget pageDesign(
       BuildContext context, GetNotificationResponseModel getOrdersResponseModel) {
-    return ListView.builder(
+    return getOrdersResponseModel.notificationList.length > 0 ? ListView.builder(
       itemBuilder: (context, index) {
         return notifCard(getOrdersResponseModel.notificationList[index]);
       },
@@ -191,6 +192,8 @@ static String name = '', email = '', image = '';
       shrinkWrap: true,
       scrollDirection: Axis.vertical,
       padding: EdgeInsets.only(bottom: 25),
-    );
+    ) 
+    : noItemDesign(
+    LocaleKeys.no_notification.tr(), 'images/not_found.png');
   }
 }

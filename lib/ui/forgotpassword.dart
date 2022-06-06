@@ -2,7 +2,6 @@ import 'package:alkhudhrah_app/constants/colors.dart';
 import 'package:alkhudhrah_app/locale/locale_keys.g.dart';
 import 'package:alkhudhrah_app/ui/password_reset.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:alkhudhrah_app/ui/login.dart';
 import 'package:flutter/material.dart';
 
 class ForgotPassword extends StatefulWidget {

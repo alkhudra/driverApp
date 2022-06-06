@@ -185,6 +185,11 @@ class OrderHeader {
     }
     return map;
   }
+  
+  @override
+  String toString() {
+    return 'OrderHeader{_invoiceNumber: $_invoiceNumber}';
+  }
 
 }
 

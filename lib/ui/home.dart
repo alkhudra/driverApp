@@ -13,10 +13,8 @@ import 'package:alkhudhrah_app/network/helper/network_helper.dart';
 import 'package:alkhudhrah_app/network/models/driver_user.dart';
 import 'package:alkhudhrah_app/network/models/orders/get_orders_response_model.dart';
 import 'package:alkhudhrah_app/network/models/orders/order_header.dart';
-import 'package:alkhudhrah_app/network/models/orders/order_items.dart';
 import 'package:alkhudhrah_app/network/repository/order_repository.dart';
 import 'package:alkhudhrah_app/ui/order_history.dart';
-import 'package:alkhudhrah_app/ui/order_list.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -33,7 +31,7 @@ class _HomescreenState extends State<Homescreen> {
   //return loadmore button
 
   int pageNumber = 1;
-  int pageSize = 10;//listItemsCount;
+  int pageSize = listItemsCount;
   bool isThereMoreItems = false;
   List<OrderHeader> orderList = [];
   String name = '', email = '', image = '';
@@ -51,9 +49,11 @@ class _HomescreenState extends State<Homescreen> {
     //------------------------
   void setValues() async {
     DriverUser user = await PreferencesHelper.getUser;
-    name = user.driverName!;
-    email = user.email!;
     image = user.image!;
+
+    name = user.driverName!=null? user.driverName! :"";
+    email = user.email != null ?user.email! :"" ;
+    image = user.image != null ?user.image! :"" ;
 
     print('Driver Name:' + name);
     print('Driver Email:' + email);
@@ -72,6 +72,7 @@ class _HomescreenState extends State<Homescreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      endDrawer: drawerDesign(context, name, email, image),
       body: FutureBuilder<GetOrdersResponseModel>(
         future: getListData(),
         builder: (context, snapshot) {
@@ -86,7 +87,6 @@ class _HomescreenState extends State<Homescreen> {
         Navigator.push(context, MaterialPageRoute(
           builder: (context) => OrderHistory()));
       }),
-      endDrawer: drawerDesign(context, name, email, image),
     );
   }
 //---------------------
@@ -121,7 +121,7 @@ print(orderList.length);
               itemCount: orderList.length,
             )
                 : noItemDesign(
-                LocaleKeys.no_finished_orders.tr(), 'images/not_found.png'),
+                LocaleKeys.no_current_orders.tr(), 'images/not_found.png'),
           ),
 
           if (isThereMoreItems == true)
@@ -153,23 +153,26 @@ print(orderList.length);
       GetOrdersResponseModel? responseModel =
           GetOrdersResponseModel.fromJson(apiResponse.result);
 
-
+      print('Order List from DB: ' + responseModel.orderList.toString());
       if (pageNumber == 1) orderList = responseModel.orderList;
       else  orderList.addAll(responseModel.orderList);
 
-orderList.removeWhere((element) => element.orderStatus == delivered);
+      //show only current and under processing orders
+      orderList.removeWhere((element) => element.orderStatus == delivered);
 
       if (responseModel.orderList.length > 0) {
         if (responseModel.orderList.length < listItemsCount) {
           isThereMoreItems = false;
+          pageNumber = 1;
         }else {
           isThereMoreItems = true;
+          pageNumber += 1;
         }
 
       }else{
         isThereMoreItems = false;
       
-        //pageNumber = 1;
+        pageNumber = 1;
       }
         print('loadmore is $isThereMoreItems');
       //-----------------------------------

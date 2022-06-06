@@ -8,7 +8,7 @@ part of 'api_config.dart';
 
 class _RestClient implements RestClient {
   _RestClient(this._dio, {this.baseUrl}) {
-    baseUrl ??= 'http://alkhudrahproject-001-site3.ctempurl.com/api';
+    baseUrl ??= 'https://driver.alkhadraunited.com/api';
   }
 
   final Dio _dio;
@@ -109,8 +109,7 @@ class _RestClient implements RestClient {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'PageNumber': pageNumber,
-      r'PageSize': pageSize,
-    
+      r'PageSize': pageSize
     };
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch(_setStreamType<dynamic>(

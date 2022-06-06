@@ -1,7 +1,6 @@
 import 'package:alkhudhrah_app/constants/colors.dart';
 import 'package:alkhudhrah_app/custom_widgets/green_btn.dart';
 import 'package:alkhudhrah_app/helper/cart_helper.dart';
-import 'package:alkhudhrah_app/helper/route_helper.dart';
 import 'package:alkhudhrah_app/network/models/driver_user.dart';
 import 'package:alkhudhrah_app/network/models/orders/branch_model.dart';
 import 'package:alkhudhrah_app/ui/order_delivered.dart';
@@ -31,7 +30,6 @@ class OrderDetails extends StatefulWidget {
 }
 
 class _OrderDetailsState extends State<OrderDetails> {
-  static String productId = '';
 
   @override
   void initState() {
@@ -49,6 +47,8 @@ class _OrderDetailsState extends State<OrderDetails> {
       driverUser = widget.orderModel.driverUser!;
     BranchModel? branch = model.branchModel;
     String? branchNo = branch!.phoneNumber;
+
+
     return Scaffold(
       appBar: appBarDesign(context, LocaleKeys.order_details.tr()),
       body: model.orderStatus == onDelivery
@@ -189,7 +189,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                             : item.product!.name!,
                         style: TextStyle(
                             color: kDarkBlue,
-                            fontWeight: FontWeight.w400),
+                            fontWeight: FontWeight.w600),
                       ),
                     ),
 
@@ -324,81 +324,11 @@ class _OrderDetailsState extends State<OrderDetails> {
                 ),
               ),
               SizedBox(height: 20,),
-              //branch name
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 40),
-                child: RichText(
-                  text: TextSpan(
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: 'Almarai',
-                      color: kLogoGreen,
-                    ),
-                    children: <TextSpan>[
-                      TextSpan(
-                          text: LocaleKeys.branch_name.tr() + ': ',
-                          style: TextStyle(color: kDarkBlue)),
-                      TextSpan(
-                          text: branchName,
-                          style: TextStyle(
-                            color: kLogoGreen,
-                            fontFamily: 'Almarai',
-                          )),
-                    ]),
-                ),
-              ),
+              branchInfoText(LocaleKeys.branch_name.tr(), branchName),
               SizedBox(height: 15,),
-              //branch address
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 40),
-                child: RichText(
-                  text: TextSpan(
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: 'Almarai',
-                      color: kLogoGreen,
-                    ),
-                    children: <TextSpan>[
-                      TextSpan(
-                          text: LocaleKeys.branch_address.tr() + ': ',
-                          style: TextStyle(color: kDarkBlue)),
-                      TextSpan(
-                          text: branchAddress,
-                          style: TextStyle(
-                            color: kLogoGreen,
-                            fontFamily: 'Almarai',
-                          )),
-                    ]),
-                ),
-              ),
+              branchInfoText(LocaleKeys.branch_address.tr(), branchAddress),
               SizedBox(height: 15,),
-              //branch phone number
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 40),
-                child: RichText(
-                  text: TextSpan(
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: 'Almarai',
-                      color: kLogoGreen,
-                    ),
-                    children: <TextSpan>[
-                      TextSpan(
-                          text: LocaleKeys.branch_phone.tr() + ': ',
-                          style: TextStyle(color: kDarkBlue)),
-                      TextSpan(
-                          text: branchNo,
-                          style: TextStyle(
-                            color: kLogoGreen,
-                            fontFamily: 'Almarai',
-                          )),
-                    ]),
-                ),
-              ),
-              // SizedBox(height: 10,),
+              branchInfoText(LocaleKeys.branch_phone.tr(), branchNo),
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 40),
                 child: Row(
@@ -408,7 +338,10 @@ class _OrderDetailsState extends State<OrderDetails> {
                       // margin: EdgeInsets.symmetric(horizontal: 30),
                       child: Text(LocaleKeys.map_location.tr() + ' :', 
                       style: TextStyle(
-                        fontSize: 16
+                        fontSize: 15.5,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: 'Almarai',
+                        color: kDarkBlue
                       ),),
                     ),
                     Container(
@@ -538,16 +471,6 @@ class _OrderDetailsState extends State<OrderDetails> {
           SizedBox(
             height: 30,
           ),
-          //ordered products title
-          // Row(
-          //   children: [
-          //     titleTextDesign(LocaleKeys.products_in_order.tr()),
-          //   ],
-          // ),
-          // SizedBox(
-          //   height: 10,
-          // ),
-          //list of ordered products
           LimitedBox(
             maxHeight: scHeight * 20,
             child: Column(
@@ -560,7 +483,6 @@ class _OrderDetailsState extends State<OrderDetails> {
                     },
                     itemCount: listItemsNumber,
                     shrinkWrap: true,
-                    // dragStartBehavior: DragStartBehavior.down,
                     physics: NeverScrollableScrollPhysics(),
                   ),
                 ),
@@ -675,9 +597,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                 Container(
                   child: model.orderStatus == onDelivery ? greenBtn(LocaleKeys.delivery_completed.tr(), EdgeInsets.symmetric(horizontal: 30, vertical: 15), () {
                     print(model.orderCheckCode);
-                    moveToNewStackWithArgs(context, MaterialPageRoute(builder: (context) {
-                      return OrderDelivered(model: model,);
-                    }));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => OrderDelivered(model: model,)));
                   }) : SizedBox(height: 30,),
                 ),
               ],
@@ -701,6 +621,40 @@ class _OrderDetailsState extends State<OrderDetails> {
             color: kLogoBrown,
             fontWeight: FontWeight.w800,
             fontSize: 19),
+      ),
+    );
+  }
+
+  branchInfoText(title, info) {
+    return Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 40),
+            child: Text(title, 
+              style: TextStyle(
+                fontSize: 15.4,
+                fontWeight: FontWeight.w600,
+                fontFamily: 'Almarai',
+                color: kDarkBlue
+              ),
+            ),
+          ),
+          SizedBox(height: 10,),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 45),
+            child: Text(info, 
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                fontFamily: 'Almarai',
+                color: kLogoGreen
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

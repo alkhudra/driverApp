@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class TextFieldDesign {
 
-  static textFieldStyle({context, double? verMarg, double? horMarg, TextEditingController? controller, TextInputType? kbType, String? lbTxt, validat, enabled, obscTxt}) {
+  static textFieldStyle({context, double? verMarg, double? horMarg, TextEditingController? controller, TextInputType? kbType, String? lbTxt, validat, enabled, obscTxt, textInputAction}) {
     return Container(
       alignment: Alignment.center,
       margin: EdgeInsets.symmetric(horizontal: horMarg!, vertical: verMarg!),
@@ -22,6 +22,7 @@ class TextFieldDesign {
               obscureText: obscTxt,
               controller: controller,
               keyboardType: kbType,
+              textInputAction: textInputAction,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               validator: validat,
               style: TextStyle(

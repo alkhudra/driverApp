@@ -169,3 +169,33 @@ void directToOrderDetails(context, {model, orderId}) async {
               )));
 }
 
+
+void navigatorKeyToOrderDetails(navigatorKey, {model, orderId}) async {
+  String language = await PreferencesHelper.getSelectedLanguage;
+
+  //todo: test
+  if (model == null) {
+    Map<String, dynamic> headerMap = await getHeaderMap();
+
+    OrderRepository orderRepository = OrderRepository(headerMap);
+
+    ApiResponse apiResponse = await orderRepository.getOrderById(orderId);
+
+    if (apiResponse.apiStatus.code == ApiResponseType.OK.code) {
+      OrderHeader? responseModel = OrderHeader.fromJson(apiResponse.result);
+      navigatorKey.currentState!.push(MaterialPageRoute(builder: ((context) => 
+      OrderDetails(
+                orderModel: responseModel,
+                language: language,
+              ))));
+
+    }
+  } else
+      navigatorKey.currentState!.push(
+      MaterialPageRoute(
+          builder: (context) => OrderDetails(
+                orderModel: model,
+                language: language,
+              )));
+}
+

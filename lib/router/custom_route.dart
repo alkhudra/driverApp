@@ -1,10 +1,10 @@
 import 'package:alkhudhrah_app/ui/dashboard_page.dart';
 import 'package:alkhudhrah_app/ui/home.dart';
 import 'package:alkhudhrah_app/ui/language_page.dart';
+import 'package:alkhudhrah_app/ui/login_email.dart';
 import 'package:alkhudhrah_app/ui/order_delivered.dart';
 import 'package:flutter/material.dart';
 import 'package:alkhudhrah_app/ui/language_setting.dart';
-import 'package:alkhudhrah_app/ui/login.dart';
 import 'package:alkhudhrah_app/main.dart';
 import 'package:alkhudhrah_app/router/route_constants.dart';
 
@@ -13,7 +13,7 @@ class CustomRouter {
   static Route<dynamic> generatedRoute(RouteSettings settings) {
     switch (settings.name) {
       case loginRoute:
-        return MaterialPageRoute(builder: (_) => Login());
+        return MaterialPageRoute(builder: (_) => LoginEmail());
       case homeRoute:
         return MaterialPageRoute(builder: (_) => Homescreen());
       case languageRoute:

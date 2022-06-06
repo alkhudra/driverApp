@@ -107,4 +107,8 @@ abstract class  LocaleKeys {
   static const cash_info = "cash_info";
   static const confirm_Delivery = "confirm_Delivery";
   static const transfer = "transfer";
+  static const deleted_account = "deleted_account";
+  static const order_completed = "order_completed";
+  static const completed_thanks = "completed_thanks";
+  static const no_notification = "no_notification";
 }

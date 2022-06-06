@@ -1,6 +1,7 @@
 import 'dart:collection';
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:alkhudhrah_app/network/api/api_config.dart';
 import 'package:alkhudhrah_app/network/api/api_response.dart';
@@ -27,19 +28,25 @@ class AuthRepository {
   Future<ApiResponse> loginUser(
       String email,
       String password,
-      deviceId,
-      isAndroiodDevice) async {
+      deviceId) async {
     if (email == null ||
         password == null || 
         deviceId == null) {
       return ApiResponse(ApiResponseType.BadRequest, null, '');
     }
 
+      int isAndroiodDevice ;
+    if(Platform.isAndroid)
+    isAndroiodDevice =1;
+     else isAndroiodDevice =2;
+
     Map<String, dynamic> hashMap = {
       "email": email,
       "password": password,
-      "isAndroiodDevice": isAndroiodDevice,
-      "deviceId": deviceId
+      "rememberMe": true,
+      "isAndroiodDevice": true,
+      "deviceId": deviceId,
+      "deviceType" : isAndroiodDevice
     };
 
     return await _client

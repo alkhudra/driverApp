@@ -78,6 +78,7 @@ class _LoginEmailState extends State<LoginEmail> {
                   kbType: TextInputType.emailAddress,
                   obscTxt: false,
                   lbTxt: LocaleKeys.email_textfield.tr(),
+                  textInputAction: TextInputAction.next,
                 ),
                 SizedBox(
                   height: 3,
@@ -90,6 +91,7 @@ class _LoginEmailState extends State<LoginEmail> {
                     kbType: TextInputType.visiblePassword,
                     obscTxt: true,
                     lbTxt:  LocaleKeys.password_textfield.tr(),
+                    textInputAction: TextInputAction.done,
                 ),
                 SizedBox(
                   height: scHeight * 0.04,
@@ -172,7 +174,7 @@ class _LoginEmailState extends State<LoginEmail> {
     AuthRepository loginRepository = AuthRepository();
     
     loginRepository
-        .loginUser(emailController.text, passController.text, token, Platform.isAndroid)
+        .loginUser(emailController.text, passController.text, token)
         .then((result) async {
       //-------- fail response ---------
 
@@ -186,6 +188,12 @@ class _LoginEmailState extends State<LoginEmail> {
       //-------- success response ---------
       SuccessLoginResponseModel model = SuccessLoginResponseModel.fromJson(
           result.result);
+
+      if(model.user!.isDeleted == true) {
+        Navigator.pop(context);
+        showErrorDialog(LocaleKeys.deleted_account);
+        return;
+      }
 
       print(model.user.toString());
 

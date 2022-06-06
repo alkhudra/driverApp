@@ -123,6 +123,10 @@ class CodegenLoader extends AssetLoader {
   "confirm_Delivery": "Confirm Delivery",
   "order_history": "Order History",
   "transfer": "Bank Transfer",
+  "deleted_account": "Your account has been deactivated, please contact us",
+  "order_completed": "Order Completed",
+  "completed_thanks": "Thank You For Completing Your Delivery!",
+  "no_notification": "There are no Notifications",
 };
 static const Map<String,dynamic> ar = {
   "SIGN IN": "تسجيل الدخول",
@@ -233,6 +237,10 @@ static const Map<String,dynamic> ar = {
   "confirm_Delivery": "إنهاء التسليم",
   "order_history": "تاريخ الطلبات",
   "transfer": "تحويل بنكي",
+  "deleted_account": "تم تعطيل حسابك٬ يرجى التواصل معنا",
+  "order_completed": "تم التسليم",
+  "completed_thanks": "!تم توصيل الطلب بنجاح",
+  "no_notification": "لا توجد أي إشعارات  "
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "ar": ar};
  }
