@@ -171,7 +171,7 @@ class _LoginEmailState extends State<LoginEmail> {
 
     String? token = await FirebaseMessaging.instance.getToken();
     print('notification token is $token');
-    AuthRepository loginRepository = AuthRepository();
+    AuthRepository loginRepository = AuthRepository(headerMap);
     
     loginRepository
         .loginUser(emailController.text, passController.text, token)
@@ -224,7 +224,7 @@ class _LoginEmailState extends State<LoginEmail> {
 
     moveToNewStack(context , dashBoardRoute);
 
-    SchedulerBinding.instance?.addPostFrameCallback((_) {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
       Flushbar(
         message:
         LocaleKeys.welcome_back.tr()+" $name",

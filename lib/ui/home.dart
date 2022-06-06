@@ -18,42 +18,38 @@ import 'package:alkhudhrah_app/ui/order_history.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-
 class Homescreen extends StatefulWidget {
-  const Homescreen({ Key? key }) : super(key: key);
+  const Homescreen({Key? key}) : super(key: key);
 
   @override
   _HomescreenState createState() => _HomescreenState();
 }
 
 class _HomescreenState extends State<Homescreen> {
-
   //return loadmore button
 
   int pageNumber = 1;
   int pageSize = listItemsCount;
   bool isThereMoreItems = false;
   List<OrderHeader> orderList = [];
-  String name = '', email = '', image = '';
+ static String name = '', email = '', image = '';
   final ScrollController _controller = ScrollController();
 
-    void _scrollListener() {
-      print('listener');
+  void _scrollListener() {
+    print('listener');
     if (_controller.position.pixels == _controller.position.maxScrollExtent) {
-   
-   loadMoreInfo();
+      loadMoreInfo();
     }
   }
 
-
-    //------------------------
+  //------------------------
   void setValues() async {
     DriverUser user = await PreferencesHelper.getUser;
-    image = user.image!;
+    //  image = user.image!;
 
-    name = user.driverName!=null? user.driverName! :"";
-    email = user.email != null ?user.email! :"" ;
-    image = user.image != null ?user.image! :"" ;
+    name = user.driverName != null ? user.driverName! : "";
+    email = user.email != null ? user.email! : "";
+    image = user.image != null ? user.image! : "";
 
     print('Driver Name:' + name);
     print('Driver Email:' + email);
@@ -64,10 +60,8 @@ class _HomescreenState extends State<Homescreen> {
   void initState() {
     super.initState();
     setValues();
-   _controller.addListener(_scrollListener);
+    _controller.addListener(_scrollListener);
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -84,49 +78,50 @@ class _HomescreenState extends State<Homescreen> {
       ),
       appBar: appBarWithActions(context, LocaleKeys.orders.tr(), () {
         //display order history
-        Navigator.push(context, MaterialPageRoute(
-          builder: (context) => OrderHistory()));
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => OrderHistory()));
       }),
     );
   }
 //---------------------
 
   pageDesign(BuildContext context, GetOrdersResponseModel model) {
-    
     Size size = MediaQuery.of(context).size;
     double scWidth = size.width;
     double scHeight = size.height;
 
-print(orderList.length);
+    print(orderList.length);
     return Container(
       child: Column(
         children: [
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Expanded(
             child: orderList.length > 0
                 ? ListView.builder(
-                  controller: _controller,
-              itemBuilder: ((context, index) {
-                if(isThereMoreItems == true) {
-                    if (index == orderList.length-1) {
-                      return Center(
-                        child: CircularProgressIndicator(), //value.getLoadMoreDataStatus == true ? CircularProgressIndicator():null,
-                      );
-                    }
-                   
-                  }
-                return orderTileDesign(
-                    context, orderList[index], scWidth, scHeight);
-              }),
-              itemCount: orderList.length,
-            )
+                    controller: _controller,
+                    itemBuilder: ((context, index) {
+                      if (isThereMoreItems == true) {
+                        if (index == orderList.length - 1) {
+                          return Center(
+                            child:
+                                CircularProgressIndicator(), //value.getLoadMoreDataStatus == true ? CircularProgressIndicator():null,
+                          );
+                        }
+                      }
+                      return orderTileDesign(
+                          context, orderList[index], scWidth, scHeight);
+                    }),
+                    itemCount: orderList.length,
+                  )
                 : noItemDesign(
-                LocaleKeys.no_current_orders.tr(), 'images/not_found.png'),
+                    LocaleKeys.no_current_orders.tr(), 'images/not_found.png'),
           ),
 
           if (isThereMoreItems == true)
             loadMoreBtn(context, loadMoreInfo, 0, 0),
-        //  SizedBox(height: 32,),
+          //  SizedBox(height: 32,),
         ],
       ),
     );
@@ -137,7 +132,6 @@ print(orderList.length);
     setState(() {
       pageNumber++;
     });
-
   }
 
   //--------------------------
@@ -154,8 +148,10 @@ print(orderList.length);
           GetOrdersResponseModel.fromJson(apiResponse.result);
 
       print('Order List from DB: ' + responseModel.orderList.toString());
-      if (pageNumber == 1) orderList = responseModel.orderList;
-      else  orderList.addAll(responseModel.orderList);
+      if (pageNumber == 1)
+        orderList = responseModel.orderList;
+      else
+        orderList.addAll(responseModel.orderList);
 
       //show only current and under processing orders
       orderList.removeWhere((element) => element.orderStatus == delivered);
@@ -164,17 +160,16 @@ print(orderList.length);
         if (responseModel.orderList.length < listItemsCount) {
           isThereMoreItems = false;
           pageNumber = 1;
-        }else {
+        } else {
           isThereMoreItems = true;
           pageNumber += 1;
         }
-
-      }else{
+      } else {
         isThereMoreItems = false;
-      
+
         pageNumber = 1;
       }
-        print('loadmore is $isThereMoreItems');
+      print('loadmore is $isThereMoreItems');
       //-----------------------------------
       return responseModel;
     } else {

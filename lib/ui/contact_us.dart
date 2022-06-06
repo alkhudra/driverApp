@@ -35,7 +35,7 @@ class _ContactUsState extends State<ContactUs> {
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: appBarDesign(context, LocaleKeys.contact_us.tr()),
-      body: FutureBuilder<ContactUsResponseModel?>(
+      body: FutureBuilder<dynamic>(
         future: getContactUsInfo(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
@@ -50,13 +50,14 @@ class _ContactUsState extends State<ContactUs> {
 
 
   //---------------------
+  Widget getContactUsDesign(ContactUsResponseModel model) {
 
-  Widget getContactUsDesign(ContactUsResponseModel? model) {
-    String phone = model!.phoneNumber!;
-       String twitter= model.twitter!;
-    String email = model.email!;
-    num lat = model.latitude!;
-    num lng = model.longitude!;
+    print(model.toString());
+    String phone = model.phoneNumber != null ? model.phoneNumber! : '';
+    String twitter = model.twitter != null ? model.twitter! : '';
+    String email = model.email != null ? model.email! : '';
+    num lat = model.latitude != null ? model.latitude! : 0;
+    num lng = model.longitude != null ? model.longitude! : 0;
 
     Size size = MediaQuery.of(context).size;
     double scWidth = size.width;
@@ -74,7 +75,7 @@ class _ContactUsState extends State<ContactUs> {
         Container(
           margin: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
           decoration: BoxDecoration(
-              // color: CustomColors().primaryWhiteColor,
+            // color: CustomColors().primaryWhiteColor,
               borderRadius: BorderRadius.circular(30)),
           child: ListTile(
             title: GestureDetector(
@@ -92,7 +93,7 @@ class _ContactUsState extends State<ContactUs> {
                     height: scHeight * 0.13,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage('assets/images/product_icon.png'),
+                        image: AssetImage('images/product_icon.png'),
                       ),
                     ),
                     child: Icon(
@@ -143,7 +144,7 @@ class _ContactUsState extends State<ContactUs> {
                     height: scHeight * 0.13,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage('assets/images/product_icon.png'),
+                        image: AssetImage('images/product_icon.png'),
                       ),
                     ),
                     child: Icon(
@@ -160,7 +161,8 @@ class _ContactUsState extends State<ContactUs> {
                     // alignment: Alignment.center,
                     width: scWidth * 0.5,
                     child: Text(
-                      email,maxLines: 1,
+                      email,
+                      maxLines: 1,
                       style: TextStyle(
                           color: kDarkBlue,
                           fontSize: 15,
@@ -191,7 +193,7 @@ class _ContactUsState extends State<ContactUs> {
                   height: scHeight * 0.13,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('assets/images/product_icon.png'),
+                      image: AssetImage('images/product_icon.png'),
                     ),
                   ),
                   child: Icon(FontAwesomeIcons.hashtag,
@@ -231,7 +233,7 @@ class _ContactUsState extends State<ContactUs> {
                         height: scHeight * 0.12,
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage('assets/images/product_icon.png'),
+                            image: AssetImage('images/product_icon.png'),
                           ),
                         ),
                         child: Icon(FontAwesomeIcons.whatsapp,
@@ -273,7 +275,7 @@ class _ContactUsState extends State<ContactUs> {
                         height: scHeight * 0.12,
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage('assets/images/product_icon.png'),
+                            image: AssetImage('images/product_icon.png'),
                           ),
                         ),
                         child: Icon(FontAwesomeIcons.twitter,
@@ -287,7 +289,6 @@ class _ContactUsState extends State<ContactUs> {
                         alignment: Alignment.center,
                         width: scWidth * 0.4,
                         child: Text(
-                          //TODO: replace text with twitter handle
                           LocaleKeys.twit.tr(),
                           style: TextStyle(
                               color: kDarkBlue,
@@ -318,7 +319,7 @@ class _ContactUsState extends State<ContactUs> {
         Container(
           margin: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
           decoration: BoxDecoration(
-              // color: CustomColors().primaryWhiteColor,
+            // color: CustomColors().primaryWhiteColor,
               borderRadius: BorderRadius.circular(30)),
           child: ListTile(
             title: GestureDetector(
@@ -336,7 +337,7 @@ class _ContactUsState extends State<ContactUs> {
                     height: scHeight * 0.13,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage('assets/images/product_icon.png'),
+                        image: AssetImage('images/product_icon.png'),
                       ),
                     ),
                     child: Icon(

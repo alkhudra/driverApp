@@ -21,21 +21,22 @@ import 'package:alkhudhrah_app/constants/colors.dart';
 import 'package:alkhudhrah_app/router/route_constants.dart';
 import 'helper/shared_pref_helper.dart';
 
-final GlobalKey<NavigatorState> navigatorKey = GlobalKey(debugLabel: "Main Navigator");
+final GlobalKey<NavigatorState> navigatorKey =
+    GlobalKey(debugLabel: "Main Navigator");
 late String routeToGo = '/';
 String? payload;
 
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
-  'high_importance_channel', //id
-  'High Importance Notifications', //title
-  description: 'This channel is used for important notifications',
-  importance: Importance.high,
-  playSound: true
-);
+    'high_importance_channel', //id
+    'High Importance Notifications', //title
+    description: 'This channel is used for important notifications',
+    importance: Importance.high,
+    playSound: true);
 
 FirebaseMessaging messaging = messaging;
 
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -53,13 +54,14 @@ Future<void> selectNotification(String? payload) async {
 }
 
 Future<void> main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
-  bool isUserLoggedIn = await PreferencesHelper.getIsUserLoggedIn == null ? false:await PreferencesHelper.getIsUserLoggedIn ;
-  bool isUserFirstLogin = await PreferencesHelper.getIsUserFirstLogIn == null ? true:await PreferencesHelper.getIsUserFirstLogIn ;
+  bool isUserLoggedIn = await PreferencesHelper.getIsUserLoggedIn == null
+      ? false
+      : await PreferencesHelper.getIsUserLoggedIn;
+  bool isUserFirstLogin = await PreferencesHelper.getIsUserFirstLogIn == null
+      ? true
+      : await PreferencesHelper.getIsUserFirstLogIn;
 
-  
- 
   await Firebase.initializeApp();
   await EasyLocalization.ensureInitialized();
 
@@ -71,29 +73,27 @@ Future<void> main() async {
         path: 'assets/locale',
         fallbackLocale: Locale('en'),
         assetLoader: CodegenLoader(),
-        child: MyApp(isUserFisrtLogin: isUserFirstLogin,isUserLoggedIn:isUserLoggedIn)),
+        child: MyApp(
+            isUserFisrtLogin: isUserFirstLogin,
+            isUserLoggedIn: isUserLoggedIn)),
   );
-
 
   await flutterLocalNotificationsPlugin
-  .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
-  ?.createNotificationChannel(channel);
+      .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()
+      ?.createNotificationChannel(channel);
 
   await messaging.setForegroundNotificationPresentationOptions(
-    alert: true,
-    badge: true,
-    sound: true
-  );
+      alert: true, badge: true, sound: true);
 
   final NotificationAppLaunchDetails? notificationAppLaunchDetails =
-    await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
-    print('payload=');
-    payload= notificationAppLaunchDetails!.payload;
-  if(payload != null){
+      await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+  print('payload=');
+  payload = notificationAppLaunchDetails!.payload;
+  if (payload != null) {
     routeToGo = '/second';
     navigatorKey.currentState?.pushNamed('/second');
   }
-
 }
 
 // Future init() async {
@@ -113,23 +113,22 @@ Future<void> main() async {
 // }
 
 class MyApp extends StatefulWidget {
-  final bool isUserLoggedIn ,isUserFisrtLogin;
-  
-  const MyApp({
-    Key? key,
-required this.isUserFisrtLogin,required this.isUserLoggedIn}) : super(key: key);
+  final bool isUserLoggedIn, isUserFisrtLogin;
+
+  const MyApp(
+      {Key? key, required this.isUserFisrtLogin, required this.isUserLoggedIn})
+      : super(key: key);
 
   @override
   _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-
   static int counter = 0;
 
   late String token;
 
-    getToken() async {
+  getToken() async {
     token = (await FirebaseMessaging.instance.getToken())!;
     print(token);
   }
@@ -148,24 +147,21 @@ class _MyAppState extends State<MyApp> {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification?.android;
-      if(notification  != null && android != null) {
+      if (notification != null && android != null) {
         flutterLocalNotificationsPlugin.show(
-          notification.hashCode, 
-          notification.title, 
-          notification.body, 
+          notification.hashCode,
+          notification.title,
+          notification.body,
           NotificationDetails(
-            android: AndroidNotificationDetails(
-              channel.id,
-              channel.name,
-              channelDescription: channel.description,
-              color: kLogoGreen,
-              playSound: true,
-              //TODO: Add custom icon
-              icon: '@mipmap/ic_launcher'
-            ),
+            android: AndroidNotificationDetails(channel.id, channel.name,
+                channelDescription: channel.description,
+                color: kLogoGreen,
+                playSound: true,
+                //TODO: Add custom icon
+                icon: '@mipmap/ic_launcher'),
             // iOS: IOSNotificationDetails()
           ),
-          // payload: 
+          // payload:
         );
       }
 
@@ -173,45 +169,42 @@ class _MyAppState extends State<MyApp> {
       print('Data is ' + message.data.toString());
       print('Body is ' + notification.body.toString());
 
-      if(message.data != null) {
+      if (message.data != null) {
         Map<String, dynamic> map = message.data;
         if (map.containsKey('orderId') && map['orderId'] != '0') {
           print(map.containsKey('orderId'));
           print(map['orderId'] != 0);
           print(map['orderId']);
 
-
-        print('Navigation reached here!');
+          print('Navigation reached here!');
           // navigatorKey.currentState!.push(MaterialPageRoute(builder: ((context) => WalletScreen())));
           // directToOrderDetails(context, orderId: message.data['orderId']);
 
-        String language = await PreferencesHelper.getSelectedLanguage;
+          String language = await PreferencesHelper.getSelectedLanguage;
 
-        Map<String, dynamic> headerMap = await getHeaderMap();
+          Map<String, dynamic> headerMap = await getHeaderMap();
 
-        OrderRepository orderRepository = OrderRepository(headerMap);
+          OrderRepository orderRepository = OrderRepository(headerMap);
 
-        ApiResponse apiResponse = await orderRepository.getOrderById(int.parse(map['orderId']));
+          ApiResponse apiResponse =
+              await orderRepository.getOrderById(int.parse(map['orderId']));
 
-        if (apiResponse.apiStatus.code == ApiResponseType.OK.code) {
-          OrderHeader? responseModel = OrderHeader.fromJson(apiResponse.result);
+          if (apiResponse.apiStatus.code == ApiResponseType.OK.code) {
+            OrderHeader? responseModel =
+                OrderHeader.fromJson(apiResponse.result);
 
-          navigatorKey.currentState!.push(MaterialPageRoute(builder: ((context) => 
-          OrderDetails(
-                    orderModel: responseModel,
-                    language: language,
-                  ))));
+            navigatorKey.currentState!.push(MaterialPageRoute(
+                builder: ((context) => OrderDetails(
+                      orderModel: responseModel,
+                      language: language,
+                    ))));
+          }
         }
-
       }
-    }
 
       print('navigation successful');
     });
     getToken();
-
-
-
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
       print('A new onMessageOpenedApp event was published');
@@ -222,30 +215,29 @@ class _MyAppState extends State<MyApp> {
       //   navigatorKey.currentState?.pushNamed('/second');
       // }
 
-      if(notification != null && android != null) {
-        showDialog(context: context,
-          builder: (_) {
-            return AlertDialog(
-              title: Text('Notification.title'),
-              content:  SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(notification.body!)
-                  ],
+      if (notification != null && android != null) {
+        showDialog(
+            context: context,
+            builder: (_) {
+              return AlertDialog(
+                title: Text('Notification.title'),
+                content: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [Text(notification.body!)],
+                  ),
                 ),
-              ),
-            );
-          });
-          // Navigator.push(context, MaterialPageRoute(
-            // builder: (context) => OrderDea));
+              );
+            });
+        // Navigator.push(context, MaterialPageRoute(
+        // builder: (context) => OrderDea));
       }
 
       print('Title is ' + notification!.title.toString());
       print('Data is ' + message.data.toString());
       // print('Body is ' + notification.body.toString());
 
-      if(message.data != null) {
+      if (message.data != null) {
         Map<String, dynamic> map = message.data;
         if (map.containsKey('orderId') && map['orderId'] != '0') {
           print(map.containsKey('orderId'));
@@ -255,32 +247,33 @@ class _MyAppState extends State<MyApp> {
           // navigatorKey.currentState!.push(MaterialPageRoute(builder: ((context) => WalletScreen())));
           // directToOrderDetails(context, orderId: message.data['orderId']);
 
-        String language = await PreferencesHelper.getSelectedLanguage;
+          String language = await PreferencesHelper.getSelectedLanguage;
 
-        Map<String, dynamic> headerMap = await getHeaderMap();
+          Map<String, dynamic> headerMap = await getHeaderMap();
 
-        OrderRepository orderRepository = OrderRepository(headerMap);
+          OrderRepository orderRepository = OrderRepository(headerMap);
 
-        ApiResponse apiResponse = await orderRepository.getOrderById(int.parse(map['orderId']));
+          ApiResponse apiResponse =
+              await orderRepository.getOrderById(int.parse(map['orderId']));
 
-        if (apiResponse.apiStatus.code == ApiResponseType.OK.code) {
-          OrderHeader? responseModel = OrderHeader.fromJson(apiResponse.result);
+          if (apiResponse.apiStatus.code == ApiResponseType.OK.code) {
+            OrderHeader? responseModel =
+                OrderHeader.fromJson(apiResponse.result);
 
-          navigatorKey.currentState!.push(MaterialPageRoute(builder: ((context) => 
-          OrderDetails(
-                    orderModel: responseModel,
-                    language: language,
-                  ))));
+            navigatorKey.currentState!.push(MaterialPageRoute(
+                builder: ((context) => OrderDetails(
+                      orderModel: responseModel,
+                      language: language,
+                    ))));
 
-          // print('Navigation reached here!');
-        }
-
+            // print('Navigation reached here!');
+          }
         }
       }
     });
   }
 
-  void showNotification() async{
+  void showNotification() async {
     setState(() {
       counter++;
     });
@@ -289,42 +282,39 @@ class _MyAppState extends State<MyApp> {
     print('Notification token: ' + token!);
 
     flutterLocalNotificationsPlugin.show(
-      0, 
-      'Testing $counter', 
-      'How you doin?', 
-      NotificationDetails(
-        android: AndroidNotificationDetails(
-          channel.id, 
-          channel.name,
-          channelDescription: channel.description,
-          importance: Importance.high,
-          color: kLogoGreen,
-          playSound: true,
-          //TODO: Add custom icon
-          icon: '@mipmap/ic_launcher'
-        ),
-        // iOS: IOSNotificationDetails()
-      ));
+        0,
+        'Testing $counter',
+        'How you doin?',
+        NotificationDetails(
+          android: AndroidNotificationDetails(channel.id, channel.name,
+              channelDescription: channel.description,
+              importance: Importance.high,
+              color: kLogoGreen,
+              playSound: true,
+              //TODO: Add custom icon
+              icon: '@mipmap/ic_launcher'),
+          // iOS: IOSNotificationDetails()
+        ));
 
+    await FirebaseMessaging.instance
+        .setForegroundNotificationPresentationOptions(
+      alert: true, // Required to display a heads up notification
+      badge: true,
+      sound: true,
+    );
 
-        await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-          alert: true, // Required to display a heads up notification
-          badge: true,
-          sound: true,
-        );
+    NotificationSettings settings =
+        await FirebaseMessaging.instance.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
 
-
-        NotificationSettings settings = await FirebaseMessaging.instance.requestPermission(
-          alert: true,
-          announcement: false,
-          badge: true,
-          carPlay: false,
-          criticalAlert: false,
-          provisional: false,
-          sound: true,
-        );
-
-        print('User granted permission: ${settings.authorizationStatus}');
+    print('User granted permission: ${settings.authorizationStatus}');
   }
 
   @override
@@ -366,12 +356,7 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-
-
   Widget getRout() {
-
-
-
     if (widget.isUserFisrtLogin == false && widget.isUserLoggedIn == true)
       return DashboardPage();
     if (widget.isUserFisrtLogin == false && widget.isUserLoggedIn == false)
@@ -380,49 +365,54 @@ class _MyAppState extends State<MyApp> {
       return LanguagePage();
   }
 
-
-  
   static Route<dynamic> _errorRoute() {
-    return MaterialPageRoute(
-        builder: (_){
-          return Scaffold(
-            body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+    return MaterialPageRoute(builder: (_) {
+      return Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Stack(
                 children: [
-                  Stack(
-                    children: [
-                      Align(
-                        child:  Container(
-                          width: 150,
-                          height: 150,
-                          child: Icon(
-                            Icons.delete_forever,
-                            size: 48,
-                          ),
-                        ),
-                        alignment: Alignment.center,
+                  Align(
+                    child: Container(
+                      width: 150,
+                      height: 150,
+                      child: Icon(
+                        Icons.delete_forever,
+                        size: 48,
                       ),
-                      Align(
-                        alignment: Alignment.center,
-                        child: SizedBox(
-                          width: 150,
-                          height: 150,
-                          child: CircularProgressIndicator(
-                              strokeWidth: 4,
-                              value: 1.0
-                            // valueColor: AlwaysStoppedAnimation<Color>(Colors.blue.withOpacity(0.5)),
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
+                    alignment: Alignment.center,
                   ),
-                  SizedBox(height: 20,),
-                  Text('Page Not Found'),
-                  SizedBox(height: 10,),
-                  Text('Press back button on your phone', style: TextStyle(color: Color(0xff39399d), fontSize: 28),),
-                  SizedBox(height: 20,),
-                  /*ElevatedButton(
+                  Align(
+                    alignment: Alignment.center,
+                    child: SizedBox(
+                      width: 150,
+                      height: 150,
+                      child: CircularProgressIndicator(
+                          strokeWidth: 4, value: 1.0
+                          // valueColor: AlwaysStoppedAnimation<Color>(Colors.blue.withOpacity(0.5)),
+                          ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text('Page Not Found'),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                'Press back button on your phone',
+                style: TextStyle(color: Color(0xff39399d), fontSize: 28),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              /*ElevatedButton(
                     onPressed: () {
                       Navigator.pop();
                       return;
@@ -433,15 +423,13 @@ class _MyAppState extends State<MyApp> {
                     ),
                     child: const Text('Back to home'),
                   ),*/
-                ],
-              ),
-            ),
-          );
-        }
-    );
+            ],
+          ),
+        ),
+      );
+    });
   }
 }
-
 
 // void navigatorKeyToOrderDetails(navigatorKey, {model, orderId}) async {
 //   String language = await PreferencesHelper.getSelectedLanguage;
@@ -456,7 +444,7 @@ class _MyAppState extends State<MyApp> {
 
 //     if (apiResponse.apiStatus.code == ApiResponseType.OK.code) {
 //       OrderHeader? responseModel = OrderHeader.fromJson(apiResponse.result);
-//       navigatorKey.currentState!.push(MaterialPageRoute(builder: ((context) => 
+//       navigatorKey.currentState!.push(MaterialPageRoute(builder: ((context) =>
 //       OrderDetails(
 //                 orderModel: responseModel,
 //                 language: language,
