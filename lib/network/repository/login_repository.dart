@@ -13,12 +13,11 @@ import 'package:dio/dio.dart';
 
 class AuthRepository {
    late final RestClient _client;
-
-  AuthRepository() {
-    _client = RestClient(Dio(
-    BaseOptions(contentType: 'application/json'),
-  ));
-}
+   AuthRepository(Map<String,dynamic> headerMap) {
+     _client = RestClient(Dio(
+       BaseOptions(contentType: 'application/json',headers: headerMap),
+     ));
+   }
 
 
 

@@ -222,7 +222,7 @@ class _OrderDeliveredState extends State<OrderDelivered> {
                       builder: (BuildContext context) => showMessageDialog(context, LocaleKeys.completed_order.tr(), LocaleKeys.completed_thanks.tr(), dashBoardRoute)
                     );
 
-                    showSuccessMessage(context, 'Order Successfully Delivered!');
+                   // showSuccessMessage(context,  LocaleKeys.completed_order.tr());
 
                     
                   }),

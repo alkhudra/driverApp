@@ -4,15 +4,15 @@ class ContactUsResponseModel {
       String? email, 
       String? phoneNumber, 
       String? whatsApp,
-      String? twitter,
-      num? longitude, 
+    String? twitter,
+      num? longitude,
       num? latitude,}){
-    _email = email; //== null ? '' : email;
-    _phoneNumber = phoneNumber; //== null ? '' : phoneNumber;
-    _whatsApp = whatsApp; //== null ? '' : whatsApp;
-    _longitude = longitude; // == 0 ? 0.0 : longitude;
-    _twitter = twitter; // == null ? '' : twitter;
-    _latitude = latitude; // == 0 ? 0.0 : latitude;
+    _email = email == null ? '' : email;
+    _phoneNumber = phoneNumber == null ? '' : phoneNumber;
+    _whatsApp = whatsApp == null ? '' : whatsApp;
+    _longitude = longitude == 0 ? 0.0 : longitude;
+    _twitter = twitter == null ? '' : twitter;
+    _latitude = latitude == 0 ? 0.0 : latitude;
 }
 
   ContactUsResponseModel.fromJson(dynamic json) {

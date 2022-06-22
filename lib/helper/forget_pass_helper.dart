@@ -24,7 +24,7 @@ void forgetPasswordProcess(
     //----------start api ----------------
     Map<String, dynamic> headerMap = await getAuthHeaderMap();
 
-    AuthRepository registerRepository = AuthRepository();
+    AuthRepository registerRepository = AuthRepository(headerMap);
     registerRepository.forgetPassword(userEmail).then((result) async {
       //-------- fail response ---------
 

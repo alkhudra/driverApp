@@ -146,7 +146,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
     //----------start api ----------------
     Map<String, dynamic> headerMap = await getAuthHeaderMap();
 
-    AuthRepository loginRepository = AuthRepository();
+    AuthRepository loginRepository = AuthRepository(headerMap);
     String email = widget.dataMap.values.first;
     String token = widget.dataMap.values.last;
 
