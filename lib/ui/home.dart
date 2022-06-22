@@ -1,3 +1,4 @@
+import 'package:alkhudhrah_app/constants/api_const.dart';
 import 'package:alkhudhrah_app/constants/cont.dart';
 import 'package:alkhudhrah_app/designs/appbar_design.dart';
 import 'package:alkhudhrah_app/designs/drawer_design.dart';
@@ -49,15 +50,14 @@ class _HomescreenState extends State<Homescreen> {
     //------------------------
   void setValues() async {
     DriverUser user = await PreferencesHelper.getUser;
-    image = user.image!;
 
-    name = user.driverName!=null? user.driverName! :"";
-    email = user.email != null ?user.email! :"" ;
-    image = user.image != null ?user.image! :"" ;
+    name = user.driverName!=null? user.driverName! : "";
+    email = user.email != null ? user.email! : "" ;
+    image = user.image != null ? user.image! : " " ;
 
     print('Driver Name:' + name);
     print('Driver Email:' + email);
-    print('Driver Image:' + image);
+    print('Driver Image:' + ApiConst.dashboard_url + image);
   }
 
   @override

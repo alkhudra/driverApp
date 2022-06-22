@@ -1,14 +1,10 @@
-import 'package:alkhudhrah_app/designs/order_tile_design.dart';
 import 'package:alkhudhrah_app/locale/codegen_loader.g.dart';
 import 'package:alkhudhrah_app/network/API/api_response.dart';
 import 'package:alkhudhrah_app/network/API/api_response_type.dart';
 import 'package:alkhudhrah_app/network/helper/network_helper.dart';
 import 'package:alkhudhrah_app/network/models/orders/order_header.dart';
 import 'package:alkhudhrah_app/network/repository/order_repository.dart';
-import 'package:alkhudhrah_app/ui/language_setting.dart';
 import 'package:alkhudhrah_app/ui/order_details.dart';
-import 'package:alkhudhrah_app/ui/wallet.dart';
-import 'package:another_flushbar/flushbar.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
