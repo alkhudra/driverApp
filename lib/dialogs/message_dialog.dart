@@ -37,8 +37,8 @@ Widget showMessageDialog(BuildContext context, String title, String txt,String p
 }
 
 //------------------------------------
-FlatButton messageDialogBtns(BuildContext context) {
-  return FlatButton(
+MaterialButton messageDialogBtns(BuildContext context) {
+  return MaterialButton(
     textColor: kLogoGreen,
     onPressed: () {
       Navigator.pop(context);
@@ -52,9 +52,9 @@ FlatButton messageDialogBtns(BuildContext context) {
 //------------------------------------
 
 
-FlatButton directToPageBtns(BuildContext context,String route) {
+MaterialButton directToPageBtns(BuildContext context,String route) {
 
-  return FlatButton(
+  return MaterialButton(
     textColor: kLogoGreen,
     onPressed: () {
       Navigator.pop(context);
