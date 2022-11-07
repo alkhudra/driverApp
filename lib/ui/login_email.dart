@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:alkhudhrah_app/constants/colors.dart';
+import 'package:alkhudhrah_app/constants/cont.dart';
 import 'package:alkhudhrah_app/custom_widgets/brandname.dart';
 import 'package:alkhudhrah_app/custom_widgets/green_btn.dart';
 import 'package:alkhudhrah_app/designs/card_design.dart';
@@ -195,12 +196,13 @@ class _LoginEmailState extends State<LoginEmail> {
         return;
       }
 
-      print(model.user.toString());
 
-
-      DriverUser user = model.user!;
-
-
+      DriverUser? user = model.user!;
+      if(user != null) {
+        Consts.name = user.driverName ?? '';
+        Consts.email = user.email ?? '';
+        Consts.image = user.image ?? '';
+      }
       PreferencesHelper.setUserID(user.id!);
       PreferencesHelper.getUserID.then((value) => print('user id : $value'));
 

@@ -55,6 +55,7 @@ AppBar appBarWithActions(context, title, Function() action) {
       onTap: action,
     ),
 
+
     backgroundColor: kLogoGreen,
     centerTitle: true,
     title: appBarTitle(context,title)

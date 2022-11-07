@@ -24,3 +24,11 @@ const credit = 'R';
 const visa = 'V';
 const stcPay = 'S';
 const applePay = 'A';
+
+class Consts{
+ static String name = '';
+ static String email = '';
+ static String image ='';
+ static int pageSize = 15;
+
+}

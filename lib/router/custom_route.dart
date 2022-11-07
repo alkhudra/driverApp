@@ -2,7 +2,7 @@ import 'package:alkhudhrah_app/ui/dashboard_page.dart';
 import 'package:alkhudhrah_app/ui/home.dart';
 import 'package:alkhudhrah_app/ui/language_page.dart';
 import 'package:alkhudhrah_app/ui/login_email.dart';
-import 'package:alkhudhrah_app/ui/order_delivered.dart';
+import 'package:alkhudhrah_app/ui/companies/order_delivered.dart';
 import 'package:flutter/material.dart';
 import 'package:alkhudhrah_app/ui/language_setting.dart';
 import 'package:alkhudhrah_app/main.dart';

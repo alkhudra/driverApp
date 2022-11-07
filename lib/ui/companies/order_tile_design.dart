@@ -8,7 +8,7 @@ import 'package:alkhudhrah_app/locale/locale_keys.g.dart';
 import 'package:alkhudhrah_app/helper/shared_pref_helper.dart';
 import 'package:alkhudhrah_app/network/models/orders/order_header.dart';
 
-import 'package:alkhudhrah_app/ui/order_details.dart';
+import 'package:alkhudhrah_app/ui/companies/order_details.dart';
 import 'package:alkhudhrah_app/constants/colors.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -16,7 +16,6 @@ Widget orderTileDesign(context, OrderHeader model, scWidth, scHeight) {
   String orderStatus = '';
   String orderDate = '';
 
-  //todo: edit statusColor
   Color statusColor ;
   if (model.orderStatus == underProcess) {
     orderDate = model.orderInitializedDate!;
@@ -173,7 +172,6 @@ void directToOrderDetails(context, {model, orderId}) async {
 void navigatorKeyToOrderDetails(navigatorKey, {model, orderId}) async {
   String language = await PreferencesHelper.getSelectedLanguage;
 
-  //todo: test
   if (model == null) {
     Map<String, dynamic> headerMap = await getHeaderMap();
 

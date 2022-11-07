@@ -2,7 +2,7 @@ import 'package:alkhudhrah_app/constants/colors.dart';
 import 'package:alkhudhrah_app/designs/appbar_design.dart';
 import 'package:alkhudhrah_app/designs/drawer_design.dart';
 import 'package:alkhudhrah_app/designs/no_item_design.dart';
-import 'package:alkhudhrah_app/designs/order_tile_design.dart';
+import 'package:alkhudhrah_app/ui/companies/order_tile_design.dart';
 import 'package:alkhudhrah_app/helper/shared_pref_helper.dart';
 import 'package:alkhudhrah_app/locale/locale_keys.g.dart';
 import 'package:alkhudhrah_app/network/API/api_response.dart';

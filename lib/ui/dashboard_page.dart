@@ -23,7 +23,7 @@ class _DashboardPageState extends State<DashboardPage> {
   final List<Widget> screens = [
     //home is orders screen; both complete and incoming
     Homescreen(),
-    WalletScreen(),
+    SettingsScreen(),
     NotificationsScreen()
   ];
 
@@ -75,7 +75,7 @@ class _DashboardPageState extends State<DashboardPage> {
                 onPressed: () {
                   setState(() {
                     //ishasbranch could be set to false later
-                    currentScreen = WalletScreen();
+                    currentScreen = SettingsScreen();
                     currentTab = 0;
                   });
                 },
@@ -85,14 +85,14 @@ class _DashboardPageState extends State<DashboardPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
-                        FontAwesomeIcons.wallet,
+                        Icons.menu,
                         color: currentTab == 0 
                         ? kLogoGreen 
                         : kGray,
                       ),
                       SizedBox(height: 5,),
                       Text(
-                        LocaleKeys.wallet.tr(),
+                        LocaleKeys.my_setting.tr(),
                         style: TextStyle(
                           fontSize: 13,
                           color: currentTab == 0 

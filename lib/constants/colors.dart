@@ -22,6 +22,7 @@ const Color kConBG = Color.fromRGBO(221, 245, 244, 1);
 const Color kCon = Color.fromRGBO(62, 34, 111, 1);
 const Color kRed = Colors.red;
 const Color kBackgroundColor =Colors.white;
-
+Color orderBG = const Color.fromRGBO(228, 243, 234, 1);
+Color order = const Color.fromRGBO(3, 176, 169, 1);
 
   // Color unlikeColor = Color.fromRGBO(136, 125, 125, 1);

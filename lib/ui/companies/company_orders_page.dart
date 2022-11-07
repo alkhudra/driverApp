@@ -4,7 +4,7 @@ import 'package:alkhudhrah_app/constants/cont.dart';
 import 'package:alkhudhrah_app/designs/appbar_design.dart';
 import 'package:alkhudhrah_app/designs/drawer_design.dart';
 import 'package:alkhudhrah_app/designs/no_item_design.dart';
-import 'package:alkhudhrah_app/designs/order_tile_design.dart';
+import 'package:alkhudhrah_app/ui/companies/order_tile_design.dart';
 import 'package:alkhudhrah_app/helper/custom_btn.dart';
 import 'package:alkhudhrah_app/helper/shared_pref_helper.dart';
 import 'package:alkhudhrah_app/locale/locale_keys.g.dart';
@@ -16,9 +16,10 @@ import 'package:alkhudhrah_app/network/models/driver_user.dart';
 import 'package:alkhudhrah_app/network/models/orders/get_orders_response_model.dart';
 import 'package:alkhudhrah_app/network/models/orders/order_header.dart';
 import 'package:alkhudhrah_app/network/repository/order_repository.dart';
-import 'package:alkhudhrah_app/ui/order_history.dart';
+import 'package:alkhudhrah_app/ui/companies/company_order_history.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 class CompanyOrderPage extends StatefulWidget {
   const CompanyOrderPage({Key? key}) : super(key: key);
 
@@ -27,47 +28,23 @@ class CompanyOrderPage extends StatefulWidget {
 }
 
 class _CompanyOrderPageState extends State<CompanyOrderPage> {
-  //return loadmore button
+  TextEditingController srController = TextEditingController();
 
-  int pageNumber = 1;
-  int pageSize = listItemsCount;
-  bool isThereMoreItems = false;
-  List<OrderHeader> orderList = [];
-  static String name = '', email = '', image = '';
-  final ScrollController _controller = ScrollController();
-
-  void _scrollListener() {
-    print('listener');
-    if (_controller.position.pixels == _controller.position.maxScrollExtent) {
-      loadMoreInfo();
-    }
-  }
-
-  //------------------------
-  void setValues() async {
-    DriverUser user = await PreferencesHelper.getUser;
-    //  image = user.image!;
-
-    name = user.driverName != null ? user.driverName! : "";
-    email = user.email != null ? user.email! : "";
-    image = user.image != null ? user.image! : "";
-
-    print('Driver Name:' + name);
-    print('Driver Email:' + email);
-    print('Driver Image:' + ApiConst.dashboard_url + image);
-  }
-
+  final PagingController<int, OrderHeader> _pagingController =
+  PagingController(firstPageKey: 1);
   @override
   void initState() {
+    _pagingController.addPageRequestListener((pageKey) {
+      getListData(pageKey);
+    });
     super.initState();
-    setValues();
-    _controller.addListener(_scrollListener);
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
   body:    FutureBuilder<GetOrdersResponseModel>(
-        future: getListData(),
+        future: getListData(_pagingController.firstPageKey),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return pageDesign(context, snapshot.data!);
@@ -83,8 +60,8 @@ class _CompanyOrderPageState extends State<CompanyOrderPage> {
     Size size = MediaQuery.of(context).size;
     double scWidth = size.width;
     double scHeight = size.height;
+    _pagingController.value.itemList!.removeWhere((element) => element.orderStatus == delivered);
 
-    print(orderList.length);
     return Container(
       child: Column(
         children: [
@@ -92,78 +69,58 @@ class _CompanyOrderPageState extends State<CompanyOrderPage> {
             height: 10,
           ),
           Expanded(
-            child: orderList.length > 0
-                ? ListView.builder(
-              controller: _controller,
-              itemBuilder: ((context, index) {
-                if (isThereMoreItems == true) {
-                  if (index == orderList.length - 1) {
-                    return Center(
-                      child:
-                      CircularProgressIndicator(), //value.getLoadMoreDataStatus == true ? CircularProgressIndicator():null,
-                    );
-                  }
-                }
-                return orderTileDesign(
-                    context, orderList[index], scWidth, scHeight);
-              }),
-              itemCount: orderList.length,
+            child: _pagingController.value.itemList!.isNotEmpty
+                ? PagedListView<int, OrderHeader>(
+              pagingController: _pagingController,
+              shrinkWrap: true,
+              //   physics: const NeverScrollableScrollPhysics(),
+              padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 12),
+
+              builderDelegate: PagedChildBuilderDelegate<OrderHeader>(
+                  itemBuilder: (context, item, index) =>
+                      orderTileDesign(
+                          context,item, scWidth, scHeight)),
             )
+            //   controller: _controller,
+
+
                 : noItemDesign(
                 LocaleKeys.no_current_orders.tr(), 'images/not_found.png'),
           ),
 
-          if (isThereMoreItems == true)
-            loadMoreBtn(context, loadMoreInfo, 0, 0),
+
           //  SizedBox(height: 32,),
         ],
       ),
     );
   }
-//---------------------
-
-  loadMoreInfo() async {
-    setState(() {
-      pageNumber++;
-    });
-  }
 
   //--------------------------
-  Future<GetOrdersResponseModel> getListData() async {
+  Future<GetOrdersResponseModel> getListData(pageNumber) async {
     Map<String, dynamic> headerMap = await getHeaderMap();
 
     OrderRepository orderRepository = OrderRepository(headerMap);
 
     ApiResponse apiResponse =
-    await orderRepository.getOrders(pageNumber, pageSize);
+    await orderRepository.getOrders(pageNumber, Consts.pageSize);
 
     if (apiResponse.apiStatus.code == ApiResponseType.OK.code) {
       GetOrdersResponseModel? responseModel =
       GetOrdersResponseModel.fromJson(apiResponse.result);
 
-      print('Order List from DB: ' + responseModel.orderList.toString());
-      if (pageNumber == 1)
-        orderList = responseModel.orderList;
-      else
-        orderList.addAll(responseModel.orderList);
 
-      //show only current and under processing orders
-      orderList.removeWhere((element) => element.orderStatus == delivered);
-
-      if (responseModel.orderList.length > 0) {
-        if (responseModel.orderList.length < listItemsCount) {
-          isThereMoreItems = false;
-          pageNumber = 1;
+      try {
+        final isLastPage = responseModel.orderList.length < Consts.pageSize;
+        if (isLastPage) {
+          _pagingController.appendLastPage(responseModel.orderList);
         } else {
-          isThereMoreItems = true;
-          pageNumber += 1;
+          final nextPageKey = pageNumber + responseModel.orderList.length;
+          _pagingController.appendPage(responseModel.orderList, nextPageKey);
         }
-      } else {
-        isThereMoreItems = false;
 
-        pageNumber = 1;
+      } catch (error) {
+        _pagingController.error = error;
       }
-      print('loadmore is $isThereMoreItems');
       //-----------------------------------
       return responseModel;
     } else {

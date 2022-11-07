@@ -4,7 +4,7 @@ import 'package:alkhudhrah_app/network/API/api_response_type.dart';
 import 'package:alkhudhrah_app/network/helper/network_helper.dart';
 import 'package:alkhudhrah_app/network/models/orders/order_header.dart';
 import 'package:alkhudhrah_app/network/repository/order_repository.dart';
-import 'package:alkhudhrah_app/ui/order_details.dart';
+import 'package:alkhudhrah_app/ui/companies/order_details.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';

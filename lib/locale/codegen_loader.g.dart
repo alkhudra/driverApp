@@ -127,7 +127,9 @@ class CodegenLoader extends AssetLoader {
   "order_completed": "Order Completed",
   "completed_thanks": "Thank You For Completing Your Delivery!",
   "no_notification": "There are no Notifications",
-};
+    "my_setting": "Setting",
+
+  };
 static const Map<String,dynamic> ar = {
   "SIGN IN": "تسجيل الدخول",
   "Please begin number with 05": "الرجاء بدء رقم الجوال بـ 05",
@@ -214,6 +216,8 @@ static const Map<String,dynamic> ar = {
   "Order Status": "حالة الطلب",
   "contact_client": "تواصل مع العميل",
   "cash": "دفع نقدي",
+  "my_setting": "الإعدادات",
+
   "credit_card": "بطاقة ائتمانية",
   "postpaid": "دفع آجل",
   "apple_pay": "ابل باي",

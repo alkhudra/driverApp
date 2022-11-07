@@ -3,7 +3,7 @@ import 'package:alkhudhrah_app/custom_widgets/green_btn.dart';
 import 'package:alkhudhrah_app/helper/cart_helper.dart';
 import 'package:alkhudhrah_app/network/models/driver_user.dart';
 import 'package:alkhudhrah_app/network/models/orders/branch_model.dart';
-import 'package:alkhudhrah_app/ui/order_delivered.dart';
+import 'package:alkhudhrah_app/ui/companies/order_delivered.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:alkhudhrah_app/constants/cont.dart';

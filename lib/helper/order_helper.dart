@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:alkhudhrah_app/constants/api_const.dart';
 import 'package:alkhudhrah_app/helper/contact_helper.dart';
 import 'package:alkhudhrah_app/helper/route_helper.dart';
-import 'package:alkhudhrah_app/ui/order_delivered.dart';
+import 'package:alkhudhrah_app/ui/companies/order_delivered.dart';
 
 class OrderHelper {
   // static callApi(BuildContext context, UserCart userCart,
