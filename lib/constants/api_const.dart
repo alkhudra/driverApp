@@ -21,6 +21,10 @@ abstract class ApiConst {
   static const String get_orders = "/Orders/getOrders";
   static const String order_delivered = "/Orders/orderDelivered";
   static const String get_order_by_id = "/Order/getOrderById/{id}";
+  //--------------- individual orders ----------------
+  static const String get_individual_orders = "/Orders/getIndividualOrders";
+  static const String order_individual_delivered = "/Orders/individualOrderDelivered";
+  static const String get_individual_order_by_id = "/Order/getIndividualOrderById/{id}";
 
  //--------------- Notifications ----------------
 static const String send_notification = "/NotificationD/send";
