@@ -145,6 +145,133 @@ late final RestClient _client;
   }
   //-----------------------------------
 
-  
+
+//------------Get Orders--------------
+
+Future<ApiResponse> getIndividualOrders(
+    int pageNumber,
+    int  pageSize) async {
+  if (pageSize == null || pageNumber == null ) {
+    return ApiResponse(ApiResponseType.BadRequest, null, '');
+  }
+
+  return await _client
+      .getIndividualOrders(pageNumber, pageSize)
+      .then((value) => ApiResponse(ApiResponseType.OK, value, ''))
+      .catchError((e) {
+    int errorCode = 0;
+    String errorMessage = "";
+    switch (e.runtimeType) {
+      case DioError:
+        final res = (e as DioError).response;
+        if (res != null) {
+          errorCode = res.statusCode!;
+          errorMessage = res.statusMessage!;
+
+          if (errorCode == 400) {
+            MessageResponseModel model =
+            MessageResponseModel.fromJson(res.data);
+
+
+            errorMessage =  model.message!;
+          } else if (errorCode == 500) {
+            errorMessage = res.data['Message'];
+          }
+        }
+        break;
+      default:
+    }
+    log("Got error : $errorCode -> $errorMessage");
+
+    var apiResponseType = ApiResponse.convert(errorCode);
+    return ApiResponse(apiResponseType, null, errorMessage);
+  });
+}
+
+//------------Delivered Orders--------------
+
+Future<ApiResponse> orderIndividualDelivered(
+    int invoiceNumber,
+    bool hasPaid
+    ) async {
+  if (invoiceNumber == null ||
+      hasPaid == null ) {
+    return ApiResponse(ApiResponseType.BadRequest, null, '');
+  }
+
+  return await _client
+      .orderIndividualDelivered(invoiceNumber, hasPaid)
+      .then((value) => ApiResponse(ApiResponseType.OK, value, ''))
+      .catchError((e) {
+    int errorCode = 0;
+    String errorMessage = "";
+    switch (e.runtimeType) {
+      case DioError:
+        final res = (e as DioError).response;
+        if (res != null) {
+          errorCode = res.statusCode!;
+          errorMessage = res.statusMessage!;
+
+          if (errorCode == 400) {
+            MessageResponseModel model =
+            MessageResponseModel.fromJson(res.data);
+
+
+            errorMessage =  model.message!;
+          } else if (errorCode == 500) {
+            errorMessage = res.data['Message'];
+          }
+        }
+        break;
+      default:
+    }
+    log("Got error : $errorCode -> $errorMessage");
+
+    var apiResponseType = ApiResponse.convert(errorCode);
+    return ApiResponse(apiResponseType, null, errorMessage);
+  });
+}
+
+
+//------------Get Order By ID--------------
+
+
+Future<ApiResponse> getIndividualOrderById(
+    int orderId,
+
+    ) async {
+  if (orderId == null ) {
+    return ApiResponse(ApiResponseType.BadRequest, null, '');
+  }
+
+  return await _client
+      .getIndividualOrderById(orderId)
+      .then((value) => ApiResponse(ApiResponseType.OK, value, ''))
+      .catchError((e) {
+    int errorCode = 0;
+    String errorMessage = "";
+    switch (e.runtimeType) {
+      case DioError:
+        final res = (e as DioError).response;
+        if (res != null) {
+          errorCode = res.statusCode!;
+          errorMessage = res.statusMessage!;
+          if (errorCode == 500) {
+            errorMessage = res.data['Message'];
+          } else {
+            errorMessage = LocaleKeys.wrong_error.tr();
+          }
+        }
+        break;
+      default:
+    }
+    log("Got error : $errorCode -> $errorMessage");
+
+    var apiResponseType = ApiResponse.convert(errorCode);
+    return ApiResponse(apiResponseType, null, errorMessage);
+  });
+}
+//-----------------------------------
+
 
 }

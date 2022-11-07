@@ -361,70 +361,7 @@ class _MyAppState extends State<MyApp> {
       return LanguagePage();
   }
 
-  static Route<dynamic> _errorRoute() {
-    return MaterialPageRoute(builder: (_) {
-      return Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Stack(
-                children: [
-                  Align(
-                    child: Container(
-                      width: 150,
-                      height: 150,
-                      child: Icon(
-                        Icons.delete_forever,
-                        size: 48,
-                      ),
-                    ),
-                    alignment: Alignment.center,
-                  ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: SizedBox(
-                      width: 150,
-                      height: 150,
-                      child: CircularProgressIndicator(
-                          strokeWidth: 4, value: 1.0
-                          // valueColor: AlwaysStoppedAnimation<Color>(Colors.blue.withOpacity(0.5)),
-                          ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Text('Page Not Found'),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                'Press back button on your phone',
-                style: TextStyle(color: Color(0xff39399d), fontSize: 28),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              /*ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop();
-                      return;
-                    },
-                    style: ButtonStyle(
-                      backgroundColor:
-                      MaterialStateProperty.all(Colors.orange),
-                    ),
-                    child: const Text('Back to home'),
-                  ),*/
-            ],
-          ),
-        ),
-      );
-    });
-  }
+
 }
 
 // void navigatorKeyToOrderDetails(navigatorKey, {model, orderId}) async {

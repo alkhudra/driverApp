@@ -43,6 +43,15 @@ abstract class RestClient {
 
   @GET(ApiConst.get_order_by_id)
   Future<dynamic> getOrderById(@Path() int orderId);
+  //---------------Individual orders ----------------
+  @GET(ApiConst.get_individual_orders)
+  Future<dynamic> getIndividualOrders(@Query('PageNumber') int pageNumber, @Query('PageSize') int  pageSize);
+
+  @POST(ApiConst.order_individual_delivered)
+  Future<dynamic> orderIndividualDelivered(@Query('invoiceNumber') int invoiceNumber, @Query('hasPaid') bool hasPaid,);
+
+  @GET(ApiConst.get_individual_order_by_id)
+  Future<dynamic> getIndividualOrderById(@Path() int orderId);
 
   //--------------- Notifications ----------------
   @POST(ApiConst.send_notification)
