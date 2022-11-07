@@ -22,6 +22,9 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
+import '../../network/models/orders/OrderHeaderIndividual.dart';
+import '../../network/models/orders/get_order_individaul_response.dart';
+
 class IndividualOrdersPage extends StatefulWidget {
   const IndividualOrdersPage({Key? key}) : super(key: key);
 
@@ -32,7 +35,7 @@ class IndividualOrdersPage extends StatefulWidget {
 class _IndividualOrdersPageState extends State<IndividualOrdersPage> {
   TextEditingController srController = TextEditingController();
 
-  final PagingController<int, OrderHeader> _pagingController =
+  final PagingController<int, OrderHeaderIndividual> _pagingController =
       PagingController(firstPageKey: 1);
   @override
   void initState() {
@@ -45,7 +48,7 @@ class _IndividualOrdersPageState extends State<IndividualOrdersPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<GetOrdersResponseModel>(
+      body: FutureBuilder<GetOrdersIndividualResponseModel>(
         future: getListData(_pagingController.firstPageKey),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
@@ -58,7 +61,7 @@ class _IndividualOrdersPageState extends State<IndividualOrdersPage> {
   }
   //---------------------
 
-  pageDesign(BuildContext context, GetOrdersResponseModel model) {
+  pageDesign(BuildContext context, GetOrdersIndividualResponseModel model) {
     Size size = MediaQuery.of(context).size;
     double scWidth = size.width;
     double scHeight = size.height;
@@ -73,16 +76,16 @@ class _IndividualOrdersPageState extends State<IndividualOrdersPage> {
           ),
           Expanded(
             child: _pagingController.value.itemList!.isNotEmpty
-                ? PagedListView<int, OrderHeader>(
+                ? PagedListView<int, OrderHeaderIndividual>(
                     pagingController: _pagingController,
                     shrinkWrap: true,
                     //   physics: const NeverScrollableScrollPhysics(),
                     padding: const EdgeInsets.symmetric(
                         horizontal: 10.0, vertical: 12),
 
-                    builderDelegate: PagedChildBuilderDelegate<OrderHeader>(
+                    builderDelegate: PagedChildBuilderDelegate<OrderHeaderIndividual>(
                         itemBuilder: (context, item, index) =>
-                            orderTileDesign(context, item, scWidth, scHeight)),
+                            orderTileDesign(context, individual,item, scWidth, scHeight)),
                   )
                 //   controller: _controller,
 
@@ -98,7 +101,7 @@ class _IndividualOrdersPageState extends State<IndividualOrdersPage> {
 //---------------------
 
   //--------------------------
-  Future<GetOrdersResponseModel> getListData(pageNumber) async {
+  Future<GetOrdersIndividualResponseModel> getListData(pageNumber) async {
     Map<String, dynamic> headerMap = await getHeaderMap();
 
     OrderRepository orderRepository = OrderRepository(headerMap);
@@ -106,9 +109,10 @@ class _IndividualOrdersPageState extends State<IndividualOrdersPage> {
     ApiResponse apiResponse =
         await orderRepository.getIndividualOrders(pageNumber, Consts.pageSize);
 
+    print(apiResponse.result.toString());
     if (apiResponse.apiStatus.code == ApiResponseType.OK.code) {
-      GetOrdersResponseModel? responseModel =
-          GetOrdersResponseModel.fromJson(apiResponse.result);
+      GetOrdersIndividualResponseModel? responseModel =
+      GetOrdersIndividualResponseModel.fromJson(apiResponse.result);
 
       print('Order List from DB: ' + responseModel.orderList.toString());
 

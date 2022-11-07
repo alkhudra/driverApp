@@ -79,7 +79,7 @@ class _CompanyOrderPageState extends State<CompanyOrderPage> {
               builderDelegate: PagedChildBuilderDelegate<OrderHeader>(
                   itemBuilder: (context, item, index) =>
                       orderTileDesign(
-                          context,item, scWidth, scHeight)),
+                          context,company,item, scWidth, scHeight)),
             )
             //   controller: _controller,
 

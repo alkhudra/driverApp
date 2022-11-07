@@ -75,7 +75,7 @@ class _CompanyOrderHistoryState extends State<CompanyOrderHistory> {
 
                     builderDelegate: PagedChildBuilderDelegate<OrderHeader>(
                         itemBuilder: (context, item, index) =>
-                            orderTileDesign(context, item, scWidth, scHeight)),
+                            orderTileDesign(context,company, item, scWidth, scHeight)),
                   )
                 //   controller: _controller,
 

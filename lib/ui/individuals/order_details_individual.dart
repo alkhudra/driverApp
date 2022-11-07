@@ -1,36 +1,35 @@
-import 'package:alkhudhrah_app/constants/colors.dart';
-import 'package:alkhudhrah_app/custom_widgets/green_btn.dart';
-import 'package:alkhudhrah_app/helper/cart_helper.dart';
-import 'package:alkhudhrah_app/network/models/driver_user.dart';
-import 'package:alkhudhrah_app/network/models/orders/branch_model.dart';
-import 'package:alkhudhrah_app/ui/companies/order_delivered.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:alkhudhrah_app/constants/cont.dart';
-import 'package:alkhudhrah_app/locale/locale_keys.g.dart';
-import 'package:alkhudhrah_app/designs/appbar_design.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:alkhudhrah_app/helper/contact_helper.dart';
-import 'package:alkhudhrah_app/helper/image_helper.dart';
-import 'package:alkhudhrah_app/helper/order_helper.dart';
-import 'package:alkhudhrah_app/network/models/orders/order_header.dart';
-import 'package:alkhudhrah_app/network/models/orders/order_items.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
+import '../../constants/colors.dart';
+import '../../constants/cont.dart';
+import '../../custom_widgets/green_btn.dart';
+import '../../designs/appbar_design.dart';
+import '../../helper/cart_helper.dart';
+import '../../helper/contact_helper.dart';
+import '../../helper/image_helper.dart';
+import '../../helper/order_helper.dart';
+import '../../locale/locale_keys.g.dart';
+import '../../network/models/driver_user.dart';
+import '../../network/models/orders/AddressModel.dart';
+import '../../network/models/orders/OrderHeaderIndividual.dart';
+import '../../network/models/orders/OrderItemIndividaul.dart';
+import '../../network/models/orders/order_items.dart';
+import '../companies/order_delivered.dart';
+import 'order_delivered_individual.dart';
 
-class OrderDetails extends StatefulWidget {
-  final OrderHeader orderModel;
+class IndividualOrderDetails extends StatefulWidget {
+  final OrderHeaderIndividual orderModel;
   final String language;
-  const OrderDetails(
-      {Key? key, required this.orderModel, required this.language})
-      : super(key: key);
+  const IndividualOrderDetails({Key? key,required this.orderModel,required this.language}) : super(key: key);
 
   @override
-  _OrderDetailsState createState() => _OrderDetailsState();
+  State<IndividualOrderDetails> createState() => _IndividualOrderDetailsState();
 }
 
-class _OrderDetailsState extends State<OrderDetails> {
-
+class _IndividualOrderDetailsState extends State<IndividualOrderDetails> {
   @override
   void initState() {
     super.initState();
@@ -41,131 +40,130 @@ class _OrderDetailsState extends State<OrderDetails> {
     Size size = MediaQuery.of(context).size;
     double scHeight = size.height;
 
-    OrderHeader model = widget.orderModel;
+    OrderHeaderIndividual model = widget.orderModel;
     DriverUser driverUser = DriverUser();
     if (widget.orderModel.driverUser != null)
       driverUser = widget.orderModel.driverUser!;
-    BranchModel? branch = model.branchModel;
-    String? branchNo = 'branch!.phoneNumber';
+    AddressModel? branch = model.address;
+    String? branchNo = branch!.phoneNumber;
 
 
     return Scaffold(
       appBar: appBarDesign(context, LocaleKeys.order_details.tr()),
       body: model.orderStatus == onDelivery
           ? SlidingUpPanel(
-              body: pageContent(model),
-              minHeight: scHeight * 0.07,
-              maxHeight: 160,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(40),
-                topRight: Radius.circular(40),
+        body: pageContent(model),
+        minHeight: scHeight * 0.07,
+        maxHeight: 160,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(40),
+          topRight: Radius.circular(40),
+        ),
+        panel: Container(
+          height: MediaQuery.of(context).size.height * 0.14,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 10,
               ),
-              panel: Container(
-                height: MediaQuery.of(context).size.height * 0.14,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 10,
+              Row(
+                children: [
+                  Container(
+                    padding:
+                    EdgeInsets.symmetric(horizontal: 40, vertical: 5),
+                    child: Text(
+                      LocaleKeys.contact_client.tr(),
+                      style: TextStyle(
+                          color:
+                          kLogoBrown.withOpacity(0.8),
+                          fontWeight: FontWeight.w600,
+                          fontSize: 18),
                     ),
-                    Row(
-                      children: [
-                        Container(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 40, vertical: 5),
-                          child: Text(
-                            LocaleKeys.contact_client.tr(),
-                            style: TextStyle(
-                                color:
-                                    kLogoBrown.withOpacity(0.8),
-                                fontWeight: FontWeight.w600,
-                                fontSize: 18),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 25,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                //client name
-                                Container(
-                                  child: Text(
-                                    model.companyName != null
-                                        ? model.companyName!
-                                        : '',
-                                        overflow: TextOverflow.clip,
-                                    style: TextStyle(
-                                        color: kDarkBlue,
-                                        fontSize: 17.5,
-                                        fontWeight: FontWeight.w700),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                //client number
-                                Container(
-                                  child: Text(
-                                    branchNo != null
-                                        ? branchNo
-                                        : '',
-                                    style: TextStyle(
-                                        color: kDarkGray
-                                            .withOpacity(0.8),
-                                        fontSize: 15),
-                                  ),
-                                ),
-                              ],
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 25,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          //client name
+                          Container(
+                            child: Text(
+                      '       model.companyName!'
+                                  ,
+                              overflow: TextOverflow.clip,
+                              style: TextStyle(
+                                  color: kDarkBlue,
+                                  fontSize: 17.5,
+                                  fontWeight: FontWeight.w700),
                             ),
-                          ],
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          //client number
+                          Container(
+                            child: Text(
+                              branchNo != null
+                                  ? branchNo
+                                  : '',
+                              style: TextStyle(
+                                  color: kDarkGray
+                                      .withOpacity(0.8),
+                                  fontSize: 15),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  //Call client button
+                  Container(
+                      width: 45,
+                      height: 45,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(35),
+                          color: kLogoGreen),
+                      child: TextButton(
+                        child: Icon(
+                          FontAwesomeIcons.phone,
+                          color: kWhite,
+                          size: 24,
                         ),
-                        //Call client button
-                        Container(
-                            width: 45,
-                            height: 45,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(35),
-                                color: kLogoGreen),
-                            child: TextButton(
-                              child: Icon(
-                                FontAwesomeIcons.phone,
-                                color: kWhite,
-                                size: 24,
-                              ),
-                              onPressed: () {
-                                directToPhoneCall(driverUser.phoneNumber != null
-                                    ? driverUser.phoneNumber!
-                                    : '');
-                              },
-                            ))
-                      ],
-                    ),
-                  ],
-                ),
+                        onPressed: () {
+                          directToPhoneCall(driverUser.phoneNumber != null
+                              ? driverUser.phoneNumber!
+                              : '');
+                        },
+                      ))
+                ],
               ),
-            )
+            ],
+          ),
+        ),
+      )
           : pageContent(model),
     );
   }
 //-------------list tile----------------
-  Widget orderItem( OrderItems item) {
+  Widget orderItem( OrderItemIndividaul item) {
     num? productPrice = item.orderedProductPrice;
     String name = widget.language ==
         "ar"
-        ? item.product!.arName ?? ''
-        : item.product!.name!??'';
+        ? item.arProductName ?? ''
+        : item.productName??'';
     return ListTile(
-      leading: ImageHelper.productImage(item.product!.image),
+      leading: ImageHelper.productImage(item.image),
       title: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -223,7 +221,7 @@ class _OrderDetailsState extends State<OrderDetails> {
   }
 //---------------------------------
 
-  pageContent(OrderHeader model) {
+  pageContent(OrderHeaderIndividual model) {
     num? priceAfterDiscount = model.totalDiscount;
     num? subtotal = model.totalOrderPrice;
     num? vat = model.totalOrderVAT15;
@@ -262,10 +260,6 @@ class _OrderDetailsState extends State<OrderDetails> {
       paymentText = LocaleKeys.stc_pay.tr();
       //todo:edit stc pay icon
       paymentIcon = FontAwesomeIcons.gratipay;
-    } else if (model.paymentType == credit) {
-      print(model.paymentType);
-      paymentText = LocaleKeys.postpaid.tr();
-      paymentIcon = FontAwesomeIcons.receipt;
     } else {
       paymentText = LocaleKeys.transfer.tr();
       paymentIcon = FontAwesomeIcons.peopleArrows;
@@ -277,10 +271,10 @@ class _OrderDetailsState extends State<OrderDetails> {
     Size size = MediaQuery.of(context).size;
     double scWidth = size.width;
     double scHeight = size.height;
-    BranchModel? branch = model.branchModel;
+    AddressModel? branch = model.address;
 
-    String? branchName = branch!.branchName;
-    String? branchAddress = branch.address;
+    String? branchName ='';// branch!.branchName;
+    String? branchAddress = branch!.address;
     String? branchNo = branch.phoneNumber;
     num? branchLong = branch.longitude;
     num? branchLat = branch.latitude;
@@ -317,20 +311,20 @@ class _OrderDetailsState extends State<OrderDetails> {
                   children: [
                     Container(
                       // margin: EdgeInsets.symmetric(horizontal: 30),
-                      child: Text(LocaleKeys.map_location.tr() + ' :', 
-                      style: TextStyle(
-                        fontSize: 15.5,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: 'Almarai',
-                        color: kDarkBlue
-                      ),),
+                      child: Text(LocaleKeys.map_location.tr() + ' :',
+                        style: TextStyle(
+                            fontSize: 15.5,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: 'Almarai',
+                            color: kDarkBlue
+                        ),),
                     ),
                     Container(
                       width: scWidth * 0.13,
                       height: scHeight * 0.06,
                       decoration: BoxDecoration(
-                        color: kLogoGreen,
-                        borderRadius: BorderRadius.circular(50)
+                          color: kLogoGreen,
+                          borderRadius: BorderRadius.circular(50)
                       ),
                       child: TextButton(
                         child: Icon(FontAwesomeIcons.mapMarkedAlt, color: kWhite,),
@@ -394,7 +388,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                           decoration: BoxDecoration(
                               image: DecorationImage(
                                   image:
-                                    AssetImage('assets/images/ic_fruit_green.png'))),
+                                  AssetImage('assets/images/ic_fruit_green.png'))),
                         ),
                       ),
                       Column(
@@ -566,10 +560,10 @@ class _OrderDetailsState extends State<OrderDetails> {
                             child: Image.asset('assets/images/ic_file_pdf.png')),
                         onTap: () {
                           print(widget.orderModel.invoicePDFPath!);
-                          print(widget.orderModel.hasOrderCreatedFromDashboard!);
+                          print(widget.orderModel.orderCreatedFromDashboard!);
                           OrderHelper.displayInvoice(
                               widget.orderModel.invoicePDFPath!,
-                              widget.orderModel.hasOrderCreatedFromDashboard!);
+                              widget.orderModel.orderCreatedFromDashboard!);
                         },
                       ),
                     ],
@@ -578,7 +572,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                 Container(
                   child: model.orderStatus == onDelivery ? greenBtn(LocaleKeys.delivery_completed.tr(), EdgeInsets.symmetric(horizontal: 30, vertical: 15), () {
                     print(model.orderCheckCode);
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => OrderDelivered(model: model,)));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => OrderDeliveredIndividual(model: model,)));
                   }) : SizedBox(height: 30,),
                 ),
               ],
@@ -614,24 +608,24 @@ class _OrderDetailsState extends State<OrderDetails> {
         children: [
           Container(
             margin: EdgeInsets.symmetric(horizontal: 40),
-            child: Text(title, 
+            child: Text(title,
               style: TextStyle(
-                fontSize: 15.4,
-                fontWeight: FontWeight.w600,
-                fontFamily: 'Almarai',
-                color: kDarkBlue
+                  fontSize: 15.4,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: 'Almarai',
+                  color: kDarkBlue
               ),
             ),
           ),
           SizedBox(height: 10,),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 45),
-            child: Text(info, 
+            child: Text(info,
               style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                fontFamily: 'Almarai',
-                color: kLogoGreen
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  fontFamily: 'Almarai',
+                  color: kLogoGreen
               ),
             ),
           ),

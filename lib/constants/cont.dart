@@ -24,7 +24,8 @@ const credit = 'R';
 const visa = 'V';
 const stcPay = 'S';
 const applePay = 'A';
-
+const company='Company';
+const individual = 'Individual';
 class Consts{
  static String name = '';
  static String email = '';

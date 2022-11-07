@@ -12,11 +12,14 @@ import 'package:alkhudhrah_app/ui/companies/order_details.dart';
 import 'package:alkhudhrah_app/constants/colors.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-Widget orderTileDesign(context, OrderHeader model, scWidth, scHeight) {
+import '../../network/models/orders/OrderHeaderIndividual.dart';
+import '../individuals/order_details_individual.dart';
+
+Widget orderTileDesign(context, userType,dynamic model, scWidth, scHeight) {
   String orderStatus = '';
   String orderDate = '';
 
-  Color statusColor ;
+  Color statusColor;
   if (model.orderStatus == underProcess) {
     orderDate = model.orderInitializedDate!;
     orderStatus = LocaleKeys.under_process.tr();
@@ -25,12 +28,10 @@ Widget orderTileDesign(context, OrderHeader model, scWidth, scHeight) {
     orderDate = model.onDeliveryStatusDate!;
     orderStatus = LocaleKeys.on_delivery.tr();
     statusColor = kDarkBlue;
-
   } else {
     orderDate = model.deliveredStatusDate!;
     orderStatus = LocaleKeys.completed_order.tr();
     statusColor = kLogoGreen;
-
   }
 
   return ListTile(
@@ -39,7 +40,7 @@ Widget orderTileDesign(context, OrderHeader model, scWidth, scHeight) {
         onTap: () {
           // navigate to order details page
           // print(model.orderStatus);
-          directToOrderDetails(context, model: model);
+         userType == company? directToOrderDetails(context, model: model):directToIndividualOrderDetails(context, model: model);
         },
         child: Stack(
           children: [
@@ -49,7 +50,7 @@ Widget orderTileDesign(context, OrderHeader model, scWidth, scHeight) {
                 child: Container(
                   width: 6,
                   height: scHeight * 0.12,
-                  color:kLogoGreen,
+                  color: kLogoGreen,
                 )),
             //background container
             Container(
@@ -135,11 +136,8 @@ Widget orderTileDesign(context, OrderHeader model, scWidth, scHeight) {
   );
 }
 
-
 void directToOrderDetails(context, {model, orderId}) async {
   String language = await PreferencesHelper.getSelectedLanguage;
-
-  //todo: test
   if (model == null) {
     Map<String, dynamic> headerMap = await getHeaderMap();
 
@@ -152,48 +150,52 @@ void directToOrderDetails(context, {model, orderId}) async {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => OrderDetails(
-                orderModel: responseModel,
-                language: language,
-              )));
+              builder: (context) {
 
+                return  OrderDetails(
+                    orderModel: responseModel,
+                    language: language,
+                  );
+              }));
     }
   } else
-  Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => OrderDetails(
-                orderModel: model,
-                language: language,
-              )));
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => OrderDetails(
+                  orderModel: model,
+                  language: language,
+                )));
 }
 
-
-void navigatorKeyToOrderDetails(navigatorKey, {model, orderId}) async {
+void directToIndividualOrderDetails(context,{model, orderId}) async {
   String language = await PreferencesHelper.getSelectedLanguage;
-
   if (model == null) {
     Map<String, dynamic> headerMap = await getHeaderMap();
 
     OrderRepository orderRepository = OrderRepository(headerMap);
 
-    ApiResponse apiResponse = await orderRepository.getOrderById(orderId);
+    ApiResponse apiResponse = await orderRepository.getIndividualOrderById(orderId);
 
     if (apiResponse.apiStatus.code == ApiResponseType.OK.code) {
-      OrderHeader? responseModel = OrderHeader.fromJson(apiResponse.result);
-      navigatorKey.currentState!.push(MaterialPageRoute(builder: ((context) => 
-      OrderDetails(
-                orderModel: responseModel,
-                language: language,
-              ))));
+      OrderHeaderIndividual? responseModel = OrderHeaderIndividual.fromJson(apiResponse.result);
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) {
 
+                return  IndividualOrderDetails(
+                  orderModel: responseModel,
+                  language: language,
+                );
+              }));
     }
   } else
-      navigatorKey.currentState!.push(
-      MaterialPageRoute(
-          builder: (context) => OrderDetails(
-                orderModel: model,
-                language: language,
-              )));
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => IndividualOrderDetails(
+              orderModel: model,
+              language: language,
+            )));
 }
-

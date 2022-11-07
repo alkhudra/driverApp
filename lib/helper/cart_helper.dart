@@ -71,10 +71,21 @@ Widget cartTotalDesign(num total) {
 
 String currency = LocaleKeys.sar.tr();
 
+
 String getTextWithCurrency(num value) {
-  return ' $value ' + currency;
+  String num = convertTo2Decimals(value);
+  String numString =
+  '$num'.length > 6 ? '${num.toString().substring(0, 6)} ...' : '$num';
+  return ' $numString ' + LocaleKeys.sar.tr();
 }
 
 String getTextWithPercentage(num value) {
   return ' $value %';
+}
+
+
+//---------------
+convertTo2Decimals(num number){
+  return number.toStringAsFixed(2);
+
 }
