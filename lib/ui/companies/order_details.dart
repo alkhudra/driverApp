@@ -260,7 +260,6 @@ class _OrderDetailsState extends State<OrderDetails> {
     } else if (model.paymentType == stcPay) {
       print(model.paymentType);
       paymentText = LocaleKeys.stc_pay.tr();
-      //todo:edit stc pay icon
       paymentIcon = FontAwesomeIcons.gratipay;
     } else if (model.paymentType == credit) {
       print(model.paymentType);

@@ -11,6 +11,7 @@ import Firebase
       FirebaseApp.configure()
       Messaging.messaging().delegate = self
     GeneratedPluginRegistrant.register(with: self)
+       GMSServices.provideAPIKey("AIzaSyBKX5UD-YuLcLHz5eVTQLGmz_TWTyTUnak")
          if #available(iOS 10.0, *) {
              // For iOS 10 display notification (sent via APNS)
              UNUserNotificationCenter.current().delegate = self

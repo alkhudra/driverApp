@@ -126,6 +126,7 @@ class _OrderDeliveredState extends State<OrderDelivered> {
                   ],
                 ),
                 SizedBox(height: scHeight * 0.2,),
+                //todo: dont show if paid true
                 Directionality(
                   //To always display numbers from left to right
                   textDirection: ui.TextDirection.ltr,

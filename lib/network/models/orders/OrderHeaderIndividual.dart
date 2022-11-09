@@ -33,35 +33,40 @@ import 'OrderItemIndividaul.dart';
 
 class OrderHeaderIndividual {
   OrderHeaderIndividual({
-      int? id, 
-      String? userId, 
-      int? addressId, 
-      AddressModel? address,
-      String? orderStatus, 
-      String? orderCheckCode, 
-      int? invoiceNumber, 
-      String? orderInitializedDate, 
-      String? onDeliveryStatusDate,
+    int? id,
+    String? userId,
+    int? addressId,
+    String? userName,
+    String? arUserName,
+    AddressModel? address,
+    String? orderStatus,
+    String? orderCheckCode,
+    int? invoiceNumber,
+    String? orderInitializedDate,
+    String? onDeliveryStatusDate,
     String? deliveredStatusDate,
-      String? driverId, 
-      DriverUser? driverUser,
-      String? paymentType, 
-      String? paymentTypeAr, 
-      bool? hasPaid,
+    String? driverId,
+    DriverUser? driverUser,
+    String? paymentType,
+    String? paymentTypeAr,
+    bool? hasPaid,
     num? totalOrderPrice,
     num? totalNetOrderPrice,
     num? totalOrderVAT15,
-      bool? hasDiscount, 
-      bool? hasCoupon,
+    bool? hasDiscount,
+    bool? hasCoupon,
     num? discountPercentage,
-      num? couponPercentage,
+    num? couponPercentage,
     num? totalDiscount,
-      String? invoicePDFPath, 
-      bool? orderCreatedFromDashboard, 
-      List<OrderItemIndividaul>? individualOrderItems,}){
+    String? invoicePDFPath,
+    bool? orderCreatedFromDashboard,
+    List<OrderItemIndividaul>? individualOrderItems,
+  }) {
     _id = id;
     _userId = userId;
     _addressId = addressId;
+    _userName = userName;
+    _arUserName = userName;
     _address = address;
     _orderStatus = orderStatus;
     _orderCheckCode = orderCheckCode;
@@ -85,21 +90,26 @@ class OrderHeaderIndividual {
     _invoicePDFPath = invoicePDFPath;
     _orderCreatedFromDashboard = orderCreatedFromDashboard;
     _individualOrderItems = individualOrderItems;
-}
+  }
 
   OrderHeaderIndividual.fromJson(dynamic json) {
     _id = json['id'];
     _userId = json['userId'];
     _addressId = json['addressId'];
-    _address = json['address'] != null ? AddressModel.fromJson(json['address']) : null;
+    _address =
+        json['address'] != null ? AddressModel.fromJson(json['address']) : null;
     _orderStatus = json['orderStatus'];
     _orderCheckCode = json['orderCheckCode'];
     _invoiceNumber = json['invoiceNumber'];
+    _userName = json['userName'];
+    _arUserName = json['arUserName'];
     _orderInitializedDate = json['orderInitializedDate'];
     _onDeliveryStatusDate = json['onDeliveryStatusDate'];
     _deliveredStatusDate = json['deliveredStatusDate'];
     _driverId = json['driverId'];
-    _driverUser = json['driverUser'] != null ? DriverUser.fromJson(json['driverUser']) : null;
+    _driverUser = json['driverUser'] != null
+        ? DriverUser.fromJson(json['driverUser'])
+        : null;
     _paymentType = json['paymentType'];
     _paymentTypeAr = json['paymentTypeAr'];
     _hasPaid = json['hasPaid'];
@@ -123,6 +133,8 @@ class OrderHeaderIndividual {
   int? _id;
   String? _userId;
   int? _addressId;
+  String? _userName;
+  String? _arUserName;
   AddressModel? _address;
   String? _orderStatus;
   String? _orderCheckCode;
@@ -149,6 +161,9 @@ class OrderHeaderIndividual {
 
   int? get id => _id;
   String? get userId => _userId;
+  String? get userName => _userName;
+  String? get arUserName => _arUserName;
+
   int? get addressId => _addressId;
   AddressModel? get address => _address;
   String? get orderStatus => _orderStatus;
@@ -178,6 +193,9 @@ class OrderHeaderIndividual {
     final map = <String, dynamic>{};
     map['id'] = _id;
     map['userId'] = _userId;
+    map['userName'] = _userName;
+    map['arUserName'] = _arUserName;
+
     map['addressId'] = _addressId;
     if (_address != null) {
       map['address'] = _address?.toJson();
@@ -204,9 +222,9 @@ class OrderHeaderIndividual {
     map['invoicePDFPath'] = _invoicePDFPath;
     map['orderCreatedFromDashboard'] = _orderCreatedFromDashboard;
     if (_individualOrderItems != null) {
-      map['individualOrderItems'] = _individualOrderItems?.map((v) => v.toJson()).toList();
+      map['individualOrderItems'] =
+          _individualOrderItems?.map((v) => v.toJson()).toList();
     }
     return map;
   }
-
 }
