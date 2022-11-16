@@ -60,9 +60,12 @@ class OrderHeaderIndividual {
     num? totalDiscount,
     String? invoicePDFPath,
     bool? orderCreatedFromDashboard,
+    num? deliveryCost,
     List<OrderItemIndividaul>? individualOrderItems,
   }) {
     _id = id;
+    _deliveryCost = deliveryCost;
+
     _userId = userId;
     _addressId = addressId;
     _userName = userName;
@@ -96,6 +99,8 @@ class OrderHeaderIndividual {
     _id = json['id'];
     _userId = json['userId'];
     _addressId = json['addressId'];
+    _deliveryCost = json['deliveryCost'];
+
     _address =
         json['address'] != null ? AddressModel.fromJson(json['address']) : null;
     _orderStatus = json['orderStatus'];
@@ -138,6 +143,8 @@ class OrderHeaderIndividual {
   AddressModel? _address;
   String? _orderStatus;
   String? _orderCheckCode;
+  num? _deliveryCost;
+
   int? _invoiceNumber;
   String? _orderInitializedDate;
   String? _onDeliveryStatusDate;
@@ -163,7 +170,7 @@ class OrderHeaderIndividual {
   String? get userId => _userId;
   String? get userName => _userName;
   String? get arUserName => _arUserName;
-
+  num? get deliveryCost => _deliveryCost;
   int? get addressId => _addressId;
   AddressModel? get address => _address;
   String? get orderStatus => _orderStatus;
@@ -195,6 +202,7 @@ class OrderHeaderIndividual {
     map['userId'] = _userId;
     map['userName'] = _userName;
     map['arUserName'] = _arUserName;
+    map['deliveryCost'] = _deliveryCost;
 
     map['addressId'] = _addressId;
     if (_address != null) {

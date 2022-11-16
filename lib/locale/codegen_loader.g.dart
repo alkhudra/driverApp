@@ -129,11 +129,17 @@ class CodegenLoader extends AssetLoader {
   "order_completed": "Order Completed",
   "completed_thanks": "Thank You For Completing Your Delivery!",
   "no_notification": "There are no Notifications",
+    "free": "Free",
+    "delivery_fees": "Delivery Fees",
+
     "my_setting": "Setting",
 
   };
 static const Map<String,dynamic> ar = {
   "SIGN IN": "تسجيل الدخول",
+  "delivery_fees": "رسوم التوصيل ",
+  "free": "مجانا",
+
   "Please begin number with 05": "الرجاء بدء رقم الجوال بـ 05",
   "Please enter your phone number" : "الرجاء إدخال رقم الجوال",
   "Please enter 9 digit number" : "الرجاء إدخال رقم مكون من ٩ خانات",

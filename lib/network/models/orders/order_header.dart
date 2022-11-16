@@ -1,4 +1,3 @@
-
 import 'package:alkhudhrah_app/network/models/orders/branch_model.dart';
 import 'package:alkhudhrah_app/network/models/driver_user.dart';
 import 'package:alkhudhrah_app/network/models/orders/order_items.dart';
@@ -7,32 +6,33 @@ import 'branch_model.dart';
 
 class OrderHeader {
   OrderHeader({
-      num? id, 
-      String? companyId, 
-      String? companyName, 
-      String? branchId, 
-      BranchModel? branchModel,
-      String? warehouseCode, 
-      String? orderStatus, 
-      String? orderCheckCode, 
-      int? invoiceNumber, 
-      String? orderInitializedDate, 
-      String? onDeliveryStatusDate, 
-      String? deliveredStatusDate, 
-      String? driverId, 
-      DriverUser? driverUser, 
-      String? paymentType, 
-      bool? hasPaid, 
-      String? paymentDeadLine, 
-      num? totalOrderPrice, 
-      num? totalNetOrderPrice, 
-      num? totalOrderVAT15, 
-      bool? hasDiscount, 
-      num? discountPercentage, 
-      num? totalDiscount, 
-      String? invoicePDFPath, 
-      bool? hasOrderCreatedFromDashboard,
-      List<OrderItems>? orderItems,}){
+    num? id,
+    String? companyId,
+    String? companyName,
+    String? branchId,
+    BranchModel? branchModel,
+    String? warehouseCode,
+    String? orderStatus,
+    String? orderCheckCode,
+    int? invoiceNumber,
+    String? orderInitializedDate,
+    String? onDeliveryStatusDate,
+    String? deliveredStatusDate,
+    String? driverId,
+    DriverUser? driverUser,
+    String? paymentType,
+    bool? hasPaid,
+    String? paymentDeadLine,
+    num? totalOrderPrice,
+    num? totalNetOrderPrice,
+    num? totalOrderVAT15,
+    bool? hasDiscount,
+    num? discountPercentage,
+    num? totalDiscount,
+    String? invoicePDFPath,
+    bool? hasOrderCreatedFromDashboard,
+    List<OrderItems>? orderItems,
+  }) {
     _id = id;
     _companyId = companyId;
     _companyName = companyName;
@@ -48,6 +48,7 @@ class OrderHeader {
     _driverId = driverId;
     _driverUser = driverUser;
     _paymentType = paymentType;
+
     _hasPaid = hasPaid;
     _paymentDeadLine = paymentDeadLine;
     _totalOrderPrice = totalOrderPrice;
@@ -59,7 +60,7 @@ class OrderHeader {
     _invoicePDFPath = invoicePDFPath;
     _hasOrderCreatedFromDashboard = hasOrderCreatedFromDashboard;
     _orderItems = orderItems;
-}
+  }
 
   OrderHeader.fromJson(dynamic json) {
     _id = json['id'];
@@ -67,7 +68,8 @@ class OrderHeader {
     _companyName = json['companyName'];
     _branchId = json['branchId'];
     //branch mapping correct?
-    _branchModel = json['branch'] != null ? BranchModel.fromJson(json['branch']) : null;
+    _branchModel =
+        json['branch'] != null ? BranchModel.fromJson(json['branch']) : null;
     _warehouseCode = json['warehouseCode'];
     _orderStatus = json['orderStatus'];
     _orderCheckCode = json['orderCheckCode'];
@@ -76,7 +78,9 @@ class OrderHeader {
     _onDeliveryStatusDate = json['onDeliveryStatusDate'];
     _deliveredStatusDate = json['deliveredStatusDate'];
     _driverId = json['driverId'];
-    _driverUser = json['driverUser'] != null ? DriverUser.fromJson(json['driverUser']) : null;
+    _driverUser = json['driverUser'] != null
+        ? DriverUser.fromJson(json['driverUser'])
+        : null;
     _paymentType = json['paymentType'];
     _hasPaid = json['hasPaid'];
     _paymentDeadLine = json['paymentDeadLine'];
@@ -87,6 +91,7 @@ class OrderHeader {
     _discountPercentage = json['discountPercentage'];
     _totalDiscount = json['totalDiscount'];
     _invoicePDFPath = json['invoicePDFPath'];
+
     _hasOrderCreatedFromDashboard = json['orderCreatedFromDashboard'];
     if (json['orderItems'] != null) {
       _orderItems = [];
@@ -119,8 +124,10 @@ class OrderHeader {
   num? _discountPercentage;
   num? _totalDiscount;
   String? _invoicePDFPath;
+
   bool? _hasOrderCreatedFromDashboard;
   List<OrderItems>? _orderItems;
+
 
   num? get id => _id;
   String? get companyId => _companyId;
@@ -169,6 +176,7 @@ class OrderHeader {
     if (_driverUser != null) {
       map['driverUser'] = _driverUser?.toJson();
     }
+
     map['paymentType'] = _paymentType;
     map['hasPaid'] = _hasPaid;
     map['paymentDeadLine'] = _paymentDeadLine;
@@ -185,13 +193,9 @@ class OrderHeader {
     }
     return map;
   }
-  
+
   @override
   String toString() {
     return 'OrderHeader{_invoiceNumber: $_invoiceNumber}';
   }
-
 }
-
-
-

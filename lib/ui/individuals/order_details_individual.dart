@@ -219,12 +219,13 @@ class _IndividualOrderDetailsState extends State<IndividualOrderDetails> {
 //---------------------------------
 
   pageContent(OrderHeaderIndividual model) {
-    num? priceAfterDiscount = model.totalDiscount;
-    num? subtotal = model.totalOrderPrice;
-    num? vat = model.totalOrderVAT15;
-    num? total = model.totalNetOrderPrice;
-    num? discount = model.discountPercentage;
-    bool? hasDiscount = model.hasDiscount;
+    num priceAfterDiscount = model.totalDiscount ?? 0;
+    num subtotal = model.totalOrderPrice?? 0;
+    num vat = model.totalOrderVAT15?? 0;
+    num total = model.totalNetOrderPrice?? 0;
+    num discount = model.discountPercentage?? 0;
+    bool hasDiscount = model.hasDiscount?? false;
+    num deliveryFees = model.deliveryCost ?? 0;
 
     //------ date
     String orderDate = '';
@@ -523,18 +524,23 @@ class _IndividualOrderDetailsState extends State<IndividualOrderDetails> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       cartDetailsItem(LocaleKeys.subtotal.tr(),
-                          getTextWithCurrency(subtotal!)),
+                          getTextWithCurrency(subtotal)),
                       cartDetailsItem(
-                          LocaleKeys.vat.tr(), getTextWithCurrency(vat!)),
-                      if (hasDiscount!)
+                          LocaleKeys.vat.tr(), getTextWithCurrency(vat)),
+                      cartDetailsItem(
+                          LocaleKeys.delivery_fees.tr(),
+                          deliveryFees == 0
+                              ? LocaleKeys.free.tr()
+                              : getTextWithCurrency(deliveryFees)),
+                      if (hasDiscount)
                         Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             cartDetailsItem(LocaleKeys.discount_percentage.tr(),
-                                getTextWithPercentage(discount!)),
+                                getTextWithPercentage(discount)),
                             cartDetailsItem(LocaleKeys.discount.tr(),
-                                getTextWithCurrency(priceAfterDiscount!)),
+                                getTextWithCurrency(priceAfterDiscount)),
                           ],
                         )
                     ],
@@ -549,7 +555,7 @@ class _IndividualOrderDetailsState extends State<IndividualOrderDetails> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       //total
-                      cartTotalDesign(total!),
+                      cartTotalDesign(total),
                       //Receipt download button
                       InkWell(
                         child: Container(
