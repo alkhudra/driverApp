@@ -19,6 +19,24 @@
 	<string>مندوبي الخضراء</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
+			<key>LSApplicationQueriesSchemes</key>
+        	<array>
+        		<string>https</string>
+        		<string>http</string>
+        		<string>tel</string>
+        		<string>mailto</string>
+        	</array>
+        		<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+            	<string>This app needs access to location when open and in the background.</string>
+            	<key>NSLocationAlwaysUsageDescription</key>
+            	<string>This app needs access to location when in the background.</string>
+            	<key>NSLocationWhenInUseUsageDescription</key>
+            	<string>This app needs access to location when open.</string>
+            	<key>UIBackgroundModes</key>
+            	<array>
+            		<string>fetch</string>
+            		<string>remote-notification</string>
+            	</array>
 	<key>CFBundleShortVersionString</key>
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>

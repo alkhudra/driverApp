@@ -111,12 +111,12 @@ class _HomescreenState extends State<Homescreen> {
                           tabs: [
 
                             Tab(
-                                child: Text('Hospital',
+                                child: Text(LocaleKeys.company.tr(),
                                     style: TextStyle(
                                         //color: CustomColors.primaryWhiteColor,
                                         fontSize: 20))),
                             Tab(
-                                child: Text('Doctor',
+                                child: Text(LocaleKeys.individual.tr(),
                                     style: TextStyle(
                                       //  color: CustomColors.primaryWhiteColor,
                                         fontSize: 20))),

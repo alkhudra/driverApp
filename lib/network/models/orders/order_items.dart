@@ -2,7 +2,6 @@ import 'package:alkhudhrah_app/network/models/product/product_model.dart';
 
 class OrderItems {
   OrderItems({
-    //TODO: add discountValueOfItem?
     String? id,
     ProductsModel? product,
     String? userId,

@@ -30,10 +30,7 @@ class IndividualOrderDetails extends StatefulWidget {
 }
 
 class _IndividualOrderDetailsState extends State<IndividualOrderDetails> {
-  @override
-  void initState() {
-    super.initState();
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +41,8 @@ class _IndividualOrderDetailsState extends State<IndividualOrderDetails> {
     DriverUser driverUser = DriverUser();
     if (widget.orderModel.driverUser != null)
       driverUser = widget.orderModel.driverUser!;
-    AddressModel? branch = model.address;
-    String? branchNo = branch!.phoneNumber;
+    AddressModel? addressModel = model.address;
+    String? addressPhone = addressModel!.phoneNumber ??" ";
 
 
     return Scaffold(
@@ -99,7 +96,7 @@ class _IndividualOrderDetailsState extends State<IndividualOrderDetails> {
                           //client name
                           Container(
                             child: Text(
-                      '       model.companyName!'
+                            widget.language == 'ar'? model.arUserName ?? ' ' : model.userName ?? ''
                                   ,
                               overflow: TextOverflow.clip,
                               style: TextStyle(
@@ -114,8 +111,8 @@ class _IndividualOrderDetailsState extends State<IndividualOrderDetails> {
                           //client number
                           Container(
                             child: Text(
-                              branchNo != null
-                                  ? branchNo
+                              addressPhone != null
+                                  ? addressPhone
                                   : '',
                               style: TextStyle(
                                   color: kDarkGray
@@ -243,6 +240,7 @@ class _IndividualOrderDetailsState extends State<IndividualOrderDetails> {
     String paymentText = '';
     IconData paymentIcon = FontAwesomeIcons.moneyBillWave;
 
+    //todo: check after change api
     if (model.paymentType == visa) {
       print(model.paymentType);
       paymentText = LocaleKeys.credit_card.tr();

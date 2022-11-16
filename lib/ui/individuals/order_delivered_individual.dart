@@ -137,7 +137,7 @@ class _OrderDeliveredIndividualState extends State<OrderDeliveredIndividual> {
                   ),
                 ),
                 SizedBox(height: scHeight * 0.06,),
-                if(hasPaid == false)
+                if(hasPaid == false)//todo: dont show if paid true
                 Container(
                   // margin: EdgeInsets.symmetric(horizontal: 30),
                   child: Row(

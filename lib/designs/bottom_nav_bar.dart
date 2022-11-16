@@ -3,7 +3,7 @@
 // import 'package:alkhudhrah_app/ui/home.dart';
 // import 'package:alkhudhrah_app/ui/my_orders.dart';
 // import 'package:alkhudhrah_app/ui/notifications.dart';
-// import 'package:alkhudhrah_app/ui/wallet.dart';
+// import 'package:alkhudhrah_app/ui/setting_page.dart';
 // import 'package:flutter/material.dart';
 // import 'package:google_nav_bar/google_nav_bar.dart';
 // import 'package:easy_localization/easy_localization.dart';

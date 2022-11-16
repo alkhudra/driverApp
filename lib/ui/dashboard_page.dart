@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:alkhudhrah_app/locale/locale_keys.g.dart';
 import 'package:alkhudhrah_app/ui/notifications.dart';
-import 'package:alkhudhrah_app/ui/wallet.dart';
+import 'package:alkhudhrah_app/ui/setting_page.dart';
 import 'package:alkhudhrah_app/ui/home.dart';
 import 'package:alkhudhrah_app/constants/colors.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
