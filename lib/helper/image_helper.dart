@@ -9,12 +9,12 @@ class ImageHelper {
   static productImage(String? imageUrl) {
     return imageUrl != null
         ? Image.memory(
-      ImageHelper.convertBase64ToImage(imageUrl),
-      errorBuilder: (BuildContext context, Object exception,
-          StackTrace? stackTrace) {
-        return Image.asset('assets/images/green_fruit.png');
-      },
-    )
+            ImageHelper.convertBase64ToImage(imageUrl),
+            errorBuilder: (BuildContext context, Object exception,
+                StackTrace? stackTrace) {
+              return Image.asset('assets/images/green_fruit.png');
+            },
+          )
         : Image.asset('assets/images/green_fruit.png');
   }
 
@@ -23,41 +23,39 @@ class ImageHelper {
   static categoryImage(String? imageUrl) {
     return imageUrl != null
         ? WidgetMask(
-      blendMode: BlendMode.srcATop,
-      childSaveLayer: true,
-      mask: Image.memory(
-        ImageHelper.convertBase64ToImage(imageUrl),
-        fit: BoxFit.cover,
-        errorBuilder: (BuildContext context, Object exception,
-            StackTrace? stackTrace) {
-          return Image.asset('assets/images/green_fruit.png');
-        },
-      ),
-      child: Image.asset(
-        'assets/images/product_mask.png',
-        width: 350,
-      ),
-    )
+            blendMode: BlendMode.srcATop,
+            childSaveLayer: true,
+            mask: Image.memory(
+              ImageHelper.convertBase64ToImage(imageUrl),
+              fit: BoxFit.cover,
+              errorBuilder: (BuildContext context, Object exception,
+                  StackTrace? stackTrace) {
+                return Image.asset('assets/images/green_fruit.png');
+              },
+            ),
+            child: Image.asset(
+              'assets/images/product_mask.png',
+              width: 350,
+            ),
+          )
         : Image.asset('assets/images/green_fruit.png');
   }
 
 //-----------------------
 
-  static driverImage(context, String? imageUrl) {
-    return imageUrl != null
-        ? SizedBox(
-      width: 70,
-      height: 70,
-      child: CircleAvatar(
-        backgroundImage: MemoryImage(
-          ImageHelper.convertBase64ToImage(imageUrl),
-          //     errorBuilder: (BuildContext context, Object exception,
-          //   StackTrace? stackTrace) {
-          // return  driverIcon();
-          //     },
-        ),
-      ),
-    )
+  static driverImage(context, String? image) {
+    return image != null
+        ? CircleAvatar(
+            backgroundColor: kWhite,
+            radius: 30,
+            child: Image.memory(
+              ImageHelper.convertBase64ToImage(image),
+              errorBuilder: (BuildContext context, Object exception,
+                  StackTrace? stackTrace) {
+                return driverIcon();
+              },
+            ),
+          )
         : driverIcon();
   }
 
@@ -77,7 +75,7 @@ class ImageHelper {
 
   static convertBase64ToImage(String img64) {
     final UriData? data = Uri.parse(img64).data;
-    Uint8List myImage = data!=null ? data.contentAsBytes() :Uint8List(0);
+    Uint8List myImage = data != null ? data.contentAsBytes() : Uint8List(0);
     return myImage;
   }
 }

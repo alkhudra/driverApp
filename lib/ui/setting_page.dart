@@ -7,6 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import '../constants/cont.dart';
+import '../helper/image_helper.dart';
 import '../helper/route_helper.dart';
 
 import 'contact_us.dart';
@@ -16,34 +17,32 @@ import 'notifications.dart';
 import 'order_history.dart';
 
 class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({ Key? key }) : super(key: key);
+  const SettingsScreen({Key? key}) : super(key: key);
 
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  String name = Consts.name, email = Consts.email, image = Consts.image;
 
-  String name = Consts.name, email = Consts.email, image ='http://alkhadraunited.com' +  Consts.image;
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kBackgroundColor,
-      appBar: bnbAppBar(context, LocaleKeys.wallet.tr()),
+      appBar: bnbAppBar(context, LocaleKeys.my_setting.tr()),
       // endDrawer: drawerDesign(context, name, email, image),
       body: SafeArea(
         child: ListView(
           children: [
             SizedBox(
               height: MediaQuery.of(context).size.height / 5,
-
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  CircleAvatar(
-
-                    child: Image.network(image,),radius: 20,
+                 ImageHelper.driverImage(context, image),
+                  SizedBox(
+                    height: 10,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 5, bottom: 5),
@@ -57,7 +56,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only( bottom: 5),
+                    padding: const EdgeInsets.only(bottom: 5),
                     child: Text(
                       email ?? ' ',
                       style: TextStyle(
@@ -73,7 +72,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
             listDivider(),
 
-
             ////////////////////////////
 
             listTileDesign(
@@ -82,10 +80,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 iconColor: order,
                 iconBG: orderBG,
                 onTap: () {
-
-                    Navigator.push(
-                        context, MaterialPageRoute(builder: (context) => OrderHistory()));
-
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => OrderHistory()));
                 }),
             listDivider(),
             ////////////////////////////
@@ -96,10 +92,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 iconColor: kCon,
                 iconBG: kConBG,
                 onTap: () {
-                  Navigator.push(context,
-                    MaterialPageRoute(
-                        builder: (context) => ContactUs()
-                    ),
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ContactUs()),
                   );
                 }),
 
@@ -109,12 +104,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 txt: LocaleKeys.languages.tr(),
                 icon: FontAwesomeIcons.globeAfrica,
                 iconColor: kLang,
-                iconBG:kLangBG,
+                iconBG: kLangBG,
                 onTap: () {
-                  Navigator.push(context,
-                    MaterialPageRoute(
-                        builder: (context) => LanguageSetting()
-                    ),
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LanguageSetting()),
                   );
                 }),
 
@@ -122,12 +116,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ////////////////////////////
 
             listTileDesign(
-                txt:  LocaleKeys.log_out.tr(),
+                txt: LocaleKeys.log_out.tr(),
                 icon: Icons.logout,
                 iconColor: kLogOut,
                 iconBG: kLogOutBG,
                 onTap: () {
-
                   logoutUser(context);
                 }),
 
@@ -158,14 +151,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   listTileDesign(
       {txt,
-        onTap,
-        icon,
-        iconColor,
-        iconBG,
-        Widget trailing = const Icon(
-          Icons.arrow_forward_ios_sharp,
-          size: 20,
-        )}) {
+      onTap,
+      icon,
+      iconColor,
+      iconBG,
+      Widget trailing = const Icon(
+        Icons.arrow_forward_ios_sharp,
+        size: 20,
+      )}) {
     return ListTile(
       trailing: trailing,
       leading: Container(
