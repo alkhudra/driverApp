@@ -23,142 +23,134 @@ import 'order_delivered_individual.dart';
 class IndividualOrderDetails extends StatefulWidget {
   final OrderHeaderIndividual orderModel;
   final String language;
-  const IndividualOrderDetails({Key? key,required this.orderModel,required this.language}) : super(key: key);
+  const IndividualOrderDetails(
+      {Key? key, required this.orderModel, required this.language})
+      : super(key: key);
 
   @override
   State<IndividualOrderDetails> createState() => _IndividualOrderDetailsState();
 }
 
 class _IndividualOrderDetailsState extends State<IndividualOrderDetails> {
-
-
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    double scHeight = size.height;
-
     OrderHeaderIndividual model = widget.orderModel;
-    DriverUser driverUser = DriverUser();
-    if (widget.orderModel.driverUser != null)
-      driverUser = widget.orderModel.driverUser!;
-    AddressModel? addressModel = model.address;
-    String? addressPhone = addressModel!.phoneNumber ??" ";
-
-
     return Scaffold(
       appBar: appBarDesign(context, LocaleKeys.order_details.tr()),
-      body: model.orderStatus == onDelivery
-          ? SlidingUpPanel(
-        body: pageContent(model),
-        minHeight: scHeight * 0.07,
-        maxHeight: 160,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(40),
-          topRight: Radius.circular(40),
-        ),
-        panel: Container(
-          height: MediaQuery.of(context).size.height * 0.14,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                children: [
-                  Container(
-                    padding:
-                    EdgeInsets.symmetric(horizontal: 40, vertical: 5),
-                    child: Text(
-                      LocaleKeys.contact_client.tr(),
-                      style: TextStyle(
-                          color:
-                          kLogoBrown.withOpacity(0.8),
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 25,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          //client name
-                          Container(
-                            child: Text(
-                            widget.language == 'ar'? model.arUserName ?? ' ' : model.userName ?? ''
-                                  ,
-                              overflow: TextOverflow.clip,
-                              style: TextStyle(
-                                  color: kDarkBlue,
-                                  fontSize: 17.5,
-                                  fontWeight: FontWeight.w700),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          //client number
-                          Container(
-                            child: Text(
-                              addressPhone != null
-                                  ? addressPhone
-                                  : '',
-                              style: TextStyle(
-                                  color: kDarkGray
-                                      .withOpacity(0.8),
-                                  fontSize: 15),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  //Call client button
-                  Container(
-                      width: 45,
-                      height: 45,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(35),
-                          color: kLogoGreen),
-                      child: TextButton(
-                        child: Icon(
-                          FontAwesomeIcons.phone,
-                          color: kWhite,
-                          size: 24,
-                        ),
-                        onPressed: () {
-                          directToPhoneCall(driverUser.phoneNumber != null
-                              ? driverUser.phoneNumber!
-                              : '');
-                        },
-                      ))
-                ],
-              ),
-            ],
-          ),
-        ),
-      )
-          : pageContent(model),
+      body:
+          // model.orderStatus == onDelivery
+          //     ? SlidingUpPanel(
+          //   body: pageContent(model),
+          //   minHeight: scHeight * 0.07,
+          //   maxHeight: 160,
+          //   borderRadius: BorderRadius.only(
+          //     topLeft: Radius.circular(40),
+          //     topRight: Radius.circular(40),
+          //   ),
+          //   panel: Container(
+          //     height: MediaQuery.of(context).size.height * 0.14,
+          //     child: Column(
+          //       mainAxisAlignment: MainAxisAlignment.start,
+          //       crossAxisAlignment: CrossAxisAlignment.start,
+          //       children: [
+          //         SizedBox(
+          //           height: 10,
+          //         ),
+          //         Row(
+          //           children: [
+          //             Container(
+          //               padding:
+          //               EdgeInsets.symmetric(horizontal: 40, vertical: 5),
+          //               child: Text(
+          //                 LocaleKeys.contact_client.tr(),
+          //                 style: TextStyle(
+          //                     color:
+          //                     kLogoBrown.withOpacity(0.8),
+          //                     fontWeight: FontWeight.w600,
+          //                     fontSize: 18),
+          //               ),
+          //             ),
+          //           ],
+          //         ),
+          //         SizedBox(
+          //           height: 25,
+          //         ),
+          //         Row(
+          //           mainAxisAlignment: MainAxisAlignment.spaceAround,
+          //           children: [
+          //             Row(
+          //               mainAxisAlignment: MainAxisAlignment.spaceAround,
+          //               children: [
+          //                 Column(
+          //                   crossAxisAlignment: CrossAxisAlignment.start,
+          //                   children: [
+          //                     //client name
+          //                     Container(
+          //                       child: Text(
+          //                       widget.language == 'ar'? model.arUserName ?? ' ' : model.userName ?? ''
+          //                             ,
+          //                         overflow: TextOverflow.clip,
+          //                         style: TextStyle(
+          //                             color: kDarkBlue,
+          //                             fontSize: 17.5,
+          //                             fontWeight: FontWeight.w700),
+          //                       ),
+          //                     ),
+          //                     SizedBox(
+          //                       height: 5,
+          //                     ),
+          //                     //client number
+          //                     Container(
+          //                       child: Text(
+          //                         addressPhone != null
+          //                             ? addressPhone
+          //                             : '',
+          //                         style: TextStyle(
+          //                             color: kDarkGray
+          //                                 .withOpacity(0.8),
+          //                             fontSize: 15),
+          //                       ),
+          //                     ),
+          //                   ],
+          //                 ),
+          //               ],
+          //             ),
+          //             //Call client button
+          //             Container(
+          //                 width: 45,
+          //                 height: 45,
+          //                 decoration: BoxDecoration(
+          //                     borderRadius: BorderRadius.circular(35),
+          //                     color: kLogoGreen),
+          //                 child: TextButton(
+          //                   child: Icon(
+          //                     FontAwesomeIcons.phone,
+          //                     color: kWhite,
+          //                     size: 24,
+          //                   ),
+          //                   onPressed: () {
+          //                     directToPhoneCall(driverUser.phoneNumber != null
+          //                         ? driverUser.phoneNumber!
+          //                         : '');
+          //                   },
+          //                 ))
+          //           ],
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // )
+          //     :
+          pageContent(model),
     );
   }
+
 //-------------list tile----------------
-  Widget orderItem( OrderItemIndividaul item) {
+  Widget orderItem(OrderItemIndividaul item) {
     num? productPrice = item.orderedProductPrice;
-    String name = widget.language ==
-        "ar"
+    String name = widget.language == "ar"
         ? item.arProductName ?? ''
-        : item.productName??'';
+        : item.productName ?? '';
     return ListTile(
       leading: ImageHelper.productImage(item.image),
       title: Column(
@@ -172,9 +164,7 @@ class _IndividualOrderDetailsState extends State<IndividualOrderDetails> {
               // '$name',
               name.length > 20 ? '${name.substring(0, 20)} ...' : name,
               maxLines: 1,
-              style: TextStyle(
-                  color: kLogoBrown,
-                  fontWeight: FontWeight.w600),
+              style: TextStyle(color: kLogoBrown, fontWeight: FontWeight.w600),
             ),
           ),
 
@@ -190,24 +180,21 @@ class _IndividualOrderDetailsState extends State<IndividualOrderDetails> {
                       getTextWithCurrency(productPrice!),
                       maxLines: 1,
                       style: TextStyle(
-                          color: kLogoGreen,
-                          fontWeight: FontWeight.w500),
+                          color: kLogoGreen, fontWeight: FontWeight.w500),
                     ),
                     Text(
                       ' ×  ${item.userProductQuantity}',
                       maxLines: 1,
                       style: TextStyle(
-                          color: kLogoGreen,
-                          fontWeight: FontWeight.w500),
+                          color: kLogoGreen, fontWeight: FontWeight.w500),
                     ),
                   ],
                 ),
                 Text(
                   getTextWithCurrency(item.totalProductPrice!),
                   maxLines: 1,
-                  style: TextStyle(
-                      color: kLogoGreen,
-                      fontWeight: FontWeight.w600),
+                  style:
+                      TextStyle(color: kLogoGreen, fontWeight: FontWeight.w600),
                 ),
               ],
             ),
@@ -220,11 +207,11 @@ class _IndividualOrderDetailsState extends State<IndividualOrderDetails> {
 
   pageContent(OrderHeaderIndividual model) {
     num priceAfterDiscount = model.totalDiscount ?? 0;
-    num subtotal = model.totalOrderPrice?? 0;
-    num vat = model.totalOrderVAT15?? 0;
-    num total = model.totalNetOrderPrice?? 0;
-    num discount = model.discountPercentage?? 0;
-    bool hasDiscount = model.hasDiscount?? false;
+    num subtotal = model.totalOrderPrice ?? 0;
+    num vat = model.totalOrderVAT15 ?? 0;
+    num total = model.totalNetOrderPrice ?? 0;
+    num discount = model.discountPercentage ?? 0;
+    bool hasDiscount = model.hasDiscount ?? false;
     num deliveryFees = model.deliveryCost ?? 0;
 
     //------ date
@@ -265,14 +252,13 @@ class _IndividualOrderDetailsState extends State<IndividualOrderDetails> {
     }
 
     //--------
-    int listItemsNumber = model.orderItems!=null  ? model.orderItems!.length: 0;
+    int listItemsNumber =
+        model.orderItems != null ? model.orderItems!.length : 0;
 
     Size size = MediaQuery.of(context).size;
     double scWidth = size.width;
     double scHeight = size.height;
     AddressModel? branch = model.address;
-
-    String? branchName ='';// branch!.branchName;
     String? branchAddress = branch!.address;
     String? branchNo = branch.phoneNumber;
     num? branchLong = branch.longitude;
@@ -293,16 +279,20 @@ class _IndividualOrderDetailsState extends State<IndividualOrderDetails> {
                 margin: EdgeInsets.symmetric(horizontal: 3),
                 child: Row(
                   children: [
-                    titleTextDesign(LocaleKeys.order_branch_info.tr()),
+                    titleTextDesign(LocaleKeys.user_info.tr()),
                   ],
                 ),
               ),
-              SizedBox(height: 20,),
-              branchInfoText(LocaleKeys.branch_name.tr(), branchName),
-              SizedBox(height: 15,),
-              branchInfoText(LocaleKeys.branch_address.tr(), branchAddress),
-              SizedBox(height: 15,),
-              branchInfoText(LocaleKeys.branch_phone.tr(), branchNo),
+              SizedBox(
+                height: 20,
+              ),
+              // branchInfoText(LocaleKeys.branch_name.tr(), branchName),
+              // SizedBox(height: 15,),
+              branchInfoText(LocaleKeys.user_address.tr(), branchAddress),
+              SizedBox(
+                height: 15,
+              ),
+              //     branchInfoText(LocaleKeys.user_phone.tr(), branchNo),
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 40),
                 child: Row(
@@ -310,26 +300,26 @@ class _IndividualOrderDetailsState extends State<IndividualOrderDetails> {
                   children: [
                     Container(
                       // margin: EdgeInsets.symmetric(horizontal: 30),
-                      child: Text(LocaleKeys.map_location.tr() + ' :',
+                      child: Text(
+                        LocaleKeys.user_map_location.tr() + ' :',
                         style: TextStyle(
                             fontSize: 15.5,
                             fontWeight: FontWeight.w600,
                             fontFamily: 'Almarai',
-                            color: kDarkBlue
-                        ),),
+                            color: kDarkBlue),
+                      ),
                     ),
                     Container(
                       width: scWidth * 0.13,
                       height: scHeight * 0.06,
                       decoration: BoxDecoration(
                           color: kLogoGreen,
-                          borderRadius: BorderRadius.circular(50)
-                      ),
+                          borderRadius: BorderRadius.circular(50)),
                       child: TextButton(
-                        child: Icon(FontAwesomeIcons.mapMarkedAlt, color: kWhite,),
-                        // Text('Location', style: TextStyle(
-                        //   color: kWhite
-                        // ),),
+                        child: Icon(
+                          FontAwesomeIcons.mapMarkedAlt,
+                          color: kWhite,
+                        ),
                         onPressed: () {
                           openMap(branchLat!, branchLong!);
                         },
@@ -337,6 +327,56 @@ class _IndividualOrderDetailsState extends State<IndividualOrderDetails> {
                     ),
                   ],
                 ),
+              ),
+
+              ListTile(
+                trailing: Container(
+                  width: scWidth * 0.13,
+                  height: scHeight * 0.06,
+                  decoration: BoxDecoration(
+                      color: kLogoGreen,
+                      borderRadius: BorderRadius.circular(50)),
+                  child: Icon(
+                    FontAwesomeIcons.phone,
+                    color: kWhite,
+                  ),
+                ),
+                title: Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 40),
+                        child: Text(
+                          LocaleKeys.user_phone.tr(),
+                          style: TextStyle(
+                              fontSize: 15.4,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'Almarai',
+                              color: kDarkBlue),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 45),
+                        child: Text(
+                          branchNo ?? ' ',
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: 'Almarai',
+                              color: kLogoGreen),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                onTap: () {
+                  directToPhoneCall(branchNo ?? ' ');
+                },
               ),
             ],
           ),
@@ -386,8 +426,8 @@ class _IndividualOrderDetailsState extends State<IndividualOrderDetails> {
                           height: scHeight * 0.17,
                           decoration: BoxDecoration(
                               image: DecorationImage(
-                                  image:
-                                  AssetImage('assets/images/ic_fruit_green.png'))),
+                                  image: AssetImage(
+                                      'assets/images/ic_fruit_green.png'))),
                         ),
                       ),
                       Column(
@@ -485,14 +525,12 @@ class _IndividualOrderDetailsState extends State<IndividualOrderDetails> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-
                       child: payButtonDesign(
                           context, paymentColor, paymentText, paymentIcon),
                       padding: EdgeInsets.symmetric(horizontal: 30),
                     ),
                   ],
                 ),
-
                 SizedBox(
                   height: 20,
                 ),
@@ -561,7 +599,8 @@ class _IndividualOrderDetailsState extends State<IndividualOrderDetails> {
                         child: Container(
                             width: 50,
                             height: 50,
-                            child: Image.asset('assets/images/ic_file_pdf.png')),
+                            child:
+                                Image.asset('assets/images/ic_file_pdf.png')),
                         onTap: () {
                           print(widget.orderModel.invoicePDFPath!);
                           print(widget.orderModel.orderCreatedFromDashboard!);
@@ -574,18 +613,33 @@ class _IndividualOrderDetailsState extends State<IndividualOrderDetails> {
                   ),
                 ),
                 Container(
-                  child: model.orderStatus == onDelivery ? greenBtn(LocaleKeys.delivery_completed.tr(), EdgeInsets.symmetric(horizontal: 30, vertical: 15), () {
-                    print(model.orderCheckCode);
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => OrderDeliveredIndividual(model: model,)));
-                  }) : SizedBox(height: 30,),
+                  child: model.orderStatus == onDelivery
+                      ? greenBtn(LocaleKeys.delivery_completed.tr(),
+                          EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                          () {
+                          print(model.orderCheckCode);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      OrderDeliveredIndividual(
+                                        model: model,
+                                      )));
+                        })
+                      : SizedBox(
+                          height: 30,
+                        ),
                 ),
               ],
             ),
           ),
-          model.orderStatus == onDelivery?
-          SizedBox(
-            height: 160,
-          ): SizedBox(height: 10,),
+          model.orderStatus == onDelivery
+              ? SizedBox(
+                  height: 160,
+                )
+              : SizedBox(
+                  height: 10,
+                ),
         ],
       ),
     );
@@ -597,9 +651,7 @@ class _IndividualOrderDetailsState extends State<IndividualOrderDetails> {
       child: Text(
         text,
         style: TextStyle(
-            color: kLogoBrown,
-            fontWeight: FontWeight.w800,
-            fontSize: 19),
+            color: kLogoBrown, fontWeight: FontWeight.w800, fontSize: 19),
       ),
     );
   }
@@ -612,25 +664,27 @@ class _IndividualOrderDetailsState extends State<IndividualOrderDetails> {
         children: [
           Container(
             margin: EdgeInsets.symmetric(horizontal: 40),
-            child: Text(title,
+            child: Text(
+              title,
               style: TextStyle(
                   fontSize: 15.4,
                   fontWeight: FontWeight.w600,
                   fontFamily: 'Almarai',
-                  color: kDarkBlue
-              ),
+                  color: kDarkBlue),
             ),
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 45),
-            child: Text(info,
+            child: Text(
+              info,
               style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                   fontFamily: 'Almarai',
-                  color: kLogoGreen
-              ),
+                  color: kLogoGreen),
             ),
           ),
         ],

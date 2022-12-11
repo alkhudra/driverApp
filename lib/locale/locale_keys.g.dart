@@ -117,4 +117,9 @@ abstract class  LocaleKeys {
   static const order_completed = "order_completed";
   static const completed_thanks = "completed_thanks";
   static const no_notification = "no_notification";
+
+  static const  user_info = "user_info";
+  static const user_phone=  "user_phone";
+  static const user_address =  "user_address";
+  static const user_map_location = "user_map_location";
 }
